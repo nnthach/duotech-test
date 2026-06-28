@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import React from "react";
 
@@ -23,9 +24,14 @@ export default function CtaSection() {
               Join today and enjoy exclusive special offers for new members!
             </p>
           </div>
-          <button className="flex items-center gap-2 whitespace-nowrap rounded-md bg-white px-6 py-3 text-sm font-semibold text-black transition hover:bg-white/90">
+
+          <Button
+            variant={"default"}
+            size={"lg"}
+            className="bg-white text-black hover:bg-white/90 gap-2 font-semibold"
+          >
             Join IronFit Now <ArrowRight className="h-4 w-4 text-red-700" />
-          </button>
+          </Button>
         </div>
       </div>
     </section>

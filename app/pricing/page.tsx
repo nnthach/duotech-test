@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import { Button } from "@/components/ui/button";
 import {
   HOME_PLAN_FEATURES,
   HOME_PLANS,
@@ -67,16 +68,12 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-
-                  <button
-                    className={`mt-6 rounded-md px-4 py-2.5 text-sm font-semibold transition ${
-                      plan.popular
-                        ? "bg-red-600 text-white hover:bg-red-700"
-                        : "border border-red-600/70 text-red-500 hover:bg-red-600 hover:text-white"
-                    }`}
+                  <Button
+                    variant={plan.popular ? "red" : "redOutline"}
+                    className="mt-6 font-semibold"
                   >
                     Choose this plan
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>

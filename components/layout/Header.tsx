@@ -1,6 +1,7 @@
 import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Button } from "../ui/button";
 
 export default function Header() {
   return (
@@ -22,9 +23,10 @@ export default function Header() {
           <Link href="/contact" className="transition hover:text-white">
             Contact
           </Link>
-          <button className="rounded-md bg-red-600 px-5 py-2 text-sm font-semibold transition hover:bg-red-700">
+
+          <Button variant="red" className="font-semibold py-1" size="sm">
             Join Now
-          </button>
+          </Button>
         </nav>
       </div>
     </header>

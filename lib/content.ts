@@ -1,8 +1,12 @@
 import {
   Calendar,
+  Clock,
   Dumbbell,
   Heart,
   Infinity as InfinityIcon,
+  Mail,
+  MapPin,
+  Phone,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -120,6 +124,29 @@ export const PRICING_HIGHLIGHTS = [
     icon: ShieldCheck,
     title: "Cancel Anytime",
     description: "No long-term contracts, cancel anytime",
+  },
+];
+
+export const CONTACT_INFO = [
+  {
+    icon: MapPin,
+    title: "Our Location",
+    lines: ["123 Nguyen Hue Street", "District 1, Ho Chi Minh City"],
+  },
+  {
+    icon: Phone,
+    title: "Phone Number",
+    lines: ["+84 28 1234 5678", "+84 90 123 4567"],
+  },
+  {
+    icon: Mail,
+    title: "Email Address",
+    lines: ["info@ironfit.vn", "support@ironfit.com"],
+  },
+  {
+    icon: Clock,
+    title: "Operating Hours",
+    lines: ["Mon - Sat: 05:00 - 23:00", "Sunday: 07:00 - 21:00"],
   },
 ];
 

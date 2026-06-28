@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Dumbbell, Users } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -39,12 +40,16 @@ export default function HeroSection() {
             reach your fitness goals.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <button className="flex items-center gap-2 rounded-md bg-red-600 px-6 py-3 text-sm font-semibold transition hover:bg-red-700">
+            <Button variant="red" size={"lg"} className="font-semibold">
               Get Started Now <ArrowRight className="h-4 w-4" />
-            </button>
-            <button className="rounded-md border border-white/30 px-6 py-3 text-sm font-semibold transition hover:bg-white/10">
+            </Button>
+            <Button
+              variant="outline"
+              size={"lg"}
+              className="border border-white/30 font-semibold hover:bg-white/1"
+            >
               View Pricing
-            </button>
+            </Button>
           </div>
           <div className="mt-10 flex flex-wrap gap-6 text-sm text-white/70">
             <span className="flex items-center gap-2">

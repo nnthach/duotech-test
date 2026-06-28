@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { HOME_STATS } from "@/lib/content";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -43,9 +44,9 @@ export default function AboutSection() {
             ))}
           </div>
 
-          <button className="mt-8 flex items-center gap-2 rounded-md bg-red-600 px-6 py-3 text-sm font-semibold transition hover:bg-red-700">
+          <Button variant="red" size={"lg"} className="font-semibold mt-8">
             Learn More About Us <ArrowRight className="h-4 w-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </section>
