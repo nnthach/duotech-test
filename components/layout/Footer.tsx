@@ -36,35 +36,35 @@ function YoutubeIcon() {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="px-6 py-16">
+    <footer id="contact" className="relative z-10 bg-charcoal-900 px-6 py-16 text-sand/80">
       <div className="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2 text-xl font-bold">
-            <span className="flex h-8 w-8 items-center justify-center rounded bg-red-600">
+          <div className="flex items-center gap-2 text-xl font-bold text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-coral">
               <Dumbbell className="h-5 w-5 text-white" />
             </span>
-            IRONFIT
+            Trainly
           </div>
-          <p className="mt-4 text-sm text-white/60">
-            IronFit Gym — where your transformation begins and you start
-            achieving your fitness goals.
+          <p className="mt-4 text-sm text-sand/60">
+            Trainly connects you with certified personal trainers who build a
+            plan around your goals, your body, and your schedule.
           </p>
           <div className="mt-5 flex gap-3">
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
             >
               <FacebookIcon />
             </a>
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
             >
               <InstagramIcon />
             </a>
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
             >
               <YoutubeIcon />
             </a>
@@ -72,11 +72,19 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Quick Links</h4>
-          <ul className="mt-4 space-y-2 text-sm text-white/60">
+          <h4 className="font-semibold text-white">For Clients</h4>
+          <ul className="mt-4 space-y-2 text-sm text-sand/60">
             <li>
-              <Link href="/" className="transition hover:text-white">
-                Home
+              <Link href="/#trainers" className="transition hover:text-white">
+                Find a Trainer
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/#how-it-works"
+                className="transition hover:text-white"
+              >
+                How It Works
               </Link>
             </li>
             <li>
@@ -84,47 +92,45 @@ export default function Footer() {
                 Pricing
               </Link>
             </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-white">For Trainers</h4>
+          <ul className="mt-4 space-y-2 text-sm text-sand/60">
             <li>
-              <Link href="/contact" className="transition hover:text-white">
-                Contact
+              <Link href="/signup" className="transition hover:text-white">
+                Become a Trainer
               </Link>
             </li>
+            <li>Trainer Resources</li>
+            <li>Success Stories</li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold">Programs</h4>
-          <ul className="mt-4 space-y-2 text-sm text-white/60">
-            <li>Body Building</li>
-            <li>Weight Loss</li>
-            <li>Strength Training</li>
-            <li>Yoga &amp; Flexibility</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-semibold">Contact Info</h4>
-          <ul className="mt-4 space-y-3 text-sm text-white/60">
+          <h4 className="font-semibold text-white">Contact Info</h4>
+          <ul className="mt-4 space-y-3 text-sm text-sand/60">
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 text-red-500" /> 123 ABC Street,
-              District 1, Ho Chi Minh City
+              <MapPin className="mt-0.5 h-4 w-4 text-coral" /> 123 Nguyen Hue
+              Street, District 1, Ho Chi Minh City
             </li>
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-red-500" /> 0123 456 789
+              <Phone className="h-4 w-4 text-coral" /> 0123 456 789
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-red-500" /> info@ironfit.vn
+              <Mail className="h-4 w-4 text-coral" /> hello@trainly.app
             </li>
             <li className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-red-500" /> 05:00 - 23:00
+              <Clock className="h-4 w-4 text-coral" /> Support: 07:00 - 22:00
               (Everyday)
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 pt-6 text-center text-xs text-white/40">
-        © 2026 IronFit Gym. All rights reserved.
+      <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 pt-6 text-center text-xs text-sand/40">
+        © 2026 Trainly. All rights reserved.
       </div>
     </footer>
   );

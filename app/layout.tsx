@@ -14,9 +14,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "IronFit Gym - Transform Your Body & Life",
+  title: "Trainly - Transform Your Body & Life",
   description:
-    "IronFit Gym offers modern equipment, expert trainers, and flexible fitness plans to help you achieve your goals.",
+    "Trainly offers modern equipment, expert trainers, and flexible fitness plans to help you achieve your goals.",
   keywords: ["gym", "fitness", "workout", "personal training"],
 };
 

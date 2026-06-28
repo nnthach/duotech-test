@@ -1,83 +1,201 @@
 import {
-  ContactInfo,
-  HomeFeature,
+  CoachingPlan,
+  HomePainPoint,
   HomePlan,
   HomePlanFeature,
-  HomeProgram,
   HomeStat,
   HomeTestimonial,
+  HowItWorksStep,
   PricingHighlight,
+  Specialty,
+  Trainer,
 } from "@/types";
 import {
+  Award,
   Calendar,
-  Clock,
   Dumbbell,
-  Heart,
+  Flame,
+  HeartPulse,
   Infinity as InfinityIcon,
-  Mail,
-  MapPin,
-  Phone,
+  Laptop,
+  Salad,
+  SearchCheck,
   ShieldCheck,
+  TrendingUp,
   Users,
 } from "lucide-react";
 
-export const HOME_FEATURES: HomeFeature[] = [
+export const HOME_PAIN_POINTS: HomePainPoint[] = [
   {
-    icon: Dumbbell,
-    title: "Modern Equipment",
+    icon: SearchCheck,
+    title: "No Personalization",
     description:
-      "State-of-the-art equipment meeting international standards, regularly maintained for optimal performance.",
+      "Generic workout plans ignore your body, your injuries, and your actual goals — so progress stalls fast.",
   },
   {
     icon: Users,
-    title: "Expert Coaches",
+    title: "No Accountability",
     description:
-      "Highly experienced and dedicated trainers committed to helping you reach your fitness goals.",
+      "Without someone tracking your progress, it's easy to skip sessions and lose motivation within weeks.",
   },
   {
-    icon: Calendar,
-    title: "Flexible Schedule",
+    icon: TrendingUp,
+    title: "No Real Feedback",
     description:
-      "24/7 flexible training schedules designed to fit your busy lifestyle.",
-  },
-  {
-    icon: Heart,
-    title: "Supportive Community",
-    description:
-      "A positive and motivating fitness community that supports you every step of the way.",
+      "Apps and videos can't correct your form in real time — small mistakes turn into plateaus or injuries.",
   },
 ];
 
 export const HOME_STATS: HomeStat[] = [
-  { value: "10,000+", label: "Satisfied Members" },
-  { value: "50+", label: "Expert Coaches" },
-  { value: "5+", label: "Years of Excellence" },
+  { value: "500+", label: "Certified Trainers" },
+  { value: "10,000+", label: "Sessions Booked" },
+  { value: "4.9/5", label: "Average Rating" },
 ];
-export const HOME_PROGRAMS: HomeProgram[] = [
+
+export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   {
-    title: "Body Building",
+    number: "01",
+    title: "Tell Us Your Goals",
     description:
-      "Build muscle mass, increase strength, and improve overall physique.",
-    image: "/images/program3.jpg",
+      "Share your fitness goals, schedule, and preferences — it takes less than two minutes.",
   },
   {
-    title: "Weight Loss",
+    number: "02",
+    title: "Get Matched With Trainers",
     description:
-      "Burn excess fat and achieve safe, effective weight loss results.",
-    image: "/images/program2.jpg",
+      "Browse certified trainers who fit your goals, compare profiles, and pick the right one for you.",
   },
   {
-    title: "Strength Training",
+    number: "03",
+    title: "Book & Start Training",
     description:
-      "Enhance strength, endurance, and overall physical performance.",
+      "Schedule your first session online or in person, and start training with real, ongoing guidance.",
+  },
+];
+
+export const SPECIALTIES: Specialty[] = [
+  { label: "Weight Loss", icon: Flame },
+  { label: "Strength & Muscle", icon: Dumbbell },
+  { label: "Yoga & Mobility", icon: HeartPulse },
+  { label: "Sports Performance", icon: TrendingUp },
+  { label: "Online Coaching", icon: Laptop },
+  { label: "Nutrition Coaching", icon: Salad },
+];
+
+export const FEATURED_TRAINERS: Trainer[] = [
+  {
+    name: "Daniel Carter",
+    specialty: "Strength & Conditioning",
+    tags: ["Strength", "Muscle Gain"],
+    rating: 4.9,
+    sessions: 320,
+    price: "350,000",
     image: "/images/program1.jpg",
   },
   {
-    title: "Yoga & Flexibility",
-    description:
-      "Improve flexibility, reduce stress, and achieve mental balance.",
+    name: "Sophia Nguyen",
+    specialty: "Weight Loss Coach",
+    tags: ["Weight Loss", "Nutrition"],
+    rating: 5.0,
+    sessions: 410,
+    price: "300,000",
+    image: "/images/program2.jpg",
+  },
+  {
+    name: "Marcus Lee",
+    specialty: "Sports Performance",
+    tags: ["Performance", "Speed"],
+    rating: 4.8,
+    sessions: 275,
+    price: "400,000",
+    image: "/images/program3.jpg",
+  },
+  {
+    name: "Olivia Tran",
+    specialty: "Yoga & Mobility",
+    tags: ["Yoga", "Recovery"],
+    rating: 4.9,
+    sessions: 198,
+    price: "280,000",
     image: "/images/program4.jpg",
   },
+];
+
+export const WHY_TRAINLY: HomePainPoint[] = [
+  {
+    icon: Award,
+    title: "Verified & Certified",
+    description:
+      "Every trainer is background-checked and holds a recognized certification before joining Trainly.",
+  },
+  {
+    icon: Calendar,
+    title: "Flexible Scheduling",
+    description:
+      "Book sessions around your life, not the other way around — early mornings, late nights, weekends.",
+  },
+  {
+    icon: Laptop,
+    title: "In-Person or Online",
+    description:
+      "Train at a gym, at home, outdoors, or over video call — whatever fits your routine best.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Money-Back Guarantee",
+    description:
+      "Not the right match? Get paired with a new trainer or your money back, no questions asked.",
+  },
+];
+
+export const COACHING_PLANS: CoachingPlan[] = [
+  {
+    name: "Single Session",
+    price: "300,000",
+    period: "/session",
+    description: "Try a certified trainer with zero commitment.",
+    features: [
+      "One 60-minute session",
+      "Choose any trainer",
+      "In-person or online",
+    ],
+    popular: false,
+  },
+  {
+    name: "Monthly Coaching",
+    price: "2,400,000",
+    period: "/month",
+    description: "4 sessions a month plus check-ins between workouts.",
+    features: [
+      "4 sessions per month",
+      "Progress tracking",
+      "Chat with your trainer",
+      "Reschedule anytime",
+    ],
+    popular: true,
+  },
+  {
+    name: "Elite 1:1",
+    price: "4,800,000",
+    period: "/month",
+    description: "Weekly sessions with a dedicated nutrition plan.",
+    features: [
+      "Weekly sessions",
+      "Custom nutrition plan",
+      "Unlimited messaging",
+      "Priority rescheduling",
+    ],
+    popular: false,
+  },
+];
+
+export const AVAILABLE_CITIES: string[] = [
+  "Ho Chi Minh City",
+  "Hanoi",
+  "Da Nang",
+  "Can Tho",
+  "Nha Trang",
+  "Online, Anywhere",
 ];
 
 export const HOME_PLANS: HomePlan[] = [
@@ -133,49 +251,26 @@ export const PRICING_HIGHLIGHTS: PricingHighlight[] = [
   },
 ];
 
-export const CONTACT_INFO: ContactInfo[] = [
-  {
-    icon: MapPin,
-    title: "Our Location",
-    lines: ["123 Nguyen Hue Street", "District 1, Ho Chi Minh City"],
-  },
-  {
-    icon: Phone,
-    title: "Phone Number",
-    lines: ["+84 28 1234 5678", "+84 90 123 4567"],
-  },
-  {
-    icon: Mail,
-    title: "Email Address",
-    lines: ["info@ironfit.vn", "support@ironfit.com"],
-  },
-  {
-    icon: Clock,
-    title: "Operating Hours",
-    lines: ["Mon - Sat: 05:00 - 23:00", "Sunday: 07:00 - 21:00"],
-  },
-];
-
 export const HOME_TESTIMONIAL: HomeTestimonial[] = [
   {
-    name: "Nguyen Minh Anh",
-    role: "Member - 6 months",
+    name: "Minh Anh Nguyen",
+    role: "Matched with a trainer - 6 months ago",
     quote:
-      "IronFit completely changed my life. I feel more confident, healthier, and stronger every day.",
+      "Trainly matched me with a coach who actually understood my schedule and my injuries. I've made more progress in 6 months than in 2 years on my own.",
     avatar: "/images/program1.jpg",
   },
   {
-    name: "Tran Quoc Bao",
-    role: "Member - 1 year",
+    name: "Bao Quoc Tran",
+    role: "Matched with a trainer - 1 year ago",
     quote:
-      "The equipment is modern, the environment is clean and professional. I really enjoy every training session here.",
+      "Comparing trainer profiles and reviews before booking made all the difference. I found the right coach on the first try.",
     avatar: "/images/program3.jpg",
   },
   {
     name: "Emily Johnson",
-    role: "Member - 3 months",
+    role: "Matched with a trainer - 3 months ago",
     quote:
-      "I lost 10kg in just 3 months. IronFit helped me stay motivated and completely transform my lifestyle.",
+      "I lost 10kg in 3 months because someone was finally checking in on me every week. Booking sessions online took two minutes.",
     avatar: "/images/program4.jpg",
   },
 ];

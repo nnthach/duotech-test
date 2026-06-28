@@ -1,40 +1,49 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import SectionLabel from "./SectionLabel";
 
 export default function CtaSection() {
   return (
-    <section className="px-6 py-20">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl bg-gradient-to-r from-red-700 to-red-900">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/program1.jpg"
-            alt="CTA background"
-            fill
-            className="object-cover opacity-20"
-          />
-        </div>
-        <div className="relative flex flex-col items-start justify-between gap-6 px-8 py-12 sm:flex-row sm:items-center">
-          <div>
-            <h2 className="text-2xl font-bold sm:text-3xl">
-              Ready to Transform
-              <br />
-              Your Life?
-            </h2>
-            <p className="mt-2 max-w-md text-white/80">
-              Join today and enjoy exclusive special offers for new members!
-            </p>
-          </div>
+    <section className="relative z-10 flex min-h-[80vh] flex-col items-center justify-center overflow-hidden bg-charcoal px-6 py-24 text-center">
+      <p
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none whitespace-nowrap text-center text-[14vw] font-extrabold uppercase leading-none tracking-tight text-transparent"
+        style={{ WebkitTextStroke: "1px rgba(255,255,255,0.08)" }}
+      >
+        Get Started
+      </p>
 
-          <Link href={"/signin"}>
+      <div className="relative z-10 mx-auto max-w-2xl">
+        <SectionLabel label="Ready When You Are" />
+        <h2 className="mt-5 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+          Your Strongest Years
+          <br />
+          <span className="text-white/40">Start Now.</span>
+        </h2>
+        <p className="mx-auto mt-5 max-w-md text-white/60">
+          Whether you&apos;re looking for a trainer or ready to become one,
+          Trainly makes the match.
+        </p>
+
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <Link href={"/signup"}>
             <Button
-              variant={"default"}
+              variant="accent"
               size={"lg"}
-              className="bg-white text-black hover:bg-white/90 gap-2 font-semibold"
+              className="gap-2 font-semibold"
             >
-              Join IronFit Now <ArrowRight className="h-4 w-4 text-red-700" />
+              Find a Trainer <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
+          <Link href={"/signup"}>
+            <Button
+              variant="outline"
+              size={"lg"}
+              className="gap-2 border-white/30 bg-transparent font-semibold text-white hover:bg-white/10 hover:text-white"
+            >
+              Join As A Trainer <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>

@@ -58,6 +58,25 @@ const config: Config = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        sand: {
+          DEFAULT: "#FAF6F0",
+          100: "#F5EFE6",
+          200: "#EDE3D3",
+        },
+        charcoal: {
+          DEFAULT: "#262626",
+          800: "#303030",
+          900: "#1A1A1A",
+        },
+        coral: {
+          DEFAULT: "#FB7A5E",
+          50: "#FFF1EC",
+          600: "#F4623F",
+          700: "#DD4C2A",
+        },
+        amber: {
+          DEFAULT: "#F5A524",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

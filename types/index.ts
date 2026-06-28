@@ -11,10 +11,40 @@ export interface HomeStat {
   label: string;
 }
 
-export interface HomeProgram {
+export interface HomePainPoint {
+  icon: LucideIcon;
   title: string;
   description: string;
+}
+
+export interface HowItWorksStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export interface Specialty {
+  label: string;
+  icon: LucideIcon;
+}
+
+export interface Trainer {
+  name: string;
+  specialty: string;
+  tags: string[];
+  rating: number;
+  sessions: number;
+  price: string;
   image: string;
+}
+
+export interface CoachingPlan {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  popular: boolean;
 }
 
 export interface HomePlan {
