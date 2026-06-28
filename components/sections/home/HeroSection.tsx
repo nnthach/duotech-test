@@ -9,7 +9,7 @@ export default function HeroSection() {
       id="home"
       className="relative overflow-hidden border-b border-white/10 h-screen pt-10 px-6"
     >
-      <div className="absolute inset-0 animate-pan animate-imageFade">
+      <div className="absolute inset-0 animate-imageFade">
         <Image
           src="/images/banner1.jpg"
           alt="Athlete"

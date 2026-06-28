@@ -3,6 +3,7 @@
 import { useInView } from "@/hooks/useInView";
 import { HOME_PROGRAMS } from "@/lib/content";
 import { Dumbbell } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 export default function ProgramSection() {
@@ -25,10 +26,11 @@ export default function ProgramSection() {
               style={{ animationDelay: `${index * 100}ms` }}
               className={`group relative h-72 overflow-hidden rounded-xl text-left ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}`}
             >
-              <img
+              <Image
                 src={program.image}
                 alt={program.title}
-                className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                fill
+                className="object-cover transition duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
               <div className="absolute bottom-0 left-0 p-5">

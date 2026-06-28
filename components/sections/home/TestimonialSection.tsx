@@ -3,6 +3,7 @@
 import { useInView } from "@/hooks/useInView";
 import { HOME_TESTIMONIAL } from "@/lib/content";
 import { Star } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 export default function TestimonialSection() {
@@ -35,10 +36,12 @@ export default function TestimonialSection() {
               </p>
               <div className="mt-6 flex items-center gap-3">
                 <div className="relative h-10 w-10 overflow-hidden rounded-full">
-                  <img
+                  <Image
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="40px"
                   />
                 </div>
                 <div>

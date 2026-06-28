@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -8,10 +9,11 @@ export default function CtaSection() {
     <section className="px-6 py-20">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl bg-gradient-to-r from-red-700 to-red-900">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1400&auto=format&fit=crop"
+          <Image
+            src="/images/program1.jpg"
             alt="CTA background"
-            className="h-full w-full object-cover opacity-20"
+            fill
+            className="object-cover opacity-20"
           />
         </div>
         <div className="relative flex flex-col items-start justify-between gap-6 px-8 py-12 sm:flex-row sm:items-center">

@@ -1,4 +1,5 @@
 import { Clock, Dumbbell, Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 function FacebookIcon() {
@@ -74,19 +75,19 @@ export default function Footer() {
           <h4 className="font-semibold">Quick Links</h4>
           <ul className="mt-4 space-y-2 text-sm text-white/60">
             <li>
-              <a href="#home" className="transition hover:text-white">
+              <Link href="/" className="transition hover:text-white">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#pricing" className="transition hover:text-white">
+              <Link href="/pricing" className="transition hover:text-white">
                 Pricing
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#contact" className="transition hover:text-white">
+              <Link href="/contact" className="transition hover:text-white">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

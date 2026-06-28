@@ -58,29 +58,25 @@ export const HOME_PROGRAMS: HomeProgram[] = [
     title: "Body Building",
     description:
       "Build muscle mass, increase strength, and improve overall physique.",
-    image:
-      "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?q=80&w=800&auto=format&fit=crop",
+    image: "/images/program3.jpg",
   },
   {
     title: "Weight Loss",
     description:
       "Burn excess fat and achieve safe, effective weight loss results.",
-    image:
-      "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/program2.jpg",
   },
   {
     title: "Strength Training",
     description:
       "Enhance strength, endurance, and overall physical performance.",
-    image:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop",
+    image: "/images/program1.jpg",
   },
   {
     title: "Yoga & Flexibility",
     description:
       "Improve flexibility, reduce stress, and achieve mental balance.",
-    image:
-      "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=800&auto=format&fit=crop",
+    image: "/images/program4.jpg",
   },
 ];
 
@@ -166,20 +162,20 @@ export const HOME_TESTIMONIAL: HomeTestimonial[] = [
     role: "Member - 6 months",
     quote:
       "IronFit completely changed my life. I feel more confident, healthier, and stronger every day.",
-    avatar: "https://i.pravatar.cc/100?img=12",
+    avatar: "/images/program1.jpg",
   },
   {
     name: "Tran Quoc Bao",
     role: "Member - 1 year",
     quote:
       "The equipment is modern, the environment is clean and professional. I really enjoy every training session here.",
-    avatar: "https://i.pravatar.cc/100?img=33",
+    avatar: "/images/program3.jpg",
   },
   {
     name: "Emily Johnson",
     role: "Member - 3 months",
     quote:
       "I lost 10kg in just 3 months. IronFit helped me stay motivated and completely transform my lifestyle.",
-    avatar: "https://i.pravatar.cc/100?img=47",
+    avatar: "/images/program4.jpg",
   },
 ];
