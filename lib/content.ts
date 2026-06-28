@@ -1,4 +1,11 @@
-import { Calendar, Dumbbell, Heart, Users } from "lucide-react";
+import {
+  Calendar,
+  Dumbbell,
+  Heart,
+  Infinity as InfinityIcon,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 
 export const HOME_FEATURES = [
   {
@@ -91,6 +98,29 @@ export const HOME_PLAN_FEATURES = [
   "Full access to all equipment",
   "Basic nutrition consultation",
   "Group class participation",
+];
+
+export const PRICING_HIGHLIGHTS = [
+  {
+    icon: InfinityIcon,
+    title: "No Limits",
+    description: "Train without limits anytime",
+  },
+  {
+    icon: Dumbbell,
+    title: "Premium Equipment",
+    description: "Access to all premium machines",
+  },
+  {
+    icon: Users,
+    title: "Expert Support",
+    description: "Professional trainers always here",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Cancel Anytime",
+    description: "No long-term contracts, cancel anytime",
+  },
 ];
 
 export const HOME_TESTIMONIAL = [
