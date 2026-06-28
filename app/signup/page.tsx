@@ -1,24 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { SignUpFormState } from "@/types";
 import { Dumbbell, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
-type FormState = {
-  fullName: string;
-  email: string;
-  password: string;
-};
-
-const INITIAL_FORM: FormState = {
+const INITIAL_FORM: SignUpFormState = {
   fullName: "",
   email: "",
   password: "",
 };
 
 export default function SignUpPage() {
-  const [form, setForm] = useState<FormState>(INITIAL_FORM);
+  const [form, setForm] = useState<SignUpFormState>(INITIAL_FORM);
   const [showPassword, setShowPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading">("idle");

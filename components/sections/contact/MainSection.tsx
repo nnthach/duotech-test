@@ -3,17 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { useInView } from "@/hooks/useInView";
 import { CONTACT_INFO } from "@/lib/content";
+import { ContactFormState } from "@/types";
 import { Loader2, Send } from "lucide-react";
 import React, { useState } from "react";
 
-type FormState = {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-};
-
-const INITIAL_FORM: FormState = {
+const INITIAL_FORM: ContactFormState = {
   name: "",
   email: "",
   phone: "",
@@ -21,7 +15,7 @@ const INITIAL_FORM: FormState = {
 };
 
 function MainSection() {
-  const [form, setForm] = useState<FormState>(INITIAL_FORM);
+  const [form, setForm] = useState<ContactFormState>(INITIAL_FORM);
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const { ref: gridRef, inView: gridInView } = useInView<HTMLDivElement>();
 

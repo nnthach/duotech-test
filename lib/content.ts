@@ -1,4 +1,14 @@
 import {
+  ContactInfo,
+  HomeFeature,
+  HomePlan,
+  HomePlanFeature,
+  HomeProgram,
+  HomeStat,
+  HomeTestimonial,
+  PricingHighlight,
+} from "@/types";
+import {
   Calendar,
   Clock,
   Dumbbell,
@@ -11,7 +21,7 @@ import {
   Users,
 } from "lucide-react";
 
-export const HOME_FEATURES = [
+export const HOME_FEATURES: HomeFeature[] = [
   {
     icon: Dumbbell,
     title: "Modern Equipment",
@@ -38,12 +48,12 @@ export const HOME_FEATURES = [
   },
 ];
 
-export const HOME_STATS = [
+export const HOME_STATS: HomeStat[] = [
   { value: "10,000+", label: "Satisfied Members" },
   { value: "50+", label: "Expert Coaches" },
   { value: "5+", label: "Years of Excellence" },
 ];
-export const HOME_PROGRAMS = [
+export const HOME_PROGRAMS: HomeProgram[] = [
   {
     title: "Body Building",
     description:
@@ -74,7 +84,7 @@ export const HOME_PROGRAMS = [
   },
 ];
 
-export const HOME_PLANS = [
+export const HOME_PLANS: HomePlan[] = [
   {
     duration: "1 Month",
     price: "799.000",
@@ -97,14 +107,14 @@ export const HOME_PLANS = [
   },
 ];
 
-export const HOME_PLAN_FEATURES = [
+export const HOME_PLAN_FEATURES: HomePlanFeature[] = [
   "Unlimited training access",
   "Full access to all equipment",
   "Basic nutrition consultation",
   "Group class participation",
 ];
 
-export const PRICING_HIGHLIGHTS = [
+export const PRICING_HIGHLIGHTS: PricingHighlight[] = [
   {
     icon: InfinityIcon,
     title: "No Limits",
@@ -127,7 +137,7 @@ export const PRICING_HIGHLIGHTS = [
   },
 ];
 
-export const CONTACT_INFO = [
+export const CONTACT_INFO: ContactInfo[] = [
   {
     icon: MapPin,
     title: "Our Location",
@@ -150,7 +160,7 @@ export const CONTACT_INFO = [
   },
 ];
 
-export const HOME_TESTIMONIAL = [
+export const HOME_TESTIMONIAL: HomeTestimonial[] = [
   {
     name: "Nguyen Minh Anh",
     role: "Member - 6 months",
