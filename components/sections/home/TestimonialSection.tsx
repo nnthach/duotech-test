@@ -1,10 +1,15 @@
+"use client";
+
+import { useInView } from "@/hooks/useInView";
 import { HOME_TESTIMONIAL } from "@/lib/content";
 import { Star } from "lucide-react";
 import React from "react";
 
 export default function TestimonialSection() {
+  const { ref, inView } = useInView<HTMLDivElement>();
+
   return (
-    <section className="border-b border-white/10 px-6 py-20">
+    <section ref={ref} className="border-b border-white/10 px-6 py-20">
       <div className="mx-auto max-w-7xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-red-500">
           What Our Members Say
@@ -14,10 +19,11 @@ export default function TestimonialSection() {
         </h2>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {HOME_TESTIMONIAL.map((testimonial) => (
+          {HOME_TESTIMONIAL.map((testimonial, index) => (
             <div
               key={testimonial.name}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 text-left"
+              style={{ animationDelay: `${index * 100}ms` }}
+              className={`rounded-xl border border-white/10 bg-white/5 p-6 text-left ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}`}
             >
               <div className="flex gap-1 text-yellow-400">
                 {Array.from({ length: 5 }).map((_, i) => (

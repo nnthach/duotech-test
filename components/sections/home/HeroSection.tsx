@@ -9,7 +9,7 @@ export default function HeroSection() {
       id="home"
       className="relative overflow-hidden border-b border-white/10 h-screen pt-10 px-6"
     >
-      <div className="absolute inset-0 animate-pan">
+      <div className="absolute inset-0 animate-pan animate-imageFade">
         <Image
           src="/images/banner1.jpg"
           alt="Athlete"
@@ -21,7 +21,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-black/0" />
 
       <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center">
-        <div className="max-w-xl">
+        <div className="max-w-xl animate-fadeInUp">
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-red-500">
             Build Strength. Build Confidence.
           </p>
@@ -40,16 +40,20 @@ export default function HeroSection() {
             reach your fitness goals.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button variant="red" size={"lg"} className="font-semibold">
-              Get Started Now <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size={"lg"}
-              className="border border-white/30 font-semibold hover:bg-white/1"
-            >
-              View Pricing
-            </Button>
+            <a href="#feature">
+              <Button variant="red" size={"lg"} className="font-semibold">
+                Get Started Now <ArrowRight className="h-4 w-4" />
+              </Button>
+            </a>
+            <a href="#pricing">
+              <Button
+                variant="outline"
+                size={"lg"}
+                className="border border-white/30 font-semibold hover:bg-white/10"
+              >
+                View Pricing
+              </Button>
+            </a>
           </div>
           <div className="mt-10 flex flex-wrap gap-6 text-sm text-white/70">
             <span className="flex items-center gap-2">

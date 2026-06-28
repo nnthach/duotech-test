@@ -22,7 +22,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent px-6">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent px-6 animate-imageFade">
       <div className="mx-auto flex max-w-7xl items-center justify-between py-4">
         <Link href={"/"}>
           <div className="flex items-center gap-2 text-xl font-bold text-white">

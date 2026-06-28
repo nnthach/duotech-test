@@ -1,10 +1,15 @@
+"use client";
+
+import { useInView } from "@/hooks/useInView";
 import { HOME_PROGRAMS } from "@/lib/content";
 import { Dumbbell } from "lucide-react";
 import React from "react";
 
 export default function ProgramSection() {
+  const { ref, inView } = useInView<HTMLDivElement>();
+
   return (
-    <section className="border-b border-white/10 px-6 pt-20">
+    <section ref={ref} className="border-b border-white/10 px-6 pt-20">
       <div className="mx-auto max-w-7xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-red-500">
           Our Programs
@@ -14,10 +19,11 @@ export default function ProgramSection() {
         </h2>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {HOME_PROGRAMS.map((program) => (
+          {HOME_PROGRAMS.map((program, index) => (
             <div
               key={program.title}
-              className="group relative h-72 overflow-hidden rounded-xl text-left"
+              style={{ animationDelay: `${index * 100}ms` }}
+              className={`group relative h-72 overflow-hidden rounded-xl text-left ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}`}
             >
               <img
                 src={program.image}

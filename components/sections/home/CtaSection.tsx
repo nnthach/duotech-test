@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function CtaSection() {
@@ -25,13 +26,15 @@ export default function CtaSection() {
             </p>
           </div>
 
-          <Button
-            variant={"default"}
-            size={"lg"}
-            className="bg-white text-black hover:bg-white/90 gap-2 font-semibold"
-          >
-            Join IronFit Now <ArrowRight className="h-4 w-4 text-red-700" />
-          </Button>
+          <Link href={"/signin"}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              className="bg-white text-black hover:bg-white/90 gap-2 font-semibold"
+            >
+              Join IronFit Now <ArrowRight className="h-4 w-4 text-red-700" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

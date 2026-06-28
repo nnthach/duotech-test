@@ -1,9 +1,14 @@
+"use client";
+
+import { useInView } from "@/hooks/useInView";
 import { HOME_FEATURES } from "@/lib/content";
 import React from "react";
 
 export default function FeatureSection() {
+  const { ref, inView } = useInView<HTMLDivElement>();
+
   return (
-    <section className="border-b border-white/10 px-6 pt-20">
+    <section id="feature" className="border-b border-white/10 px-6 pt-20">
       <div className="mx-auto max-w-7xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-red-500">
           Why Choose IronFit?
@@ -14,13 +19,19 @@ export default function FeatureSection() {
           to Succeed
         </h2>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {HOME_FEATURES.map((feature) => {
+        <div
+          ref={ref}
+          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {HOME_FEATURES.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div
                 key={feature.title}
-                className="rounded-xl border border-white/10 bg-white/5 p-6 text-left transition hover:border-red-600/50"
+                style={{ animationDelay: `${index * 100}ms` }}
+                className={`rounded-xl border border-white/10 bg-white/5 p-6 text-left transition hover:border-red-600/50
+  ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}
+`}
               >
                 <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-red-600/10">
                   <Icon className="h-5 w-5 text-red-500" />

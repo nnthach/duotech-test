@@ -1,11 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useInView } from "@/hooks/useInView";
 import { HOME_PLAN_FEATURES, HOME_PLANS } from "@/lib/content";
 import { Check, ShieldCheck, Star } from "lucide-react";
 import React from "react";
 
 export default function PricingSection() {
+  const { ref, inView } = useInView<HTMLDivElement>();
+
   return (
-    <section id="pricing" className="border-b border-white/10 px-6">
+    <section id="pricing" ref={ref} className="border-b border-white/10 px-6">
       <div className="mx-auto max-w-7xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-red-500">
           Pricing Plans
@@ -15,14 +20,17 @@ export default function PricingSection() {
         </h2>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {HOME_PLANS.map((plan) => (
+          {HOME_PLANS.map((plan, index) => (
             <div
               key={plan.duration}
+              style={{ animationDelay: `${index * 100}ms` }}
               className={`relative flex flex-col rounded-2xl border p-6 text-left transition ${
                 plan.popular
                   ? "border-red-600 bg-zinc-950 shadow-[0_0_50px_rgba(220,38,38,0.35)]"
                   : "border-white/10 bg-white/5 hover:border-white/20"
-              }`}
+              }
+              ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}    
+              `}
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-red-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
