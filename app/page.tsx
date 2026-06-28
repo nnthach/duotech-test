@@ -1,3 +1,4 @@
+import ScrollToTopButton from "@/components/custom/ScrollToTopButton";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import AboutSection from "@/components/sections/home/AboutSection";
@@ -37,6 +38,8 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      <ScrollToTopButton />
     </div>
   );
 }
