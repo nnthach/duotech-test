@@ -28,7 +28,7 @@ export default function CtaSection() {
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-          <Link href={"/signup"}>
+          <Link href={"/"}>
             <Button
               variant="accent"
               size={"lg"}
@@ -37,7 +37,7 @@ export default function CtaSection() {
               Find a Trainer <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
-          <Link href={"/signup"}>
+          <Link href={"/"}>
             <Button
               variant="outline"
               size={"lg"}
