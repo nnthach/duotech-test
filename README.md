@@ -20,4 +20,4 @@ Open http://localhost:3000 in your browser.
 
 ## Live Demo
 
-https://your-deployment-url.vercel.app
+[https://duotech-test.vercel.app/](https://duotech-test.vercel.app/)
