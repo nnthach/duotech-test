@@ -33,8 +33,17 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     <div className="bg-sand">
       <Header />
 
-      <section className="bg-charcoal-900 px-6 pb-8 pt-28">
-        <div className="mx-auto max-w-2xl text-center">
+      <section className="relative overflow-hidden bg-charcoal-900 px-6 pb-8 pt-28">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/75 via-charcoal-900/55 to-charcoal-900/85" />
+
+        <div className="relative z-10 mx-auto max-w-2xl text-center">
           <Link
             href="/menu"
             className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition hover:text-amber"
