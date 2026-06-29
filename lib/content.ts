@@ -9,19 +9,15 @@ import { Clock, Heart, Leaf, Wheat } from "lucide-react";
 export const BAKERY_PRINCIPLES: BakeryStandard[] = [
   {
     image: "/images/banner1.webp",
-    title: "100% Natural",
-    description: "Real flour, real butter — no preservatives, no shortcuts.",
+    key: "natural",
   },
   {
     image: "/images/banner2.webp",
-    title: "Handcrafted Daily",
-    description:
-      "Every loaf is shaped and kneaded by hand, never machine-pressed.",
+    key: "handcraftedDaily",
   },
   {
     image: "/images/banner3.webp",
-    title: "Always Fresh",
-    description: "Nothing sits overnight — out of the oven every morning.",
+    key: "alwaysFresh",
   },
 ];
 
@@ -29,7 +25,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
   { id: "all", label: "All" },
   { id: "bread", label: "Bread" },
   { id: "cake", label: "Cake" },
-  { id: "sweet", label: "Pastry" },
+  { id: "pastry", label: "Pastry" },
 ];
 
 export const MENU_PRODUCTS: MenuProduct[] = [
@@ -40,7 +36,7 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Fresh Cream Bread",
     description: "Soft milk bread, sweet cream swirl.",
     price: "$3.80",
-    ingredients: ["Wheat flour", "Fresh milk", "Butter", "Sweet cream", "Yeast"],
+    ingredients: ["wheatFlour", "freshMilk", "butter", "sweetCream", "yeast"],
   },
   {
     id: "cream-cheese-bread",
@@ -49,7 +45,7 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Cream Cheese Bread",
     description: "Soft white bread, cream cheese center.",
     price: "$3.90",
-    ingredients: ["Wheat flour", "Cream cheese", "Milk", "Butter", "Sugar"],
+    ingredients: ["wheatFlour", "creamCheese", "milk", "butter", "sugar"],
   },
   {
     id: "raisin-bread",
@@ -58,7 +54,7 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Raisin Bread",
     description: "Soft milk bread, sweet raisins throughout.",
     price: "$3.60",
-    ingredients: ["Wheat flour", "Raisins", "Milk", "Butter", "Honey"],
+    ingredients: ["wheatFlour", "raisins", "milk", "butter", "honey"],
   },
   {
     id: "frankfurter-roll",
@@ -67,7 +63,13 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Frankfurter Roll",
     description: "Savory sausage wrapped in soft bread.",
     price: "$4.10",
-    ingredients: ["Wheat flour", "Frankfurter sausage", "Butter", "Onion", "Ketchup"],
+    ingredients: [
+      "wheatFlour",
+      "frankfurterSausage",
+      "butter",
+      "onion",
+      "ketchup",
+    ],
   },
   {
     id: "purple-sweet-potato-loaf",
@@ -76,7 +78,13 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Purple Sweet Potato Loaf",
     description: "Naturally sweet, vibrant purple hue.",
     price: "$4.20",
-    ingredients: ["Wheat flour", "Purple sweet potato", "Milk", "Butter", "Sugar"],
+    ingredients: [
+      "wheatFlour",
+      "purpleSweetPotato",
+      "milk",
+      "butter",
+      "sugar",
+    ],
   },
   {
     id: "red-bean-bun",
@@ -85,7 +93,7 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Red Bean Bun",
     description: "Soft bun, silky red bean filling.",
     price: "$3.50",
-    ingredients: ["Wheat flour", "Red bean paste", "Milk", "Butter", "Sugar"],
+    ingredients: ["wheatFlour", "redBeanPaste", "milk", "butter", "sugar"],
   },
   {
     id: "green-tea-cream-cake",
@@ -94,7 +102,13 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Green Tea Cream Cake",
     description: "Matcha sponge, light whipped cream.",
     price: "$32.00",
-    ingredients: ["Matcha powder", "Sponge cake", "Fresh cream", "Sugar", "Eggs"],
+    ingredients: [
+      "matchaPowder",
+      "spongeCake",
+      "freshCream",
+      "sugar",
+      "eggs",
+    ],
   },
   {
     id: "strawberry-shortcake",
@@ -103,7 +117,13 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Strawberry Shortcake",
     description: "Classic sponge, fresh strawberries, cream.",
     price: "$34.00",
-    ingredients: ["Fresh strawberries", "Sponge cake", "Whipped cream", "Sugar", "Eggs"],
+    ingredients: [
+      "freshStrawberries",
+      "spongeCake",
+      "whippedCream",
+      "sugar",
+      "eggs",
+    ],
   },
   {
     id: "cloud-cheesecake",
@@ -112,7 +132,7 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Cloud Cheesecake",
     description: "Airy, light Japanese-style cotton cheesecake.",
     price: "$28.00",
-    ingredients: ["Cream cheese", "Eggs", "Fresh milk", "Sugar", "Corn starch"],
+    ingredients: ["creamCheese", "eggs", "freshMilk", "sugar", "cornStarch"],
   },
   {
     id: "triple-berry-cake",
@@ -121,52 +141,76 @@ export const MENU_PRODUCTS: MenuProduct[] = [
     name: "Triple Berry Cake",
     description: "Strawberry, blueberry, raspberry medley.",
     price: "$36.00",
-    ingredients: ["Strawberries", "Blueberries", "Raspberries", "Sponge cake", "Fresh cream"],
+    ingredients: [
+      "strawberries",
+      "blueberries",
+      "raspberries",
+      "spongeCake",
+      "freshCream",
+    ],
   },
   {
     id: "almond-croissant",
-    category: "sweet",
+    category: "pastry",
     image: "/images/sweet_list/almond_croissant.png",
     name: "Almond Croissant",
     description: "Buttery layers, toasted almonds.",
     price: "$4.50",
-    ingredients: ["Butter", "Wheat flour", "Almond cream", "Sliced almonds", "Sugar"],
+    ingredients: [
+      "butter",
+      "wheatFlour",
+      "almondCream",
+      "slicedAlmonds",
+      "sugar",
+    ],
   },
   {
     id: "chocolate-croissant",
-    category: "sweet",
+    category: "pastry",
     image: "/images/sweet_list/chocolate.webp",
     name: "Chocolate Croissant",
     description: "Rich dark chocolate, crisp layers.",
     price: "$4.80",
-    ingredients: ["Butter", "Wheat flour", "Dark chocolate", "Cocoa", "Sugar"],
+    ingredients: ["butter", "wheatFlour", "darkChocolate", "cocoa", "sugar"],
   },
   {
     id: "strawberry-cream-croissant",
-    category: "sweet",
+    category: "pastry",
     image: "/images/sweet_list/strawberry.png",
     name: "Strawberry Cream Croissant",
     description: "Fresh strawberries, light cream.",
     price: "$5.20",
-    ingredients: ["Butter", "Wheat flour", "Fresh strawberries", "Whipped cream", "Sugar"],
+    ingredients: [
+      "butter",
+      "wheatFlour",
+      "freshStrawberries",
+      "whippedCream",
+      "sugar",
+    ],
   },
   {
     id: "original-butter-croissant",
-    category: "sweet",
+    category: "pastry",
     image: "/images/sweet_list/original.webp",
     name: "Original Butter Croissant",
     description: "Classic French recipe, flaky golden layers.",
     price: "$3.90",
-    ingredients: ["Butter", "Wheat flour", "Milk", "Yeast", "Salt"],
+    ingredients: ["butter", "wheatFlour", "milk", "yeast", "salt"],
   },
   {
     id: "garlic-cheese-bread",
-    category: "sweet",
+    category: "pastry",
     image: "/images/sweet_list/garlic_cheese.jpg",
     name: "Garlic Cheese Bread",
     description: "Savory garlic butter, melted cheese.",
     price: "$4.40",
-    ingredients: ["Wheat flour", "Garlic butter", "Mozzarella cheese", "Parsley", "Milk"],
+    ingredients: [
+      "wheatFlour",
+      "garlicButter",
+      "mozzarellaCheese",
+      "parsley",
+      "milk",
+    ],
   },
 ];
 
@@ -185,27 +229,19 @@ export const BESTSELLER_PRODUCTS: MenuProduct[] = BESTSELLER_IDS.map(
 
 export const WHY_RETURN_REASONS: BakeryReason[] = [
   {
+    key: "freshDaily",
     icon: Clock,
-    title: "Fresh Daily",
-    description:
-      "Every pastry is baked before sunrise, ensuring you experience the warmth of fresh-from-the-oven goodness.",
   },
   {
+    key: "organicIngredients",
     icon: Leaf,
-    title: "Organic Ingredients",
-    description:
-      "We source only the finest organic flours, European butter, and seasonal ingredients from local farms.",
   },
   {
+    key: "slowFermented",
     icon: Wheat,
-    title: "Slow Fermented",
-    description:
-      "Our breads are fermented for 48–72 hours, developing deep flavors and perfect texture naturally.",
   },
   {
+    key: "handmadeProcess",
     icon: Heart,
-    title: "Handmade Process",
-    description:
-      "Every loaf is shaped by hand, every croissant folded with care—no machines, just craftsmanship.",
   },
 ];

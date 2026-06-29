@@ -1,10 +1,14 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/context/I18nContext";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export default function CtaSection() {
+  const { t } = useI18n();
   return (
     <section className="relative z-10 flex min-h-[70vh] flex-col items-center justify-center overflow-hidden bg-sand px-6 py-24 text-center">
       <Image
@@ -17,16 +21,17 @@ export default function CtaSection() {
 
       <div className="relative z-10 mx-auto max-w-2xl">
         <p className="font-script text-3xl text-amber sm:text-4xl">
-          From Our Hearts To Your Table
+          {t("homePage.ctaSection.badge")}
         </p>
         <h2 className="mt-4 text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
-          Baked With Passion,
+          {t("homePage.ctaSection.titleOne")}
           <br />
-          <span className="text-charcoal/40">Shared With Love.</span>
+          <span className="text-charcoal/40">
+            {t("homePage.ctaSection.titleTwo")}
+          </span>
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-charcoal/60">
-          At Petit Bakery, every loaf and pastry carries the care of real hands
-          and honest ingredients — because you deserve nothing less.
+          {t("homePage.ctaSection.description")}
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
@@ -36,7 +41,8 @@ export default function CtaSection() {
               size={"lg"}
               className="gap-2 font-semibold"
             >
-              Explore Our Menu <ArrowRight className="h-4 w-4" />
+              {t("button.exploreMenu")}
+              <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
           <Link href={"/#"}>
@@ -45,7 +51,7 @@ export default function CtaSection() {
               size={"lg"}
               className="gap-2 border-charcoal/25 bg-transparent font-semibold text-charcoal hover:bg-charcoal/5 hover:text-charcoal"
             >
-              Visit Our Bakery <ArrowRight className="h-4 w-4" />
+              {t("button.visitOurBakery")} <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>

@@ -1,11 +1,13 @@
 "use client";
 
+import { useI18n } from "@/context/I18nContext";
 import { useInView } from "@/hooks/useInView";
 import { Wheat } from "lucide-react";
 import Image from "next/image";
 
 export default function OurStorySection() {
   const { ref, inView } = useInView<HTMLDivElement>();
+  const { t } = useI18n();
 
   return (
     <section
@@ -45,7 +47,7 @@ export default function OurStorySection() {
               inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"
             }`}
           >
-            Our Story
+            {t("homePage.storySection.badge")}
           </p>
           <h2
             style={{ animationDelay: "100ms" }}
@@ -53,29 +55,16 @@ export default function OurStorySection() {
               inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"
             }`}
           >
-            Every loaf carries a little piece of our heart.
+            {t("homePage.storySection.title")}
           </h2>
 
           <p
             style={{ animationDelay: "250ms" }}
-            className={`mt-4 text-charcoal/70 ${
+            className={`mt-4 text-charcoal/70 whitespace-pre-line ${
               inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"
             }`}
           >
-            We believe a loaf isn&apos;t finished when it leaves the oven —
-            it&apos;s finished when someone breaks it open at their table.
-            That&apos;s why every batch, big or small, gets the same care, the
-            same patience, and the same hands.
-            <br />
-            <br />
-            Whether we&apos;re baking one loaf or one hundred, every batch
-            receives the same care and attention. To us, bread is more than
-            food—it&apos;s a way to bring people together, creating moments of
-            warmth, comfort, and connection around the table.
-            <br />
-            <br />
-            From our hands to yours, every loaf is baked with passion, crafted
-            with tradition, and made to be shared.
+            {t("homePage.storySection.description")}
           </p>
         </div>
       </div>

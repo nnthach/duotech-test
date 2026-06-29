@@ -1,3 +1,6 @@
+"use client";
+
+import { useI18n } from "@/context/I18nContext";
 import { Clock, Croissant, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -35,6 +38,8 @@ function YoutubeIcon() {
 }
 
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer
       id="contact"
@@ -48,9 +53,8 @@ export default function Footer() {
             </span>
             <span className="font-serif">Petit Bakery</span>
           </div>
-          <p className="mt-4 text-sm text-charcoal/60">
-            Petit Bakery bakes with honest ingredients and real care, so every
-            visit feels a little like coming home.
+          <p className="mt-4 text-sm text-charcoal/60 whitespace-pre-line">
+            {t("footer.brand.description")}
           </p>
           <div className="mt-5 flex gap-3">
             <a
@@ -75,14 +79,14 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-serif text-charcoal">Our Menu</h4>
+          <h4 className="font-serif text-charcoal">{t("footer.menu.title")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-charcoal/60">
             <li>
               <Link
                 href="/#bestsellers"
                 className="transition hover:text-charcoal"
               >
-                Bestsellers
+                {t("footer.menu.links.bestsellers")}
               </Link>
             </li>
             <li>
@@ -90,61 +94,64 @@ export default function Footer() {
                 href="/#standards"
                 className="transition hover:text-charcoal"
               >
-                Our Standards
+                {t("footer.menu.links.standards")}
               </Link>
             </li>
             <li>
               <Link href="/#why" className="transition hover:text-charcoal">
-                Why Choose Us
+                {t("footer.menu.links.whyChoose")}
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-serif text-charcoal">About Us</h4>
+          <h4 className="font-serif text-charcoal">
+            {t("footer.about.title")}
+          </h4>
           <ul className="mt-4 space-y-2 text-sm text-charcoal/60">
             <li>
               <Link href="/#story" className="transition hover:text-charcoal">
-                Our Story
+                {t("footer.about.links.ourStory")}
               </Link>
             </li>
             <li>
               <Link href="/#home" className="transition hover:text-charcoal">
-                Our Bakery
+                {t("footer.about.links.ourBakery")}
               </Link>
             </li>
             <li>
               <Link href="/#contact" className="transition hover:text-charcoal">
-                Get In Touch
+                {t("footer.about.links.getInTouch")}
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-serif text-charcoal">Visit Us</h4>
+          <h4 className="font-serif text-charcoal">
+            {t("footer.visit.title")}
+          </h4>
           <ul className="mt-4 space-y-3 text-sm text-charcoal/60">
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 text-amber" /> 123 Nguyen Hue
-              Street, District 1, Ho Chi Minh City
+              <MapPin className="mt-0.5 h-4 w-4 text-amber" />{" "}
+              {t("footer.visit.address")}
             </li>
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-amber" /> 0123 456 789
+              <Phone className="h-4 w-4 text-amber" /> {t("footer.visit.phone")}
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-amber" /> hello@petitbakery.com
+              <Mail className="h-4 w-4 text-amber" /> {t("footer.visit.email")}
             </li>
             <li className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-amber" /> Open Daily: 6:00 AM –
-              8:00 PM
+              <Clock className="h-4 w-4 text-amber" /> {t("footer.visit.hours")}
             </li>
           </ul>
         </div>
       </div>
 
       <div className="mx-auto mt-12 max-w-7xl border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40">
-        © 2026 Petit Bakery. Baked with love, every day.
+        {t("footer.copyright")}
       </div>
     </footer>
   );

@@ -1,6 +1,10 @@
+"use client";
+
+import { useI18n } from "@/context/I18nContext";
 import Image from "next/image";
 
 export default function MenuHeroSection() {
+  const { t } = useI18n();
   return (
     <section className="relative flex h-[60vh] min-h-[420px] flex-col items-center justify-center overflow-hidden px-6 pt-16">
       <Image
@@ -14,16 +18,13 @@ export default function MenuHeroSection() {
 
       <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center animate-fadeInUp">
         <p className="font-script text-4xl text-amber sm:text-5xl">
-          Our Menu
+          {t("menuPage.heroSection.badge")}
         </p>
-        <h1 className="mt-1 text-4xl font-bold leading-[1.15] text-white sm:text-5xl">
-          Everything We Bake,
-          <br />
-          In One Place
+        <h1 className="mt-1 text-4xl font-bold leading-[1.15] text-white sm:text-5xl whitespace-pre-line">
+          {t("menuPage.heroSection.title")}
         </h1>
         <p className="mt-6 max-w-md text-balance text-white/75">
-          From crusty loaves to delicate cakes — explore our full selection,
-          baked fresh every single day.
+          {t("menuPage.heroSection.description")}
         </p>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Dancing_Script } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/context/I18nContext";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${dancingScript.variable} antialiased`}
       >
-        {children}
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

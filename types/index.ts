@@ -8,14 +8,12 @@ export interface HomeFeature {
 
 export interface BakeryReason {
   icon: LucideIcon;
-  title: string;
-  description: string;
+  key: string;
 }
 
 export interface BakeryStandard {
   image: string;
-  title: string;
-  description: string;
+  key: string;
 }
 
 export interface BakeryProduct {
@@ -26,7 +24,7 @@ export interface BakeryProduct {
   price: string;
 }
 
-export type MenuCategoryId = "bread" | "cake" | "sweet";
+export type MenuCategoryId = "bread" | "cake" | "pastry";
 
 export interface MenuProduct extends BakeryProduct {
   category: MenuCategoryId;

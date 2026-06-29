@@ -1,3 +1,6 @@
+"use client";
+
+import { useI18n } from "@/context/I18nContext";
 import { BakeryProduct } from "@/types";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -16,6 +19,7 @@ export default function ProductCard({
   inView,
   animation,
 }: ProductCardProps) {
+  const { t } = useI18n();
   return (
     <div
       style={animation ? { animationDelay: `${index * 80}ms` } : undefined}
@@ -48,7 +52,7 @@ export default function ProductCard({
             href={`/menu/${product.id}`}
             className="inline-flex items-center gap-1 text-sm font-semibold text-amber transition hover:text-coral"
           >
-            View Details <ArrowRight className="h-3.5 w-3.5" />
+            {t("button.viewDetail")} <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>

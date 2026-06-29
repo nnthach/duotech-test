@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/context/I18nContext";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +16,7 @@ const SLIDE_DURATION = 6000;
 
 export default function HeroSection() {
   const [active, setActive] = useState(0);
+  const { t } = useI18n();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -54,23 +56,20 @@ export default function HeroSection() {
 
       <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center animate-fadeInUp">
         <p className="font-script text-4xl text-amber sm:text-5xl">
-          Freshly Baked
+          {t("homePage.heroSection.badge")}
         </p>
-        <h1 className="mt-1 text-4xl font-bold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
-          Pure Ingredients,
-          <br />
-          Perfect Every Bite
+        <h1 className="mt-1 text-4xl font-bold leading-[1.15] text-white sm:text-5xl lg:text-6xl whitespace-pre-line">
+          {t("homePage.heroSection.title")}
         </h1>
         <p className="mt-6 max-w-md text-balance text-white/75">
-          Handcrafted every morning with quality flour, slow fermentation, and
-          no shortcuts — bread the way it&apos;s meant to be.
+          {t("homePage.heroSection.description")}
         </p>
 
         <Link
           href="/menu"
           className="group mt-8 inline-flex items-center gap-2 border-b border-white/40 pb-1 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-amber hover:text-amber"
         >
-          Order Now
+          {t("button.orderNow")}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

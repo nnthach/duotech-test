@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/context/I18nContext";
 import { useInView } from "@/hooks/useInView";
 import { WHY_RETURN_REASONS } from "@/lib/content";
 
@@ -12,6 +13,7 @@ const ICON_COLORS = [
 
 export default function WhyChooseSection() {
   const { ref, inView } = useInView<HTMLDivElement>();
+  const { t } = useI18n();
 
   return (
     <section
@@ -20,7 +22,7 @@ export default function WhyChooseSection() {
     >
       <div className="mx-auto max-w-6xl text-center">
         <h2 className="font-serif text-4xl italic text-charcoal sm:text-5xl">
-          Why people return every morning
+          {t("homePage.whyChooseSection.title")}
         </h2>
 
         <div
@@ -32,7 +34,7 @@ export default function WhyChooseSection() {
             const color = ICON_COLORS[index % ICON_COLORS.length];
             return (
               <div
-                key={reason.title}
+                key={reason.key}
                 style={{ animationDelay: `${index * 100}ms` }}
                 className={`rounded-2xl bg-sand-100 p-8 text-center transition hover:shadow-lg
   ${inView ? "animate-fadeUp opacity-100" : "opacity-0 translate-y-6"}
@@ -44,10 +46,12 @@ export default function WhyChooseSection() {
                   <Icon className="h-6 w-6" strokeWidth={1.5} />
                 </span>
                 <h3 className="font-serif text-lg text-charcoal">
-                  {reason.title}
+                  {t(`homePage.whyChooseSection.reasons.${reason.key}.title`)}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-charcoal/55">
-                  {reason.description}
+                  {t(
+                    `homePage.whyChooseSection.reasons.${reason.key}.description`,
+                  )}
                 </p>
               </div>
             );

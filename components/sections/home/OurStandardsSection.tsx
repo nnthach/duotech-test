@@ -1,11 +1,13 @@
 "use client";
 
+import { useI18n } from "@/context/I18nContext";
 import { useInView } from "@/hooks/useInView";
 import { BAKERY_PRINCIPLES } from "@/lib/content";
 import Image from "next/image";
 
 export default function OurStandardsSection() {
   const { ref, inView } = useInView<HTMLDivElement>();
+  const { t } = useI18n();
 
   return (
     <section
@@ -14,14 +16,13 @@ export default function OurStandardsSection() {
     >
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
         <p className="font-script text-3xl text-amber sm:text-4xl">
-          Our Promise
+          {t("homePage.standardSection.badge")}
         </p>
         <h2 className="mt-2 text-3xl font-bold leading-tight text-charcoal sm:text-4xl">
-          Baked On Three Simple Promises
+          {t("homePage.standardSection.title")}
         </h2>
         <p className="mt-5 max-w-lg text-charcoal/60">
-          Whether it&apos;s our first batch of the day or our last, every loaf
-          that leaves our oven follows the same three standards.
+          {t("homePage.standardSection.description")}
         </p>
 
         <div
@@ -30,7 +31,7 @@ export default function OurStandardsSection() {
         >
           {BAKERY_PRINCIPLES.map((item, index) => (
             <div
-              key={item.title}
+              key={item.key}
               style={{ animationDelay: `${index * 120}ms` }}
               className={`flex w-[220px] shrink-0 flex-col items-center text-center sm:w-[260px] ${
                 inView
@@ -41,16 +42,20 @@ export default function OurStandardsSection() {
               <div className="relative h-[220px] w-[220px] overflow-hidden rounded-full shadow-lg ring-4 ring-white sm:h-[260px] sm:w-[260px]">
                 <Image
                   src={item.image}
-                  alt={item.title}
+                  alt={t(
+                    `homePage.standardSection.principles.${item.key}.title`,
+                  )}
                   fill
                   className="object-cover"
                 />
               </div>
               <p className="mt-5 text-sm font-bold uppercase tracking-widest text-charcoal">
-                {item.title}
+                {t(`homePage.standardSection.principles.${item.key}.title`)}
               </p>
               <p className="mt-1 text-xs text-charcoal/55">
-                {item.description}
+                {t(
+                  `homePage.standardSection.principles.${item.key}.description`,
+                )}
               </p>
             </div>
           ))}

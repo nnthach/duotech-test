@@ -11,17 +11,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import { useI18n } from "@/context/I18nContext";
+import LanguageToggle from "../custom/LanguageToggle";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/#story", label: "Our Story" },
-  { href: "/#bestsellers", label: "Baked Daily" },
-  { href: "/menu", label: "Menu" },
+  { href: "/#story", label: "headerNav.ourStory" },
+  { href: "/#bestsellers", label: "headerNav.bakedDaily" },
+  { href: "/menu", label: "headerNav.menu" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -63,13 +65,15 @@ export default function Header() {
                 scrolled ? "hover:text-charcoal" : "hover:text-white"
               }`}
             >
-              {link.label}
+              {t(link.label)}
             </Link>
           ))}
 
+          <LanguageToggle scrolled={scrolled} />
+
           <Link href={"/menu"}>
             <Button variant="accent" className="font-semibold py-1" size="sm">
-              Order Now
+              {t("headerButton.orderNow")}
             </Button>
           </Link>
         </nav>
@@ -96,14 +100,17 @@ export default function Header() {
             <SheetTitle className="text-left text-lg font-bold text-charcoal">
               Petit Bakery
             </SheetTitle>
-            <nav className="mt-8 flex flex-col gap-6 text-base font-medium text-charcoal/70">
+            <div className="mt-6 flex">
+              <LanguageToggle scrolled={scrolled} variant="dark" />
+            </div>
+            <nav className="mt-6 flex flex-col gap-6 text-base font-medium text-charcoal/70">
               {NAV_LINKS.map((link) => (
                 <SheetClose asChild key={link.href}>
                   <Link
                     href={link.href}
                     className="transition hover:text-charcoal"
                   >
-                    {link.label}
+                    {t(link.label)}
                   </Link>
                 </SheetClose>
               ))}
@@ -111,7 +118,7 @@ export default function Header() {
               <SheetClose asChild>
                 <Link href={"/#bestsellers"}>
                   <Button variant="accent" className="font-semibold">
-                    Order Now
+                    {t("headerButton.orderNow")}
                   </Button>
                 </Link>
               </SheetClose>

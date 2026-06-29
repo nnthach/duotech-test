@@ -5,8 +5,10 @@ import { cn } from "@/lib/utils";
 import { MENU_CATEGORIES, MENU_PRODUCTS } from "@/lib/content";
 import { MenuCategoryId } from "@/types";
 import { useMemo, useState } from "react";
+import { useI18n } from "@/context/I18nContext";
 
 export default function MenuSection() {
+  const { t } = useI18n();
   const [activeCategory, setActiveCategory] = useState<MenuCategoryId | "all">(
     "all",
   );
@@ -37,7 +39,7 @@ export default function MenuSection() {
                   : "border-charcoal/15 bg-white text-charcoal/60 hover:border-amber/50 hover:text-charcoal",
               )}
             >
-              {category.label}
+              {t(`menuPage.menuFilter.${category.id}`)}
             </button>
           ))}
         </div>
