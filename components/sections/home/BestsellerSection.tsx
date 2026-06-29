@@ -1,10 +1,11 @@
 "use client";
 
+import ProductCard from "@/components/custom/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useInView } from "@/hooks/useInView";
 import { BESTSELLER_PRODUCTS } from "@/lib/content";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
 
 export default function BestsellerSection() {
   const { ref, inView } = useInView<HTMLDivElement>();
@@ -27,50 +28,22 @@ export default function BestsellerSection() {
           className="mt-14 grid gap-8 text-left sm:grid-cols-2 lg:grid-cols-3"
         >
           {BESTSELLER_PRODUCTS.map((product, index) => (
-            <div
+            <ProductCard
               key={product.name}
-              style={{ animationDelay: `${index * 80}ms` }}
-              className={`group overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${
-                inView
-                  ? "animate-fadeUp opacity-100"
-                  : "opacity-0 translate-y-6"
-              }`}
-            >
-              <div className="relative h-64 w-full overflow-hidden">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-serif text-xl italic text-charcoal">
-                  {product.name}
-                </h3>
-                <p className="mt-2 text-sm text-charcoal/55">
-                  {product.description}
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-lg font-bold text-charcoal">
-                    {product.price}
-                  </span>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-amber transition hover:text-coral"
-                  >
-                    View Details <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </div>
-            </div>
+              product={product}
+              index={index}
+              inView={inView}
+              animation
+            />
           ))}
         </div>
 
         <div className="mt-14">
-          <Button variant="accent" size="lg" className="font-semibold">
-            Explore Menu <ArrowRight className="h-4 w-4" />
-          </Button>
+          <Link href={"/menu"}>
+            <Button variant="accent" size="lg" className="font-semibold">
+              Explore Menu <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -13,6 +13,7 @@ import {
 } from "../ui/sheet";
 
 const NAV_LINKS = [
+  { href: "/", label: "Home" },
   { href: "/#story", label: "Our Story" },
   { href: "/#bestsellers", label: "Baked Daily" },
   { href: "/menu", label: "Menu" },

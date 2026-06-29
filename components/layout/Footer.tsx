@@ -36,7 +36,10 @@ function YoutubeIcon() {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative z-10 bg-sand px-6 py-16 text-charcoal/80">
+    <footer
+      id="contact"
+      className="relative z-10 bg-sand border-t border-sand-200 px-6 py-16 text-charcoal/80"
+    >
       <div className="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 text-xl font-bold text-charcoal">
@@ -75,12 +78,18 @@ export default function Footer() {
           <h4 className="font-serif text-charcoal">Our Menu</h4>
           <ul className="mt-4 space-y-2 text-sm text-charcoal/60">
             <li>
-              <Link href="/#bestsellers" className="transition hover:text-charcoal">
+              <Link
+                href="/#bestsellers"
+                className="transition hover:text-charcoal"
+              >
                 Bestsellers
               </Link>
             </li>
             <li>
-              <Link href="/#standards" className="transition hover:text-charcoal">
+              <Link
+                href="/#standards"
+                className="transition hover:text-charcoal"
+              >
                 Our Standards
               </Link>
             </li>

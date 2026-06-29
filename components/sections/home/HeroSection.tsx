@@ -56,7 +56,7 @@ export default function HeroSection() {
         <p className="font-script text-4xl text-amber sm:text-5xl">
           Freshly Baked
         </p>
-        <h1 className="mt-1 font-serif text-4xl font-bold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mt-1 text-4xl font-bold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
           Pure Ingredients,
           <br />
           Perfect Every Bite

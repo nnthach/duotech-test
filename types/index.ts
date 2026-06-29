@@ -19,8 +19,21 @@ export interface BakeryStandard {
 }
 
 export interface BakeryProduct {
+  id: string;
   image: string;
   name: string;
   description: string;
   price: string;
+}
+
+export type MenuCategoryId = "bread" | "cake" | "sweet";
+
+export interface MenuProduct extends BakeryProduct {
+  category: MenuCategoryId;
+  ingredients: string[];
+}
+
+export interface MenuCategory {
+  id: MenuCategoryId | "all";
+  label: string;
 }
