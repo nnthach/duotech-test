@@ -67,7 +67,7 @@ export default function Header() {
             </Link>
           ))}
 
-          <Link href={"/#bestsellers"}>
+          <Link href={"/menu"}>
             <Button variant="accent" className="font-semibold py-1" size="sm">
               Order Now
             </Button>

@@ -67,10 +67,10 @@ export default function HeroSection() {
         </p>
 
         <Link
-          href="#"
+          href="/menu"
           className="group mt-8 inline-flex items-center gap-2 border-b border-white/40 pb-1 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-amber hover:text-amber"
         >
-          Shop Now
+          Order Now
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
