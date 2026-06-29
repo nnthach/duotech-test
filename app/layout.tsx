@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Playfair_Display, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -12,12 +13,22 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["500", "600", "700", "800"],
+});
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["500", "600", "700"],
+});
 
 export const metadata: Metadata = {
-  title: "Trainly - Transform Your Body & Life",
+  title: "Petit Bakery - Baked With Passion, Shared With Love",
   description:
-    "Trainly offers modern equipment, expert trainers, and flexible fitness plans to help you achieve your goals.",
-  keywords: ["gym", "fitness", "workout", "personal training"],
+    "Petit Bakery handcrafts fresh bread, pastries, and cakes daily using honest ingredients and real care — bringing genuine value to every customer.",
+  keywords: ["bakery", "bread", "pastries", "cakes", "artisan bakery"],
 };
 
 export default function RootLayout({
@@ -28,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${dancingScript.variable} antialiased`}
       >
         {children}
       </body>

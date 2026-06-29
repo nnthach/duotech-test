@@ -1,77 +1,94 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+"use client";
+
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import React from "react";
-import SectionLabel from "./SectionLabel";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const SLIDES = [
+  { src: "/images/banner1.webp", alt: "Freshly baked bread loaves" },
+  { src: "/images/banner2.webp", alt: "Artisan bakery display" },
+  { src: "/images/banner3.webp", alt: "Fresh pastries and bread" },
+];
+
+const SLIDE_DURATION = 6000;
 
 export default function HeroSection() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % SLIDES.length);
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       id="home"
       className="relative flex h-screen min-h-[680px] flex-col items-center justify-center overflow-hidden px-6 pt-16"
     >
-      <div className="absolute inset-0 animate-imageFade">
-        <Image
-          src="/images/banner1.jpg"
-          alt="Personal trainer coaching a client"
-          fill
-          priority
-          className="object-cover object-top"
-        />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/85 via-charcoal-900/70 to-charcoal-900/90" />
-
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center animate-fadeInUp">
-        <div className="mb-5">
-          <SectionLabel label="Personal Training" />
-        </div>
-        <h1 className="text-5xl font-extrabold leading-[1.05] text-white sm:text-6xl lg:text-7xl">
-          Generic Workouts
-          <br />
-          Get Generic <span className="text-white/40">Results.</span>
-        </h1>
-        <p className="mt-6 max-w-lg text-balance text-white/75">
-          Trainly matches you with certified personal trainers who build a
-          plan around your body, your goals, and your schedule — not a
-          one-size-fits-all program.
-        </p>
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-          <a href="#trainers">
-            <Button variant="accent" size={"lg"} className="font-semibold">
-              Find Your Trainer <ArrowRight className="h-4 w-4" />
-            </Button>
-          </a>
-          <a href="#how-it-works">
-            <Button
-              variant="outline"
-              size={"lg"}
-              className="border-white/30 bg-transparent font-semibold text-white hover:bg-white/10 hover:text-white"
+      <div className="absolute inset-0 overflow-hidden">
+        {SLIDES.map((slide, i) => {
+          const step = (i - active + SLIDES.length) % SLIDES.length;
+          const pos = step === 0 ? 0 : step === 1 ? 1 : -1;
+          return (
+            <div
+              key={slide.src}
+              className="absolute inset-0 transition-transform duration-&lsqb;1000ms&rsqb; ease-&lsqb;cubic-bezier(0.65,0,0.35,1)&rsqb;"
+              style={{ transform: `translateY(${pos * 100}%)` }}
             >
-              See How It Works
-            </Button>
-          </a>
-        </div>
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                priority={i === 0}
+                className="object-cover object-center"
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900/65 via-charcoal-900/25 to-charcoal-900/75" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_50%_42%,rgba(0,0,0,0.4),transparent_70%)]" />
 
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-4">
-          <div className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-coral/20 text-coral">
-              <Star className="h-4 w-4 fill-coral" />
-            </span>
-            <div className="text-left">
-              <p className="text-sm font-bold text-white">4.9 / 5</p>
-              <p className="text-xs text-white/60">Average rating</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber/20 text-amber">
-              <ArrowRight className="h-4 w-4 rotate-[-45deg]" />
-            </span>
-            <div className="text-left">
-              <p className="text-sm font-bold text-white">500+</p>
-              <p className="text-xs text-white/60">Certified trainers</p>
-            </div>
-          </div>
-        </div>
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center animate-fadeInUp">
+        <p className="font-script text-4xl text-amber sm:text-5xl">
+          Freshly Baked
+        </p>
+        <h1 className="mt-1 font-serif text-4xl font-bold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
+          Pure Ingredients,
+          <br />
+          Perfect Every Bite
+        </h1>
+        <p className="mt-6 max-w-md text-balance text-white/75">
+          Handcrafted every morning with quality flour, slow fermentation, and
+          no shortcuts — bread the way it&apos;s meant to be.
+        </p>
+
+        <Link
+          href="#"
+          className="group mt-8 inline-flex items-center gap-2 border-b border-white/40 pb-1 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-amber hover:text-amber"
+        >
+          Shop Now
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
+
+      <div className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 flex-col items-center gap-3 lg:right-10 lg:flex">
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setActive(i)}
+            className={`rounded-full transition-all ${
+              i === active
+                ? "h-2.5 w-2.5 bg-amber"
+                : "h-1.5 w-1.5 bg-white/40 hover:bg-white/70"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );

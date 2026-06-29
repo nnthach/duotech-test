@@ -1,4 +1,4 @@
-import { Clock, Dumbbell, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Croissant, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -36,35 +36,35 @@ function YoutubeIcon() {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative z-10 bg-charcoal-900 px-6 py-16 text-sand/80">
+    <footer id="contact" className="relative z-10 bg-sand px-6 py-16 text-charcoal/80">
       <div className="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2 text-xl font-bold text-white">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-coral">
-              <Dumbbell className="h-5 w-5 text-white" />
+          <div className="flex items-center gap-2 text-xl font-bold text-charcoal">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber">
+              <Croissant className="h-5 w-5 text-white" />
             </span>
-            Trainly
+            <span className="font-serif">Petit Bakery</span>
           </div>
-          <p className="mt-4 text-sm text-sand/60">
-            Trainly connects you with certified personal trainers who build a
-            plan around your goals, your body, and your schedule.
+          <p className="mt-4 text-sm text-charcoal/60">
+            Petit Bakery bakes with honest ingredients and real care, so every
+            visit feels a little like coming home.
           </p>
           <div className="mt-5 flex gap-3">
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/15 transition hover:bg-charcoal/5"
             >
               <FacebookIcon />
             </a>
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/15 transition hover:bg-charcoal/5"
             >
               <InstagramIcon />
             </a>
             <a
               href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 transition hover:bg-white/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/15 transition hover:bg-charcoal/5"
             >
               <YoutubeIcon />
             </a>
@@ -72,65 +72,70 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold text-white">For Clients</h4>
-          <ul className="mt-4 space-y-2 text-sm text-sand/60">
+          <h4 className="font-serif text-charcoal">Our Menu</h4>
+          <ul className="mt-4 space-y-2 text-sm text-charcoal/60">
             <li>
-              <Link href="/#trainers" className="transition hover:text-white">
-                Find a Trainer
+              <Link href="/#bestsellers" className="transition hover:text-charcoal">
+                Bestsellers
               </Link>
             </li>
             <li>
-              <Link
-                href="/#how-it-works"
-                className="transition hover:text-white"
-              >
-                How It Works
+              <Link href="/#standards" className="transition hover:text-charcoal">
+                Our Standards
               </Link>
             </li>
             <li>
-              <Link href="/pricing" className="transition hover:text-white">
-                Pricing
+              <Link href="/#why" className="transition hover:text-charcoal">
+                Why Choose Us
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold text-white">For Trainers</h4>
-          <ul className="mt-4 space-y-2 text-sm text-sand/60">
+          <h4 className="font-serif text-charcoal">About Us</h4>
+          <ul className="mt-4 space-y-2 text-sm text-charcoal/60">
             <li>
-              <Link href="/signup" className="transition hover:text-white">
-                Become a Trainer
+              <Link href="/#story" className="transition hover:text-charcoal">
+                Our Story
               </Link>
             </li>
-            <li>Trainer Resources</li>
-            <li>Success Stories</li>
+            <li>
+              <Link href="/#home" className="transition hover:text-charcoal">
+                Our Bakery
+              </Link>
+            </li>
+            <li>
+              <Link href="/#contact" className="transition hover:text-charcoal">
+                Get In Touch
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold text-white">Contact Info</h4>
-          <ul className="mt-4 space-y-3 text-sm text-sand/60">
+          <h4 className="font-serif text-charcoal">Visit Us</h4>
+          <ul className="mt-4 space-y-3 text-sm text-charcoal/60">
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 text-coral" /> 123 Nguyen Hue
+              <MapPin className="mt-0.5 h-4 w-4 text-amber" /> 123 Nguyen Hue
               Street, District 1, Ho Chi Minh City
             </li>
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-coral" /> 0123 456 789
+              <Phone className="h-4 w-4 text-amber" /> 0123 456 789
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-coral" /> hello@trainly.app
+              <Mail className="h-4 w-4 text-amber" /> hello@petitbakery.com
             </li>
             <li className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-coral" /> Support: 07:00 - 22:00
-              (Everyday)
+              <Clock className="h-4 w-4 text-amber" /> Open Daily: 6:00 AM –
+              8:00 PM
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 pt-6 text-center text-xs text-sand/40">
-        © 2026 Trainly. All rights reserved.
+      <div className="mx-auto mt-12 max-w-7xl border-t border-charcoal/10 pt-6 text-center text-xs text-charcoal/40">
+        © 2026 Petit Bakery. Baked with love, every day.
       </div>
     </footer>
   );

@@ -1,18 +1,12 @@
 import ScrollToTopButton from "@/components/custom/ScrollToTopButton";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import AvailabilitySection from "@/components/sections/home/AvailabilitySection";
+import BestsellerSection from "@/components/sections/home/BestsellerSection";
 import CtaSection from "@/components/sections/home/CtaSection";
-import FeatureSection from "@/components/sections/home/WhyTrainlySection";
 import HeroSection from "@/components/sections/home/HeroSection";
-import HowItWorksSection from "@/components/sections/home/HowItWorksSection";
-import MarqueeSection from "@/components/sections/home/MarqueeSection";
-import PricingSection from "@/components/sections/home/PricingSection";
-import ProblemSection from "@/components/sections/home/ProblemSection";
-import TestimonialSection from "@/components/sections/home/TestimonialSection";
-import TrainersSection from "@/components/sections/home/TrainersSection";
-import DifferentSection from "@/components/sections/home/DifferentSection";
-import WhyItWorkSection from "@/components/sections/home/WhyItWorkSection";
+import OurStandardsSection from "@/components/sections/home/OurStandardsSection";
+import OurStorySection from "@/components/sections/home/OurStorySection";
+import WhyChooseSection from "@/components/sections/home/WhyChooseSection";
 
 export default function Home() {
   return (
@@ -23,34 +17,17 @@ export default function Home() {
       {/* Hero: the hook */}
       <HeroSection />
 
-      {/* Ticker */}
-      <MarqueeSection />
+      {/* Our standards: what every loaf promises */}
+      <OurStandardsSection />
 
-      {/* Problem: why fitness journeys stall */}
-      <ProblemSection />
+      {/* Our story: the heart behind every loaf */}
+      <OurStorySection />
 
-      {/* About: the Trainly difference */}
-      <DifferentSection />
+      {/* Bestsellers: customer favorites */}
+      <BestsellerSection />
 
-      {/* How it works */}
-      <HowItWorksSection />
-
-      <WhyItWorkSection />
-
-      {/* Browse trainers */}
-      <TrainersSection />
-
-      {/* Why Trainly */}
-      <FeatureSection />
-
-      {/* Coaching plans */}
-      <PricingSection />
-
-      {/* Testimonials */}
-      <TestimonialSection />
-
-      {/* Availability */}
-      <AvailabilitySection />
+      {/* Why people return */}
+      <WhyChooseSection />
 
       {/* CTA */}
       <CtaSection />

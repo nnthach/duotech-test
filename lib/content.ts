@@ -1,276 +1,87 @@
-import {
-  CoachingPlan,
-  HomePainPoint,
-  HomePlan,
-  HomePlanFeature,
-  HomeStat,
-  HomeTestimonial,
-  HowItWorksStep,
-  PricingHighlight,
-  Specialty,
-  Trainer,
-} from "@/types";
-import {
-  Award,
-  Calendar,
-  Dumbbell,
-  Flame,
-  HeartPulse,
-  Infinity as InfinityIcon,
-  Laptop,
-  Salad,
-  SearchCheck,
-  ShieldCheck,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { BakeryProduct, BakeryReason, BakeryStandard } from "@/types";
+import { Clock, Heart, Leaf, Wheat } from "lucide-react";
 
-export const HOME_PAIN_POINTS: HomePainPoint[] = [
+export const BAKERY_PRINCIPLES: BakeryStandard[] = [
   {
-    icon: SearchCheck,
-    title: "No Personalization",
+    image: "/images/banner1.webp",
+    title: "100% Natural",
+    description: "Real flour, real butter — no preservatives, no shortcuts.",
+  },
+  {
+    image: "/images/banner2.webp",
+    title: "Handcrafted Daily",
     description:
-      "Generic workout plans ignore your body, your injuries, and your actual goals — so progress stalls fast.",
+      "Every loaf is shaped and kneaded by hand, never machine-pressed.",
   },
   {
-    icon: Users,
-    title: "No Accountability",
+    image: "/images/banner3.webp",
+    title: "Always Fresh",
+    description: "Nothing sits overnight — out of the oven every morning.",
+  },
+];
+
+export const BESTSELLER_PRODUCTS: BakeryProduct[] = [
+  {
+    image: "/images/sweet_list/almond_croissant.png",
+    name: "Almond Croissant",
+    description: "Buttery layers, toasted almonds.",
+    price: "$4.50",
+  },
+  {
+    image: "/images/sweet_list/chocolate.webp",
+    name: "Chocolate Croissant",
+    description: "Rich dark chocolate, crisp layers.",
+    price: "$4.80",
+  },
+  {
+    image: "/images/sweet_list/strawberry.png",
+    name: "Strawberry Cream Croissant",
+    description: "Fresh strawberries, light cream.",
+    price: "$5.20",
+  },
+  {
+    image: "/images/bread_list/cream_bread.webp",
+    name: "Fresh Cream Bread",
+    description: "Soft milk bread, sweet cream swirl.",
+    price: "$3.80",
+  },
+  {
+    image: "/images/bread_list/purple_potato.webp",
+    name: "Purple Sweet Potato Loaf",
+    description: "Naturally sweet, vibrant purple hue.",
+    price: "$4.20",
+  },
+  {
+    image: "/images/bread_list/redbean.png",
+    name: "Red Bean Bun",
+    description: "Soft bun, silky red bean filling.",
+    price: "$3.50",
+  },
+];
+
+export const WHY_RETURN_REASONS: BakeryReason[] = [
+  {
+    icon: Clock,
+    title: "Fresh Daily",
     description:
-      "Without someone tracking your progress, it's easy to skip sessions and lose motivation within weeks.",
+      "Every pastry is baked before sunrise, ensuring you experience the warmth of fresh-from-the-oven goodness.",
   },
   {
-    icon: TrendingUp,
-    title: "No Real Feedback",
+    icon: Leaf,
+    title: "Organic Ingredients",
     description:
-      "Apps and videos can't correct your form in real time — small mistakes turn into plateaus or injuries.",
+      "We source only the finest organic flours, European butter, and seasonal ingredients from local farms.",
   },
-];
-
-export const HOME_STATS: HomeStat[] = [
-  { value: "500+", label: "Certified Trainers" },
-  { value: "10,000+", label: "Sessions Booked" },
-  { value: "4.9/5", label: "Average Rating" },
-];
-
-export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   {
-    number: "01",
-    title: "Tell Us Your Goals",
+    icon: Wheat,
+    title: "Slow Fermented",
     description:
-      "Share your fitness goals, schedule, and preferences — it takes less than two minutes.",
+      "Our breads are fermented for 48–72 hours, developing deep flavors and perfect texture naturally.",
   },
   {
-    number: "02",
-    title: "Get Matched With Trainers",
+    icon: Heart,
+    title: "Handmade Process",
     description:
-      "Browse certified trainers who fit your goals, compare profiles, and pick the right one for you.",
-  },
-  {
-    number: "03",
-    title: "Book & Start Training",
-    description:
-      "Schedule your first session online or in person, and start training with real, ongoing guidance.",
-  },
-];
-
-export const SPECIALTIES: Specialty[] = [
-  { label: "Weight Loss", icon: Flame },
-  { label: "Strength & Muscle", icon: Dumbbell },
-  { label: "Yoga & Mobility", icon: HeartPulse },
-  { label: "Sports Performance", icon: TrendingUp },
-  { label: "Online Coaching", icon: Laptop },
-  { label: "Nutrition Coaching", icon: Salad },
-];
-
-export const FEATURED_TRAINERS: Trainer[] = [
-  {
-    name: "Daniel Carter",
-    specialty: "Strength & Conditioning",
-    tags: ["Strength", "Muscle Gain"],
-    rating: 4.9,
-    sessions: 320,
-    price: "350,000",
-    image: "/images/program1.jpg",
-  },
-  {
-    name: "Sophia Nguyen",
-    specialty: "Weight Loss Coach",
-    tags: ["Weight Loss", "Nutrition"],
-    rating: 5.0,
-    sessions: 410,
-    price: "300,000",
-    image: "/images/program2.jpg",
-  },
-  {
-    name: "Marcus Lee",
-    specialty: "Sports Performance",
-    tags: ["Performance", "Speed"],
-    rating: 4.8,
-    sessions: 275,
-    price: "400,000",
-    image: "/images/program3.jpg",
-  },
-  {
-    name: "Olivia Tran",
-    specialty: "Yoga & Mobility",
-    tags: ["Yoga", "Recovery"],
-    rating: 4.9,
-    sessions: 198,
-    price: "280,000",
-    image: "/images/program4.jpg",
-  },
-];
-
-export const WHY_TRAINLY: HomePainPoint[] = [
-  {
-    icon: Award,
-    title: "Verified & Certified",
-    description:
-      "Every trainer is background-checked and holds a recognized certification before joining Trainly.",
-  },
-  {
-    icon: Calendar,
-    title: "Flexible Scheduling",
-    description:
-      "Book sessions around your life, not the other way around — early mornings, late nights, weekends.",
-  },
-  {
-    icon: Laptop,
-    title: "In-Person or Online",
-    description:
-      "Train at a gym, at home, outdoors, or over video call — whatever fits your routine best.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Money-Back Guarantee",
-    description:
-      "Not the right match? Get paired with a new trainer or your money back, no questions asked.",
-  },
-];
-
-export const COACHING_PLANS: CoachingPlan[] = [
-  {
-    name: "Single Session",
-    price: "300,000",
-    period: "/session",
-    description: "Try a certified trainer with zero commitment.",
-    features: [
-      "One 60-minute session",
-      "Choose any trainer",
-      "In-person or online",
-    ],
-    popular: false,
-  },
-  {
-    name: "Monthly Coaching",
-    price: "2,400,000",
-    period: "/month",
-    description: "4 sessions a month plus check-ins between workouts.",
-    features: [
-      "4 sessions per month",
-      "Progress tracking",
-      "Chat with your trainer",
-      "Reschedule anytime",
-    ],
-    popular: true,
-  },
-  {
-    name: "Elite 1:1",
-    price: "4,800,000",
-    period: "/month",
-    description: "Weekly sessions with a dedicated nutrition plan.",
-    features: [
-      "Weekly sessions",
-      "Custom nutrition plan",
-      "Unlimited messaging",
-      "Priority rescheduling",
-    ],
-    popular: false,
-  },
-];
-
-export const AVAILABLE_CITIES: string[] = [
-  "Ho Chi Minh City",
-  "Hanoi",
-  "Da Nang",
-  "Can Tho",
-  "Nha Trang",
-  "Online, Anywhere",
-];
-
-export const HOME_PLANS: HomePlan[] = [
-  {
-    duration: "1 Month",
-    price: "799.000",
-    popular: false,
-  },
-  {
-    duration: "3 Months",
-    price: "699.000",
-    popular: false,
-  },
-  {
-    duration: "6 Months",
-    price: "599.000",
-    popular: true,
-  },
-  {
-    duration: "12 Months",
-    price: "499.000",
-    popular: false,
-  },
-];
-
-export const HOME_PLAN_FEATURES: HomePlanFeature[] = [
-  "Unlimited training access",
-  "Full access to all equipment",
-  "Basic nutrition consultation",
-  "Group class participation",
-];
-
-export const PRICING_HIGHLIGHTS: PricingHighlight[] = [
-  {
-    icon: InfinityIcon,
-    title: "No Limits",
-    description: "Train without limits anytime",
-  },
-  {
-    icon: Dumbbell,
-    title: "Premium Equipment",
-    description: "Access to all premium machines",
-  },
-  {
-    icon: Users,
-    title: "Expert Support",
-    description: "Professional trainers always here",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Cancel Anytime",
-    description: "No long-term contracts, cancel anytime",
-  },
-];
-
-export const HOME_TESTIMONIAL: HomeTestimonial[] = [
-  {
-    name: "Minh Anh Nguyen",
-    role: "Matched with a trainer - 6 months ago",
-    quote:
-      "Trainly matched me with a coach who actually understood my schedule and my injuries. I've made more progress in 6 months than in 2 years on my own.",
-    avatar: "/images/program1.jpg",
-  },
-  {
-    name: "Bao Quoc Tran",
-    role: "Matched with a trainer - 1 year ago",
-    quote:
-      "Comparing trainer profiles and reviews before booking made all the difference. I found the right coach on the first try.",
-    avatar: "/images/program3.jpg",
-  },
-  {
-    name: "Emily Johnson",
-    role: "Matched with a trainer - 3 months ago",
-    quote:
-      "I lost 10kg in 3 months because someone was finally checking in on me every week. Booking sessions online took two minutes.",
-    avatar: "/images/program4.jpg",
+      "Every loaf is shaped by hand, every croissant folded with care—no machines, just craftsmanship.",
   },
 ];

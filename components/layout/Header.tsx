@@ -1,6 +1,6 @@
 "use client";
 
-import { Dumbbell, Menu } from "lucide-react";
+import { Croissant, Menu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
@@ -13,11 +13,9 @@ import {
 } from "../ui/sheet";
 
 const NAV_LINKS = [
-  { href: "/#problems", label: "Problems" },
-  { href: "/#difference", label: "Difference" },
-  { href: "/#how-it-works", label: "How It Works" },
-  { href: "/#why", label: "Why Trainly" },
-  { href: "/#pricing", label: "Plans" },
+  { href: "/#story", label: "Our Story" },
+  { href: "/#bestsellers", label: "Baked Daily" },
+  { href: "/menu", label: "Menu" },
 ];
 
 export default function Header() {
@@ -44,10 +42,10 @@ export default function Header() {
               scrolled ? "text-charcoal" : "text-white"
             }`}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-coral">
-              <Dumbbell className="h-5 w-5 text-white" />
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber">
+              <Croissant className="h-5 w-5 text-white" />
             </span>
-            Trainly
+            <span className="font-serif">Petit Bakery</span>
           </div>
         </Link>
 
@@ -68,9 +66,9 @@ export default function Header() {
             </Link>
           ))}
 
-          <Link href={"/signin"}>
+          <Link href={"/#bestsellers"}>
             <Button variant="accent" className="font-semibold py-1" size="sm">
-              Find a Trainer
+              Order Now
             </Button>
           </Link>
         </nav>
@@ -95,7 +93,7 @@ export default function Header() {
             className="w-3/4 border-l border-charcoal/10 bg-sand text-charcoal sm:max-w-sm"
           >
             <SheetTitle className="text-left text-lg font-bold text-charcoal">
-              Trainly
+              Petit Bakery
             </SheetTitle>
             <nav className="mt-8 flex flex-col gap-6 text-base font-medium text-charcoal/70">
               {NAV_LINKS.map((link) => (
@@ -110,9 +108,9 @@ export default function Header() {
               ))}
 
               <SheetClose asChild>
-                <Link href={"/signin"}>
+                <Link href={"/#bestsellers"}>
                   <Button variant="accent" className="font-semibold">
-                    Find a Trainer
+                    Order Now
                   </Button>
                 </Link>
               </SheetClose>
