@@ -1,6 +1,6 @@
-# Gym Landing Page
+# Petit Bakery Landing Page
 
-A modern and responsive gym landing page built with **Next.js**, **TypeScript**, and **Tailwind CSS**.
+A modern and responsive bakery landing page built with **Next.js**, **TypeScript**, and **Tailwind CSS**.
 
 ## Getting Started
 
