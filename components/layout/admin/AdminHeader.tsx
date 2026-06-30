@@ -27,6 +27,7 @@ import LanguageToggle from "@/components/custom/LanguageToggle";
 
 const BREADCRUMB_MAP: Record<string, string> = {
   dashboard: "Dashboard",
+  categories: "Categories",
   orders: "Đơn hàng",
   products: "Sản phẩm",
   reviews: "Đánh giá",

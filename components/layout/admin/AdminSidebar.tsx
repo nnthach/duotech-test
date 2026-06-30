@@ -56,6 +56,12 @@ const NAV_MAIN = [
     href: "/admin/categories",
     icon: Package,
   },
+
+  {
+    title: "Nguyên liệu sản phẩm",
+    href: "/admin/ingredients",
+    icon: Package,
+  },
   {
     title: "Đánh giá",
     href: "/admin/reviews",

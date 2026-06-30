@@ -35,3 +35,22 @@ export interface MenuCategory {
   id: MenuCategoryId | "all";
   label: string;
 }
+
+export interface CategoryItem {
+  id: string;
+  name: string;
+  description: string;
+  is_active: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string | null;
+}
+
+export interface IngredientItem {
+  id: string;
+  name: string;
+  is_active: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string | null;
+}
