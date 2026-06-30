@@ -50,7 +50,7 @@ export default function ProductCard({
           </span>
           <Link
             href={`/menu/${product.id}`}
-            className="inline-flex items-center gap-1 text-sm font-semibold text-amber transition hover:text-coral"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-amber transition hover:text-amber-600"
           >
             {t("button.viewDetail")} <ArrowRight className="h-3.5 w-3.5" />
           </Link>
