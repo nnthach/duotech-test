@@ -15,7 +15,8 @@ import {
 import { formatToSlug } from "@/lib/utils";
 
 interface FormState {
-  name: string;
+  name_vi: string;
+  name_en: string;
   slug: string;
 }
 
@@ -37,13 +38,14 @@ export default function UpdateIngredientModal({
 
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name.trim()) next.name = "Tên nguyên liệu không được để trống.";
+    if (!form.name_vi.trim()) next.name_vi = "Tên nguyên liệu (VI) không được để trống.";
+    if (!form.name_en.trim()) next.name_en = "Tên nguyên liệu (EN) không được để trống.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -58,7 +60,7 @@ export default function UpdateIngredientModal({
 
     try {
       setIsSubmitting(true);
-      const payload = { ...form, slug: formatToSlug(form.name) };
+      const payload = { ...form, slug: formatToSlug(form.name_vi) };
 
       const res = await fetch(`/api/admin/ingredients/${id}`, {
         method: "PUT",
@@ -102,26 +104,43 @@ export default function UpdateIngredientModal({
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
-            {/* Name */}
+            {/* Name VI */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="update-name"
-                className="text-sm font-medium text-foreground"
-              >
-                Tên nguyên liệu <span className="text-destructive">*</span>
+              <label htmlFor="update-name_vi" className="text-sm font-medium text-foreground">
+                Tên nguyên liệu (VI) <span className="text-destructive">*</span>
               </label>
               <input
-                id="update-name"
-                name="name"
-                placeholder="Ví dụ: Bánh mì"
-                value={form.name}
+                id="update-name_vi"
+                name="name_vi"
+                placeholder="Ví dụ: Bột mì"
+                value={form.name_vi}
                 onChange={handleChange}
-                aria-invalid={!!errors.name}
+                aria-invalid={!!errors.name_vi}
                 disabled={isSubmitting}
                 className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
               />
-              {errors.name && (
-                <p className="text-xs text-destructive">{errors.name}</p>
+              {errors.name_vi && (
+                <p className="text-xs text-destructive">{errors.name_vi}</p>
+              )}
+            </div>
+
+            {/* Name EN */}
+            <div className="space-y-1.5">
+              <label htmlFor="update-name_en" className="text-sm font-medium text-foreground">
+                Tên nguyên liệu (EN) <span className="text-destructive">*</span>
+              </label>
+              <input
+                id="update-name_en"
+                name="name_en"
+                placeholder="E.g. Flour"
+                value={form.name_en}
+                onChange={handleChange}
+                aria-invalid={!!errors.name_en}
+                disabled={isSubmitting}
+                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
+              />
+              {errors.name_en && (
+                <p className="text-xs text-destructive">{errors.name_en}</p>
               )}
             </div>
           </div>

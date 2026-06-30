@@ -35,6 +35,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
     console.error("Fetch categories error:", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -48,9 +52,9 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, description, slug } = body;
+    const { name_vi, name_en, description_vi, description_en, slug } = body;
 
-    if (!name) {
+    if (!name_vi || !name_en) {
       return NextResponse.json(
         { success: false, error: "Name is required" },
         { status: 400 },
@@ -59,7 +63,11 @@ export async function POST(req: NextRequest) {
 
     const { data, error } = await supabaseAdmin
       .from("categories")
-      .insert({ name, description, slug })
+      .insert({
+        name: { vi: name_vi, en: name_en },
+        description: { vi: description_vi ?? "", en: description_en ?? "" },
+        slug,
+      })
       .select()
       .single();
     if (error) throw error;
@@ -67,5 +75,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
     console.error("Create categories error:", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

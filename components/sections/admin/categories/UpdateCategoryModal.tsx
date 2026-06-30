@@ -15,8 +15,10 @@ import {
 import { formatToSlug } from "@/lib/utils";
 
 interface FormState {
-  name: string;
-  description: string;
+  name_vi: string;
+  name_en: string;
+  description_vi: string;
+  description_en: string;
   slug: string;
 }
 
@@ -38,7 +40,8 @@ export default function UpdateCategoryModal({
 
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name.trim()) next.name = "Tên danh mục không được để trống.";
+    if (!form.name_vi.trim()) next.name_vi = "Tên danh mục (VI) không được để trống.";
+    if (!form.name_en.trim()) next.name_en = "Tên danh mục (EN) không được để trống.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -59,7 +62,7 @@ export default function UpdateCategoryModal({
 
     try {
       setIsSubmitting(true);
-      const payload = { ...form, slug: formatToSlug(form.name) };
+      const payload = { ...form, slug: formatToSlug(form.name_vi) };
 
       const res = await fetch(`/api/admin/categories/${id}`, {
         method: "PUT",
@@ -96,50 +99,81 @@ export default function UpdateCategoryModal({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Chỉnh sửa danh mục</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
-            {/* Name */}
+            {/* Name VI */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="update-name"
-                className="text-sm font-medium text-foreground"
-              >
-                Tên danh mục <span className="text-destructive">*</span>
+              <label htmlFor="update-name_vi" className="text-sm font-medium text-foreground">
+                Tên danh mục (VI) <span className="text-destructive">*</span>
               </label>
               <input
-                id="update-name"
-                name="name"
+                id="update-name_vi"
+                name="name_vi"
                 placeholder="Ví dụ: Bánh mì"
-                value={form.name}
+                value={form.name_vi}
                 onChange={handleChange}
-                aria-invalid={!!errors.name}
+                aria-invalid={!!errors.name_vi}
                 disabled={isSubmitting}
                 className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
               />
-              {errors.name && (
-                <p className="text-xs text-destructive">{errors.name}</p>
+              {errors.name_vi && (
+                <p className="text-xs text-destructive">{errors.name_vi}</p>
               )}
             </div>
 
-            {/* Description */}
+            {/* Name EN */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="update-description"
-                className="text-sm font-medium text-foreground"
-              >
-                Mô tả
+              <label htmlFor="update-name_en" className="text-sm font-medium text-foreground">
+                Tên danh mục (EN) <span className="text-destructive">*</span>
+              </label>
+              <input
+                id="update-name_en"
+                name="name_en"
+                placeholder="E.g. Bread"
+                value={form.name_en}
+                onChange={handleChange}
+                aria-invalid={!!errors.name_en}
+                disabled={isSubmitting}
+                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
+              />
+              {errors.name_en && (
+                <p className="text-xs text-destructive">{errors.name_en}</p>
+              )}
+            </div>
+
+            {/* Description VI */}
+            <div className="space-y-1.5">
+              <label htmlFor="update-description_vi" className="text-sm font-medium text-foreground">
+                Mô tả (VI)
               </label>
               <textarea
-                id="update-description"
-                name="description"
-                rows={3}
+                id="update-description_vi"
+                name="description_vi"
+                rows={2}
                 placeholder="Mô tả ngắn về danh mục..."
-                value={form.description}
+                value={form.description_vi}
+                onChange={handleChange}
+                disabled={isSubmitting}
+                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
+              />
+            </div>
+
+            {/* Description EN */}
+            <div className="space-y-1.5">
+              <label htmlFor="update-description_en" className="text-sm font-medium text-foreground">
+                Mô tả (EN)
+              </label>
+              <textarea
+                id="update-description_en"
+                name="description_en"
+                rows={2}
+                placeholder="Short description about this category..."
+                value={form.description_en}
                 onChange={handleChange}
                 disabled={isSubmitting}
                 className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"

@@ -58,12 +58,12 @@ export default function AdminIngredientPage() {
     useState<FilterState>(DEFAULT_FILTER);
   const [tempFilter, setTempFilter] = useState<FilterState>(DEFAULT_FILTER);
 
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   const fetchIngredients = async (filter: FilterState = appliedFilter) => {
     try {
       setIsLoading(true);
-      
+
       // get param
       const params = new URLSearchParams();
       if (filter.is_active !== undefined) {
@@ -269,7 +269,6 @@ export default function AdminIngredientPage() {
             <TableRow className="hover:bg-transparent">
               <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Tên nguyên liệu</TableHead>
-              <TableHead>Slug</TableHead>
               <TableHead>Trạng thái</TableHead>
               <TableHead>Ngày tạo</TableHead>
               <TableHead className="text-right">Thao tác</TableHead>
@@ -304,10 +303,7 @@ export default function AdminIngredientPage() {
                     {index + 1}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {t(`menuPage.menuFilter.${ingredient.name}`)}
-                  </TableCell>
-                  <TableCell className="font-mono text-muted-foreground">
-                    {ingredient.slug}
+                    {ingredient.name[locale]}
                   </TableCell>
                   <TableCell>
                     <Badge
@@ -326,7 +322,8 @@ export default function AdminIngredientPage() {
                       <UpdateIngredientModal
                         id={ingredient.id}
                         defaultValues={{
-                          name: ingredient.name,
+                          name_vi: ingredient.name.vi,
+                          name_en: ingredient.name.en,
                           slug: ingredient.slug,
                         }}
                         onUpdated={() => fetchIngredients(appliedFilter)}
