@@ -13,6 +13,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { formatToSlug } from "@/lib/utils";
+import { useI18n } from "@/context/I18nContext";
 
 interface FormState {
   name_vi: string;
@@ -34,10 +35,12 @@ export default function CreateIngredientModal({
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { t } = useI18n();
+
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name_vi.trim()) next.name_vi = "Tên nguyên liệu (VI) không được để trống.";
-    if (!form.name_en.trim()) next.name_en = "Tên nguyên liệu (EN) không được để trống.";
+    if (!form.name_vi.trim()) next.name_vi = t("admin.ingredientsPage.createModal.errors.nameViRequired");
+    if (!form.name_en.trim()) next.name_en = t("admin.ingredientsPage.createModal.errors.nameEnRequired");
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -93,13 +96,13 @@ export default function CreateIngredientModal({
       <DialogTrigger asChild>
         <Button variant={"accent"} size="sm" className="gap-2">
           <Plus className="h-4 w-4" />
-          Tạo nguyên liệu
+          {t("admin.ingredientsPage.createModal.trigger")}
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Tạo nguyên liệu mới</DialogTitle>
+          <DialogTitle>{t("admin.ingredientsPage.createModal.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -107,7 +110,7 @@ export default function CreateIngredientModal({
             {/* Name VI */}
             <div className="space-y-1.5">
               <label htmlFor="name_vi" className="text-sm font-medium text-foreground">
-                Tên nguyên liệu (VI) <span className="text-destructive">*</span>
+                {t("admin.ingredientsPage.createModal.fields.nameVi")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_vi"
@@ -127,7 +130,7 @@ export default function CreateIngredientModal({
             {/* Name EN */}
             <div className="space-y-1.5">
               <label htmlFor="name_en" className="text-sm font-medium text-foreground">
-                Tên nguyên liệu (EN) <span className="text-destructive">*</span>
+                {t("admin.ingredientsPage.createModal.fields.nameEn")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_en"
@@ -148,7 +151,7 @@ export default function CreateIngredientModal({
           <DialogFooter className="mt-4 gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isSubmitting}>
-                Huỷ
+                {t("admin.modal.cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -160,7 +163,7 @@ export default function CreateIngredientModal({
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Tạo nguyên liệu"
+                t("admin.ingredientsPage.createModal.submit")
               )}
             </Button>
           </DialogFooter>

@@ -44,7 +44,7 @@ const INITIAL_FORM: FormState = {
 };
 
 const inputCls =
-  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring";
+  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground";
 
 function Field({
   label,
@@ -91,7 +91,7 @@ export default function CreateProductModal({
   const [ingredients, setIngredients] = useState<IngredientItem[]>([]);
   const [loadingMeta, setLoadingMeta] = useState(false);
 
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
 
   useEffect(() => {
     if (!open) return;
@@ -190,9 +190,13 @@ export default function CreateProductModal({
   const validate = (): boolean => {
     const next: Partial<Record<keyof FormState, string>> = {};
     if (!form.name_vi.trim())
-      next.name_vi = "Tên tiếng Việt không được để trống.";
-    if (!form.price || form.price <= 0) next.price = "Giá phải lớn hơn 0.";
-    if (!form.category_id) next.category_id = "Vui lòng chọn danh mục.";
+      next.name_vi = t("admin.productsPage.createModal.errors.nameViRequired");
+    if (!form.price || form.price <= 0)
+      next.price = t("admin.productsPage.createModal.errors.priceRequired");
+    if (!form.category_id)
+      next.category_id = t(
+        "admin.productsPage.createModal.errors.categoryRequired",
+      );
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -255,13 +259,13 @@ export default function CreateProductModal({
       <DialogTrigger asChild>
         <Button variant={"accent"} size="sm" className="gap-2">
           <Plus className="h-4 w-4" />
-          Tạo sản phẩm
+          {t("admin.productsPage.createModal.trigger")}
         </Button>
       </DialogTrigger>
 
       <DialogContent className="w-[800px]">
         <DialogHeader>
-          <DialogTitle>Tạo sản phẩm mới</DialogTitle>
+          <DialogTitle>{t("admin.productsPage.createModal.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -269,7 +273,7 @@ export default function CreateProductModal({
             {/* Image Upload */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground">
-                Hình ảnh
+                {t("admin.modal.image")}
               </label>
               <input
                 ref={fileInputRef}
@@ -280,7 +284,7 @@ export default function CreateProductModal({
               />
               <div
                 onClick={handleImageClick}
-                className="relative h-28 w-28 cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
+                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
               >
                 {imagePreview ? (
                   <>
@@ -301,7 +305,9 @@ export default function CreateProductModal({
                 ) : (
                   <div className="flex flex-col items-center gap-1 text-muted-foreground">
                     <ImagePlus className="h-6 w-6" />
-                    <span className="text-xs">Chọn ảnh</span>
+                    <span className="text-xs">
+                      {t("admin.modal.pickImage")}
+                    </span>
                   </div>
                 )}
               </div>
@@ -309,7 +315,11 @@ export default function CreateProductModal({
 
             {/* Name VI / EN */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Tên (Tiếng Việt)" required error={errors.name_vi}>
+              <Field
+                label={t("admin.productsPage.createModal.fields.nameVi")}
+                required
+                error={errors.name_vi}
+              >
                 <input
                   name="name_vi"
                   placeholder="Ví dụ: Bánh mì"
@@ -319,7 +329,11 @@ export default function CreateProductModal({
                   className={inputCls}
                 />
               </Field>
-              <Field label="Tên (English)" required error={errors.name_en}>
+              <Field
+                label={t("admin.productsPage.createModal.fields.nameEn")}
+                required
+                error={errors.name_en}
+              >
                 <input
                   name="name_en"
                   placeholder="E.g: Bread"
@@ -332,7 +346,11 @@ export default function CreateProductModal({
             </div>
 
             {/* Price */}
-            <Field label="Giá (VND)" required error={errors.price}>
+            <Field
+              label={t("admin.productsPage.createModal.fields.price")}
+              required
+              error={errors.price}
+            >
               <input
                 name="price"
                 type="number"
@@ -346,7 +364,9 @@ export default function CreateProductModal({
             </Field>
 
             {/* Description VI / EN */}
-            <Field label="Mô tả (Tiếng Việt)">
+            <Field
+              label={t("admin.productsPage.createModal.fields.descriptionVi")}
+            >
               <textarea
                 name="description_vi"
                 rows={3}
@@ -357,11 +377,13 @@ export default function CreateProductModal({
                 className={inputCls}
               />
             </Field>
-            <Field label="Mô tả (English)">
+            <Field
+              label={t("admin.productsPage.createModal.fields.descriptionEn")}
+            >
               <textarea
                 name="description_en"
                 rows={3}
-                placeholder="Mô tả..."
+                placeholder="Description..."
                 value={form.description_en}
                 onChange={handleChange}
                 disabled={isSubmitting}
@@ -370,11 +392,15 @@ export default function CreateProductModal({
             </Field>
 
             {/* Category */}
-            <Field label="Danh mục" required error={errors.category_id}>
+            <Field
+              label={t("admin.productsPage.createModal.fields.category")}
+              required
+              error={errors.category_id}
+            >
               {loadingMeta ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Đang tải...
+                  {t("admin.modal.loading")}
                 </div>
               ) : (
                 <select
@@ -384,7 +410,11 @@ export default function CreateProductModal({
                   disabled={isSubmitting}
                   className={inputCls}
                 >
-                  <option value="">-- Chọn danh mục --</option>
+                  <option value="">
+                    {t(
+                      "admin.productsPage.createModal.fields.categoryPlaceholder",
+                    )}
+                  </option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name[locale]}
@@ -395,15 +425,18 @@ export default function CreateProductModal({
             </Field>
 
             {/* Ingredients */}
-            <Field label="Nguyên liệu" required>
+            <Field
+              label={t("admin.productsPage.createModal.fields.ingredients")}
+              required
+            >
               {loadingMeta ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Đang tải...
+                  {t("admin.modal.loading")}
                 </div>
               ) : ingredients.length === 0 ? (
                 <p className="text-sm text-muted-foreground py-1">
-                  Không có nguyên liệu.
+                  {t("admin.productsPage.createModal.fields.noIngredients")}
                 </p>
               ) : (
                 <div className="flex flex-wrap gap-2">
@@ -430,7 +463,9 @@ export default function CreateProductModal({
               )}
               {form.ingredient_ids.length > 0 && (
                 <p className="text-xs text-muted-foreground mt-1">
-                  Đã chọn: {form.ingredient_ids.length} nguyên liệu
+                  {locale === "vi"
+                    ? `Đã chọn: ${form.ingredient_ids.length} nguyên liệu`
+                    : `Selected: ${form.ingredient_ids.length} ingredients`}
                 </p>
               )}
             </Field>
@@ -439,7 +474,7 @@ export default function CreateProductModal({
           <DialogFooter className="mt-4 gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isSubmitting}>
-                Huỷ
+                {t("admin.modal.cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -451,7 +486,7 @@ export default function CreateProductModal({
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Tạo sản phẩm"
+                t("admin.productsPage.createModal.submit")
               )}
             </Button>
           </DialogFooter>

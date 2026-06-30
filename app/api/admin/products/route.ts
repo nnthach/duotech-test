@@ -1,5 +1,5 @@
 import { isSupabaseConfigured, supabaseAdmin } from "@/lib/supabase";
-import { ProductIngredientRow, ProductItem, RawProduct } from "@/types";
+import { ProductIngredientRow, RawProduct } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

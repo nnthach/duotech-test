@@ -13,6 +13,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { formatToSlug } from "@/lib/utils";
+import { useI18n } from "@/context/I18nContext";
 
 interface FormState {
   name_vi: string;
@@ -37,6 +38,7 @@ interface CreateCategoryModalProps {
 export default function CreateCategoryModal({
   onCreated,
 }: CreateCategoryModalProps) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [errors, setErrors] = useState<Partial<FormState>>({});
@@ -44,8 +46,10 @@ export default function CreateCategoryModal({
 
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name_vi.trim()) next.name_vi = "Tên danh mục (VI) không được để trống.";
-    if (!form.name_en.trim()) next.name_en = "Tên danh mục (EN) không được để trống.";
+    if (!form.name_vi.trim())
+      next.name_vi = t("admin.categoriesPage.createModal.errors.nameViRequired");
+    if (!form.name_en.trim())
+      next.name_en = t("admin.categoriesPage.createModal.errors.nameEnRequired");
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -101,21 +105,24 @@ export default function CreateCategoryModal({
       <DialogTrigger asChild>
         <Button variant={"accent"} size="sm" className="gap-2">
           <Plus className="h-4 w-4" />
-          Tạo danh mục
+          {t("admin.categoriesPage.createModal.trigger")}
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Tạo danh mục mới</DialogTitle>
+          <DialogTitle>{t("admin.categoriesPage.createModal.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
             {/* Name VI */}
             <div className="space-y-1.5">
-              <label htmlFor="name_vi" className="text-sm font-medium text-foreground">
-                Tên danh mục (VI) <span className="text-destructive">*</span>
+              <label
+                htmlFor="name_vi"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.categoriesPage.createModal.fields.nameVi")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_vi"
@@ -134,8 +141,11 @@ export default function CreateCategoryModal({
 
             {/* Name EN */}
             <div className="space-y-1.5">
-              <label htmlFor="name_en" className="text-sm font-medium text-foreground">
-                Tên danh mục (EN) <span className="text-destructive">*</span>
+              <label
+                htmlFor="name_en"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.categoriesPage.createModal.fields.nameEn")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_en"
@@ -154,8 +164,11 @@ export default function CreateCategoryModal({
 
             {/* Description VI */}
             <div className="space-y-1.5">
-              <label htmlFor="description_vi" className="text-sm font-medium text-foreground">
-                Mô tả (VI)
+              <label
+                htmlFor="description_vi"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.categoriesPage.createModal.fields.descriptionVi")}
               </label>
               <textarea
                 id="description_vi"
@@ -171,8 +184,11 @@ export default function CreateCategoryModal({
 
             {/* Description EN */}
             <div className="space-y-1.5">
-              <label htmlFor="description_en" className="text-sm font-medium text-foreground">
-                Mô tả (EN)
+              <label
+                htmlFor="description_en"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.categoriesPage.createModal.fields.descriptionEn")}
               </label>
               <textarea
                 id="description_en"
@@ -190,7 +206,7 @@ export default function CreateCategoryModal({
           <DialogFooter className="mt-4 gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isSubmitting}>
-                Huỷ
+                {t("admin.modal.cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -202,7 +218,7 @@ export default function CreateCategoryModal({
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Tạo danh mục"
+                t("admin.categoriesPage.createModal.submit")
               )}
             </Button>
           </DialogFooter>

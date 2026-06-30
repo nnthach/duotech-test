@@ -24,15 +24,18 @@ import { Bell } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import LanguageToggle from "@/components/custom/LanguageToggle";
+import { useI18n } from "@/context/I18nContext";
 
 const BREADCRUMB_MAP: Record<string, string> = {
-  dashboard: "Dashboard",
-  categories: "Categories",
-  orders: "Đơn hàng",
-  products: "Sản phẩm",
-  reviews: "Đánh giá",
-  customers: "Khách hàng",
-  settings: "Cài đặt",
+  dashboard: "dashboard",
+  categories: "categories",
+  ingredients: "ingredients",
+  orders: "orders",
+  products: "products",
+  reviews: "reviews",
+  customers: "customers",
+  settings: "settings",
+  staffs: "staffs",
 };
 
 function useBreadcrumbs() {
@@ -49,6 +52,7 @@ function useBreadcrumbs() {
 
 export function AdminHeader() {
   const crumbs = useBreadcrumbs();
+  const { t } = useI18n();
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-border bg-background px-6 backdrop-blur-sm">
@@ -76,7 +80,7 @@ export function AdminHeader() {
               <BreadcrumbItem>
                 {crumb.isLast ? (
                   <BreadcrumbPage className="font-medium">
-                    {crumb.label}
+                    {t(`admin.headerBreadcrumb.${crumb.label}`)}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
@@ -84,7 +88,7 @@ export function AdminHeader() {
                       href={crumb.href}
                       className="text-muted-foreground hover:text-foreground"
                     >
-                      {crumb.label}
+                      {t(`admin.headerBreadcrumb.${crumb.label}`)}
                     </Link>
                   </BreadcrumbLink>
                 )}
@@ -138,14 +142,14 @@ export function AdminHeader() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              Hồ sơ
+              {t("admin.headerDropdown.profile")}
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              Cài đặt tài khoản
+              {t("admin.headerDropdown.accountSettings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer">
-              Đăng xuất
+              {t("admin.headerDropdown.signOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

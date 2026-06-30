@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -5,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useI18n } from "@/context/I18nContext";
 import { Package, ShoppingCart, Star, TrendingUp, Users } from "lucide-react";
 
 const STATS = [
@@ -43,11 +46,41 @@ const STATS = [
 ];
 
 const RECENT_ORDERS = [
-  { id: "#ORD-001", customer: "Nguyễn Văn A", product: "Bánh Croissant", status: "Hoàn thành", amount: "85.000 ₫" },
-  { id: "#ORD-002", customer: "Trần Thị B", product: "Bánh Madeleine", status: "Đang xử lý", amount: "120.000 ₫" },
-  { id: "#ORD-003", customer: "Lê Minh C", product: "Set bánh ngọt", status: "Hoàn thành", amount: "250.000 ₫" },
-  { id: "#ORD-004", customer: "Phạm Thu D", product: "Bánh Éclair", status: "Chờ xác nhận", amount: "95.000 ₫" },
-  { id: "#ORD-005", customer: "Hoàng Kim E", product: "Bánh Tart trái cây", status: "Hoàn thành", amount: "180.000 ₫" },
+  {
+    id: "#ORD-001",
+    customer: "Nguyễn Văn A",
+    product: "Bánh Croissant",
+    status: "Hoàn thành",
+    amount: "85.000 ₫",
+  },
+  {
+    id: "#ORD-002",
+    customer: "Trần Thị B",
+    product: "Bánh Madeleine",
+    status: "Đang xử lý",
+    amount: "120.000 ₫",
+  },
+  {
+    id: "#ORD-003",
+    customer: "Lê Minh C",
+    product: "Set bánh ngọt",
+    status: "Hoàn thành",
+    amount: "250.000 ₫",
+  },
+  {
+    id: "#ORD-004",
+    customer: "Phạm Thu D",
+    product: "Bánh Éclair",
+    status: "Chờ xác nhận",
+    amount: "95.000 ₫",
+  },
+  {
+    id: "#ORD-005",
+    customer: "Hoàng Kim E",
+    product: "Bánh Tart trái cây",
+    status: "Hoàn thành",
+    amount: "180.000 ₫",
+  },
 ];
 
 const STATUS_STYLES: Record<string, string> = {
@@ -57,13 +90,16 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 export default function AdminDashboardPage() {
+  const { t } = useI18n();
   return (
     <div className="space-y-6">
       {/* Page title */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-foreground">
+          {t("admin.dashboardPage.headerTitle.title")}
+        </h1>
         <p className="text-sm text-muted-foreground">
-          Tổng quan hoạt động của Petit Bakery
+          {t("admin.dashboardPage.headerTitle.subtitle")}
         </p>
       </div>
 
@@ -81,7 +117,9 @@ export default function AdminDashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{stat.change}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {stat.change}
+              </p>
             </CardContent>
           </Card>
         ))}
@@ -92,7 +130,9 @@ export default function AdminDashboardPage() {
         {/* Recent orders */}
         <Card className="lg:col-span-2 border-border shadow-sm">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Đơn hàng gần đây</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Đơn hàng gần đây
+            </CardTitle>
             <CardDescription>5 đơn hàng mới nhất hôm nay</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -119,11 +159,16 @@ export default function AdminDashboardPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   {RECENT_ORDERS.map((order) => (
-                    <tr key={order.id} className="hover:bg-muted/40 transition-colors">
+                    <tr
+                      key={order.id}
+                      className="hover:bg-muted/40 transition-colors"
+                    >
                       <td className="px-6 py-3 font-mono text-xs text-muted-foreground">
                         {order.id}
                       </td>
-                      <td className="px-6 py-3 font-medium">{order.customer}</td>
+                      <td className="px-6 py-3 font-medium">
+                        {order.customer}
+                      </td>
                       <td className="hidden px-6 py-3 text-muted-foreground md:table-cell">
                         {order.product}
                       </td>
@@ -148,7 +193,9 @@ export default function AdminDashboardPage() {
         {/* Top products */}
         <Card className="border-border shadow-sm">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Sản phẩm bán chạy</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Sản phẩm bán chạy
+            </CardTitle>
             <CardDescription>Top 4 sản phẩm tháng này</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

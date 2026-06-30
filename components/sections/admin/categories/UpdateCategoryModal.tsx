@@ -13,6 +13,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { formatToSlug } from "@/lib/utils";
+import { useI18n } from "@/context/I18nContext";
 
 interface FormState {
   name_vi: string;
@@ -38,10 +39,12 @@ export default function UpdateCategoryModal({
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { t } = useI18n();
+
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name_vi.trim()) next.name_vi = "Tên danh mục (VI) không được để trống.";
-    if (!form.name_en.trim()) next.name_en = "Tên danh mục (EN) không được để trống.";
+    if (!form.name_vi.trim()) next.name_vi = t("admin.categoriesPage.updateModal.errors.nameViRequired");
+    if (!form.name_en.trim()) next.name_en = t("admin.categoriesPage.updateModal.errors.nameEnRequired");
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -101,7 +104,7 @@ export default function UpdateCategoryModal({
 
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Chỉnh sửa danh mục</DialogTitle>
+          <DialogTitle>{t("admin.categoriesPage.updateModal.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -109,7 +112,7 @@ export default function UpdateCategoryModal({
             {/* Name VI */}
             <div className="space-y-1.5">
               <label htmlFor="update-name_vi" className="text-sm font-medium text-foreground">
-                Tên danh mục (VI) <span className="text-destructive">*</span>
+                {t("admin.categoriesPage.updateModal.fields.nameVi")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="update-name_vi"
@@ -129,7 +132,7 @@ export default function UpdateCategoryModal({
             {/* Name EN */}
             <div className="space-y-1.5">
               <label htmlFor="update-name_en" className="text-sm font-medium text-foreground">
-                Tên danh mục (EN) <span className="text-destructive">*</span>
+                {t("admin.categoriesPage.updateModal.fields.nameEn")} <span className="text-destructive">*</span>
               </label>
               <input
                 id="update-name_en"
@@ -149,7 +152,7 @@ export default function UpdateCategoryModal({
             {/* Description VI */}
             <div className="space-y-1.5">
               <label htmlFor="update-description_vi" className="text-sm font-medium text-foreground">
-                Mô tả (VI)
+                {t("admin.categoriesPage.updateModal.fields.descriptionVi")}
               </label>
               <textarea
                 id="update-description_vi"
@@ -166,7 +169,7 @@ export default function UpdateCategoryModal({
             {/* Description EN */}
             <div className="space-y-1.5">
               <label htmlFor="update-description_en" className="text-sm font-medium text-foreground">
-                Mô tả (EN)
+                {t("admin.categoriesPage.updateModal.fields.descriptionEn")}
               </label>
               <textarea
                 id="update-description_en"
@@ -184,7 +187,7 @@ export default function UpdateCategoryModal({
           <DialogFooter className="mt-4 gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isSubmitting}>
-                Huỷ
+                {t("admin.modal.cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -196,7 +199,7 @@ export default function UpdateCategoryModal({
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Lưu thay đổi"
+                t("admin.categoriesPage.updateModal.submit")
               )}
             </Button>
           </DialogFooter>

@@ -146,6 +146,9 @@ export const translations = {
       visitOurBakery: "Visit Our Bakery",
       viewDetail: "View Detail",
       backToMenu: "Back To Menu",
+      filter: "Filter",
+      apply: "Apply",
+      clearFilter: "Clear filter",
     },
 
     // footer
@@ -178,6 +181,300 @@ export const translations = {
         hours: "Open Daily: 6:00 AM – 8:00 PM",
       },
       copyright: "© 2026 Petit Bakery. Baked with love, every day.",
+    },
+
+    // admin
+    admin: {
+      headerBreadcrumb: {
+        dashboard: "Dashboard",
+        categories: "Categories",
+        ingredients: "Ingredients",
+        orders: "Orders",
+        products: "Products",
+        reviews: "Reviews",
+        customers: "Customers",
+        settings: "Settings",
+        staffs: "Staffs",
+      },
+      headerDropdown: {
+        notifications: "Notifications",
+        account: "Account",
+        profile: "Profile",
+        accountSettings: "Account Settings",
+        signOut: "Sign Out",
+      },
+      // sidebar
+      sidebar: {
+        groups: {
+          management: "Management",
+          products: "Products",
+          system: "System",
+        },
+        nav: {
+          dashboard: "Dashboard",
+          staffs: "Staffs",
+          orders: "Orders",
+          products: "Products",
+          categories: "Categories",
+          ingredients: "Ingredients",
+          reviews: "Reviews",
+          customers: "Customers",
+          settings: "Settings",
+        },
+        user: {
+          profile: "Profile",
+          account: "Account",
+          signOut: "Sign Out",
+        },
+      },
+      // dashboard page
+      dashboardPage: {
+        headerTitle: {
+          title: "Dashboard",
+          subtitle: "Overview of Petit Bakery's activity",
+        },
+      },
+      // shared table
+      table: {
+        columns: {
+          no: "#",
+          status: "Status",
+          createdAt: "Created At",
+          actions: "Actions",
+        },
+      },
+      // shared modal strings
+      modal: {
+        cancel: "Cancel",
+        saveChanges: "Save Changes",
+        loading: "Loading...",
+        image: "Image",
+        pickImage: "Pick image",
+        descriptionVi: "Description (VI)",
+        descriptionEn: "Description (EN)",
+      },
+      productsPage: {
+        headerTitle: {
+          title: "Products",
+          subtitle: "Manage your product catalog",
+        },
+        table: {
+          columns: {
+            image: "Image",
+            name: "Product Name",
+            price: "Price",
+            category: "Category",
+          },
+        },
+        createModal: {
+          trigger: "Create Product",
+          title: "New Product",
+          submit: "Create Product",
+          fields: {
+            nameVi: "Name (VI)",
+            nameEn: "Name (EN)",
+            price: "Price (VND)",
+            descriptionVi: "Description (VI)",
+            descriptionEn: "Description (EN)",
+            category: "Category",
+            categoryPlaceholder: "-- Select category --",
+            ingredients: "Ingredients",
+            noIngredients: "No ingredients.",
+          },
+          errors: {
+            nameViRequired: "Vietnamese name is required.",
+            priceRequired: "Price must be greater than 0.",
+            categoryRequired: "Please select a category.",
+          },
+        },
+        updateModal: {
+          title: "Edit Product",
+          submit: "Save Changes",
+          fields: {
+            nameVi: "Name (VI)",
+            nameEn: "Name (EN)",
+            price: "Price (VND)",
+            descriptionVi: "Description (VI)",
+            descriptionEn: "Description (EN)",
+            category: "Category",
+            categoryPlaceholder: "-- Select category --",
+            ingredients: "Ingredients",
+            noIngredients: "No ingredients.",
+          },
+          errors: {
+            nameViRequired: "Vietnamese name is required.",
+            priceRequired: "Price must be greater than 0.",
+            categoryRequired: "Please select a category.",
+          },
+        },
+      },
+      categoriesPage: {
+        headerTitle: {
+          title: "Categories",
+          subtitle: "Manage product categories",
+        },
+        table: {
+          columns: {
+            name: "Category Name",
+            description: "Description",
+          },
+        },
+        createModal: {
+          trigger: "Create Category",
+          title: "New Category",
+          submit: "Create Category",
+          fields: {
+            nameVi: "Category Name (VI)",
+            nameEn: "Category Name (EN)",
+            descriptionVi: "Description (VI)",
+            descriptionEn: "Description (EN)",
+          },
+          errors: {
+            nameViRequired: "Category name (VI) is required.",
+            nameEnRequired: "Category name (EN) is required.",
+          },
+        },
+        updateModal: {
+          title: "Edit Category",
+          submit: "Save Changes",
+          fields: {
+            nameVi: "Category Name (VI)",
+            nameEn: "Category Name (EN)",
+            descriptionVi: "Description (VI)",
+            descriptionEn: "Description (EN)",
+          },
+          errors: {
+            nameViRequired: "Category name (VI) is required.",
+            nameEnRequired: "Category name (EN) is required.",
+          },
+        },
+      },
+      ingredientsPage: {
+        headerTitle: {
+          title: "Ingredients",
+          subtitle: "Manage product ingredients",
+        },
+        table: {
+          columns: {
+            name: "Ingredient Name",
+          },
+        },
+        createModal: {
+          trigger: "Create Ingredient",
+          title: "New Ingredient",
+          submit: "Create Ingredient",
+          fields: {
+            nameVi: "Ingredient Name (VI)",
+            nameEn: "Ingredient Name (EN)",
+          },
+          errors: {
+            nameViRequired: "Ingredient name (VI) is required.",
+            nameEnRequired: "Ingredient name (EN) is required.",
+          },
+        },
+        updateModal: {
+          title: "Edit Ingredient",
+          submit: "Save Changes",
+          fields: {
+            nameVi: "Ingredient Name (VI)",
+            nameEn: "Ingredient Name (EN)",
+          },
+          errors: {
+            nameViRequired: "Ingredient name (VI) is required.",
+            nameEnRequired: "Ingredient name (EN) is required.",
+          },
+        },
+      },
+      staffsPage: {
+        headerTitle: {
+          title: "Staff Management",
+          subtitle: "System staff list",
+        },
+        table: {
+          columns: {
+            fullname: "Full Name",
+            email: "Email",
+            dob: "Date of Birth",
+            gender: "Gender",
+          },
+        },
+        filter: {
+          statusLabel: "Status",
+          sortByLabel: "Sort By",
+          orderLabel: "Order",
+          statusOptions: {
+            all: "All",
+            active: "Active",
+            inactive: "Inactive",
+          },
+          sortByOptions: {
+            createdAt: "Created At",
+            fullname: "Full Name",
+          },
+          orderOptions: {
+            desc: "Descending",
+            asc: "Ascending",
+          },
+        },
+        gender: {
+          male: "Male",
+          female: "Female",
+          other: "Other",
+        },
+        status: {
+          active: "Active",
+          inactive: "Inactive",
+        },
+        empty: "No staff found",
+        showing: "Showing",
+        staff: "staff",
+        deleteConfirm: "Are you sure you want to delete this staff member?",
+        createModal: {
+          trigger: "Add Staff",
+          title: "Add New Staff",
+          submit: "Add New",
+          fields: {
+            fullname: "Full Name",
+            email: "Email",
+            dob: "Date of Birth",
+            gender: "Gender",
+            fullnamePlaceholder: "E.g.: John Doe",
+          },
+          genderOptions: {
+            male: "Male",
+            female: "Female",
+            other: "Other",
+          },
+          errors: {
+            fullnameRequired: "Full name is required.",
+            emailRequired: "Email is required.",
+            emailInvalid: "Invalid email address.",
+            dobRequired: "Date of birth is required.",
+          },
+        },
+        updateModal: {
+          title: "Update Staff",
+          submit: "Save Changes",
+          fields: {
+            fullname: "Full Name",
+            email: "Email",
+            dob: "Date of Birth",
+            gender: "Gender",
+            fullnamePlaceholder: "E.g.: John Doe",
+          },
+          genderOptions: {
+            male: "Male",
+            female: "Female",
+            other: "Other",
+          },
+          errors: {
+            fullnameRequired: "Full name is required.",
+            emailRequired: "Email is required.",
+            emailInvalid: "Invalid email address.",
+            dobRequired: "Date of birth is required.",
+          },
+        },
+      },
     },
   },
   vi: {
@@ -329,6 +626,9 @@ export const translations = {
       visitOurBakery: "Ghé Thăm Tiệm Bánh",
       viewDetail: "Chi tiết",
       backToMenu: "Về thực đơn",
+      filter: "Bộ lọc",
+      apply: "Áp dụng",
+      clearFilter: "Xóa bộ lọc",
     },
 
     // footer
@@ -361,6 +661,300 @@ export const translations = {
         hours: "Mở Cửa Hằng Ngày: 6:00 – 20:00",
       },
       copyright: "© 2026 Petit Bakery. Làm bằng cả tình yêu, mỗi ngày.",
+    },
+
+    // admin
+    admin: {
+      headerBreadcrumb: {
+        dashboard: "Tổng quan",
+        categories: "Danh mục sản phẩm",
+        ingredients: "Nguyên liệu sản phẩm",
+        orders: "Đơn hàng",
+        products: "Sản phẩm",
+        reviews: "Đánh giá",
+        customers: "Khách hàng",
+        settings: "Cài đặt",
+        staffs: "Nhân viên",
+      },
+      headerDropdown: {
+        notifications: "Thông báo",
+        account: "Tài khoản",
+        profile: "Hồ sơ",
+        accountSettings: "Cài đặt tài khoản",
+        signOut: "Đăng xuất",
+      },
+      // sidebar
+      sidebar: {
+        groups: {
+          management: "Quản lý",
+          products: "Sản phẩm",
+          system: "Hệ thống",
+        },
+        nav: {
+          dashboard: "Tổng quan",
+          staffs: "Nhân viên",
+          orders: "Đơn hàng",
+          products: "Sản phẩm",
+          categories: "Danh mục",
+          ingredients: "Nguyên liệu",
+          reviews: "Đánh giá",
+          customers: "Khách hàng",
+          settings: "Cài đặt",
+        },
+        user: {
+          profile: "Hồ sơ",
+          account: "Tài khoản",
+          signOut: "Đăng xuất",
+        },
+      },
+      // dashboard page
+      dashboardPage: {
+        headerTitle: {
+          title: "Tổng quan",
+          subtitle: "Tổng quan hoạt động của Petit Bakery",
+        },
+      },
+      // shared table
+      table: {
+        columns: {
+          no: "#",
+          status: "Trạng thái",
+          createdAt: "Ngày tạo",
+          actions: "Thao tác",
+        },
+      },
+      // shared modal strings
+      modal: {
+        cancel: "Huỷ",
+        saveChanges: "Lưu thay đổi",
+        loading: "Đang tải...",
+        image: "Hình ảnh",
+        pickImage: "Chọn ảnh",
+        descriptionVi: "Mô tả (VI)",
+        descriptionEn: "Mô tả (EN)",
+      },
+      productsPage: {
+        headerTitle: {
+          title: "Sản phẩm",
+          subtitle: "Tổng quan danh sách sản phẩm",
+        },
+        table: {
+          columns: {
+            image: "Hình ảnh",
+            name: "Tên sản phẩm",
+            price: "Giá sản phẩm",
+            category: "Danh mục",
+          },
+        },
+        createModal: {
+          trigger: "Tạo sản phẩm",
+          title: "Tạo sản phẩm mới",
+          submit: "Tạo sản phẩm",
+          fields: {
+            nameVi: "Tên (VI)",
+            nameEn: "Tên (EN)",
+            price: "Giá (VND)",
+            descriptionVi: "Mô tả (VI)",
+            descriptionEn: "Mô tả (EN)",
+            category: "Danh mục",
+            categoryPlaceholder: "-- Chọn danh mục --",
+            ingredients: "Nguyên liệu",
+            noIngredients: "Không có nguyên liệu.",
+          },
+          errors: {
+            nameViRequired: "Tên tiếng Việt không được để trống.",
+            priceRequired: "Giá phải lớn hơn 0.",
+            categoryRequired: "Vui lòng chọn danh mục.",
+          },
+        },
+        updateModal: {
+          title: "Chỉnh sửa sản phẩm",
+          submit: "Lưu thay đổi",
+          fields: {
+            nameVi: "Tên (VI)",
+            nameEn: "Tên (EN)",
+            price: "Giá (VND)",
+            descriptionVi: "Mô tả (VI)",
+            descriptionEn: "Mô tả (EN)",
+            category: "Danh mục",
+            categoryPlaceholder: "-- Chọn danh mục --",
+            ingredients: "Nguyên liệu",
+            noIngredients: "Không có nguyên liệu.",
+          },
+          errors: {
+            nameViRequired: "Tên tiếng Việt không được để trống.",
+            priceRequired: "Giá phải lớn hơn 0.",
+            categoryRequired: "Vui lòng chọn danh mục.",
+          },
+        },
+      },
+      categoriesPage: {
+        headerTitle: {
+          title: "Danh mục",
+          subtitle: "Tổng quan danh mục sản phẩm",
+        },
+        table: {
+          columns: {
+            name: "Tên danh mục",
+            description: "Mô tả",
+          },
+        },
+        createModal: {
+          trigger: "Tạo danh mục",
+          title: "Tạo danh mục mới",
+          submit: "Tạo danh mục",
+          fields: {
+            nameVi: "Tên danh mục (VI)",
+            nameEn: "Tên danh mục (EN)",
+            descriptionVi: "Mô tả (VI)",
+            descriptionEn: "Mô tả (EN)",
+          },
+          errors: {
+            nameViRequired: "Tên danh mục (VI) không được để trống.",
+            nameEnRequired: "Tên danh mục (EN) không được để trống.",
+          },
+        },
+        updateModal: {
+          title: "Chỉnh sửa danh mục",
+          submit: "Lưu thay đổi",
+          fields: {
+            nameVi: "Tên danh mục (VI)",
+            nameEn: "Tên danh mục (EN)",
+            descriptionVi: "Mô tả (VI)",
+            descriptionEn: "Mô tả (EN)",
+          },
+          errors: {
+            nameViRequired: "Tên danh mục (VI) không được để trống.",
+            nameEnRequired: "Tên danh mục (EN) không được để trống.",
+          },
+        },
+      },
+      ingredientsPage: {
+        headerTitle: {
+          title: "Nguyên liệu",
+          subtitle: "Tổng quan nguyên liệu sản phẩm",
+        },
+        table: {
+          columns: {
+            name: "Tên nguyên liệu",
+          },
+        },
+        createModal: {
+          trigger: "Tạo nguyên liệu",
+          title: "Tạo nguyên liệu mới",
+          submit: "Tạo nguyên liệu",
+          fields: {
+            nameVi: "Tên nguyên liệu (VI)",
+            nameEn: "Tên nguyên liệu (EN)",
+          },
+          errors: {
+            nameViRequired: "Tên nguyên liệu (VI) không được để trống.",
+            nameEnRequired: "Tên nguyên liệu (EN) không được để trống.",
+          },
+        },
+        updateModal: {
+          title: "Chỉnh sửa nguyên liệu",
+          submit: "Lưu thay đổi",
+          fields: {
+            nameVi: "Tên nguyên liệu (VI)",
+            nameEn: "Tên nguyên liệu (EN)",
+          },
+          errors: {
+            nameViRequired: "Tên nguyên liệu (VI) không được để trống.",
+            nameEnRequired: "Tên nguyên liệu (EN) không được để trống.",
+          },
+        },
+      },
+      staffsPage: {
+        headerTitle: {
+          title: "Quản lý nhân viên",
+          subtitle: "Danh sách nhân viên trong hệ thống",
+        },
+        table: {
+          columns: {
+            fullname: "Họ và tên",
+            email: "Email",
+            dob: "Ngày sinh",
+            gender: "Giới tính",
+          },
+        },
+        filter: {
+          statusLabel: "Trạng thái",
+          sortByLabel: "Sắp xếp theo",
+          orderLabel: "Thứ tự",
+          statusOptions: {
+            all: "Tất cả",
+            active: "Đang hoạt động",
+            inactive: "Không hoạt động",
+          },
+          sortByOptions: {
+            createdAt: "Ngày tạo",
+            fullname: "Họ và tên",
+          },
+          orderOptions: {
+            desc: "Giảm dần",
+            asc: "Tăng dần",
+          },
+        },
+        gender: {
+          male: "Nam",
+          female: "Nữ",
+          other: "Khác",
+        },
+        status: {
+          active: "Hoạt động",
+          inactive: "Không hoạt động",
+        },
+        empty: "Không tìm thấy nhân viên nào",
+        showing: "Hiển thị",
+        staff: "nhân viên",
+        deleteConfirm: "Bạn có chắc muốn xóa nhân viên này không?",
+        createModal: {
+          trigger: "Thêm nhân viên",
+          title: "Thêm nhân viên mới",
+          submit: "Thêm mới",
+          fields: {
+            fullname: "Họ và tên",
+            email: "Email",
+            dob: "Ngày sinh",
+            gender: "Giới tính",
+            fullnamePlaceholder: "Ví dụ: Nguyễn Văn A",
+          },
+          genderOptions: {
+            male: "Nam",
+            female: "Nữ",
+            other: "Khác",
+          },
+          errors: {
+            fullnameRequired: "Họ và tên không được để trống.",
+            emailRequired: "Email không được để trống.",
+            emailInvalid: "Email không hợp lệ.",
+            dobRequired: "Ngày sinh không được để trống.",
+          },
+        },
+        updateModal: {
+          title: "Cập nhật nhân viên",
+          submit: "Lưu thay đổi",
+          fields: {
+            fullname: "Họ và tên",
+            email: "Email",
+            dob: "Ngày sinh",
+            gender: "Giới tính",
+            fullnamePlaceholder: "Ví dụ: Nguyễn Văn A",
+          },
+          genderOptions: {
+            male: "Nam",
+            female: "Nữ",
+            other: "Khác",
+          },
+          errors: {
+            fullnameRequired: "Họ và tên không được để trống.",
+            emailRequired: "Email không được để trống.",
+            emailInvalid: "Email không hợp lệ.",
+            dobRequired: "Ngày sinh không được để trống.",
+          },
+        },
+      },
     },
   },
 };

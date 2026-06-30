@@ -24,66 +24,89 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   ChevronUp,
   Croissant,
+  FlaskConical,
   LayoutDashboard,
   Package,
   Settings,
   ShoppingCart,
   Star,
+  Tag,
   Users,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/context/I18nContext";
 
-const NAV_MAIN = [
-  {
-    title: "Dashboard",
-    href: "/admin/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Đơn hàng",
-    href: "/admin/orders",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Sản phẩm",
-    href: "/admin/products",
-    icon: Package,
-  },
-  {
-    title: "Danh mục sản phẩm",
-    href: "/admin/categories",
-    icon: Package,
-  },
+const NAV_MANAGEMENT = [
+  { key: "dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { key: "staffs", href: "/admin/staffs", icon: Users },
+  { key: "orders", href: "/admin/orders", icon: ShoppingCart },
+  { key: "reviews", href: "/admin/reviews", icon: Star },
+  { key: "customers", href: "/admin/customers", icon: Users },
+];
 
-  {
-    title: "Nguyên liệu sản phẩm",
-    href: "/admin/ingredients",
-    icon: Package,
-  },
-  {
-    title: "Đánh giá",
-    href: "/admin/reviews",
-    icon: Star,
-  },
-  {
-    title: "Khách hàng",
-    href: "/admin/customers",
-    icon: Users,
-  },
+const NAV_PRODUCTS = [
+  { key: "products", href: "/admin/products", icon: Package },
+  { key: "categories", href: "/admin/categories", icon: Tag },
+  { key: "ingredients", href: "/admin/ingredients", icon: FlaskConical },
 ];
 
 const NAV_SETTINGS = [
-  {
-    title: "Cài đặt",
-    href: "/admin/settings",
-    icon: Settings,
-  },
+  { key: "settings", href: "/admin/settings", icon: Settings },
 ];
+
+function NavGroup({
+  items,
+  label,
+  pathname,
+  t,
+}: {
+  items: { key: string; href: string; icon: React.ElementType }[];
+  label: string;
+  pathname: string;
+  t: (key: string) => string;
+}) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarMenu>
+        {items.map((item) => {
+          const isActive = pathname === item.href;
+          const title = t(`admin.sidebar.nav.${item.key}`);
+          return (
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive}
+                tooltip={title}
+                className={cn(
+                  "transition-colors",
+                  isActive &&
+                    "bg-primary/10 text-primary font-medium hover:bg-primary/15 hover:text-primary",
+                )}
+              >
+                <Link href={item.href}>
+                  <item.icon
+                    className={cn(
+                      "h-4 w-4",
+                      isActive ? "text-primary" : "text-muted-foreground",
+                    )}
+                  />
+                  <span>{title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        })}
+      </SidebarMenu>
+    </SidebarGroup>
+  );
+}
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   return (
     <Sidebar collapsible="icon">
@@ -116,73 +139,30 @@ export function AdminSidebar() {
 
       {/* Main Navigation */}
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Quản lý</SidebarGroupLabel>
-          <SidebarMenu>
-            {NAV_MAIN.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActive}
-                    tooltip={item.title}
-                    className={cn(
-                      "transition-colors",
-                      isActive &&
-                        "bg-primary/10 text-primary font-medium hover:bg-primary/15 hover:text-primary",
-                    )}
-                  >
-                    <Link href={item.href}>
-                      <item.icon
-                        className={cn(
-                          "h-4 w-4",
-                          isActive ? "text-primary" : "text-muted-foreground",
-                        )}
-                      />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              );
-            })}
-          </SidebarMenu>
-        </SidebarGroup>
+        <NavGroup
+          items={NAV_MANAGEMENT}
+          label={t("admin.sidebar.groups.management")}
+          pathname={pathname}
+          t={t}
+        />
 
         <SidebarSeparator />
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Hệ thống</SidebarGroupLabel>
-          <SidebarMenu>
-            {NAV_SETTINGS.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActive}
-                    tooltip={item.title}
-                    className={cn(
-                      "transition-colors",
-                      isActive &&
-                        "bg-primary/10 text-primary font-medium hover:bg-primary/15 hover:text-primary",
-                    )}
-                  >
-                    <Link href={item.href}>
-                      <item.icon
-                        className={cn(
-                          "h-4 w-4",
-                          isActive ? "text-primary" : "text-muted-foreground",
-                        )}
-                      />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              );
-            })}
-          </SidebarMenu>
-        </SidebarGroup>
+        <NavGroup
+          items={NAV_PRODUCTS}
+          label={t("admin.sidebar.groups.products")}
+          pathname={pathname}
+          t={t}
+        />
+
+        <SidebarSeparator />
+
+        <NavGroup
+          items={NAV_SETTINGS}
+          label={t("admin.sidebar.groups.system")}
+          pathname={pathname}
+          t={t}
+        />
       </SidebarContent>
 
       {/* Footer - User Profile */}
@@ -217,14 +197,14 @@ export function AdminSidebar() {
                 sideOffset={4}
               >
                 <DropdownMenuItem>
-                  <span>Hồ sơ</span>
+                  <span>{t("admin.sidebar.user.profile")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <span>Tài khoản</span>
+                  <span>{t("admin.sidebar.user.account")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive focus:text-destructive">
-                  <span>Đăng xuất</span>
+                  <span>{t("admin.sidebar.user.signOut")}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Filter, Trash2, LayoutGrid, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -60,38 +60,38 @@ export default function AdminCategoryPage() {
 
   const { t, locale } = useI18n();
 
-  const fetchCategories = async (filter: FilterState = appliedFilter) => {
-    try {
-      setIsLoading(true);
+  const fetchCategories = useCallback(
+    async (filter: FilterState = appliedFilter) => {
+      try {
+        setIsLoading(true);
 
-      // get param
-      const params = new URLSearchParams();
-      if (filter.is_active !== undefined) {
-        params.set("is_active", String(filter.is_active));
+        const params = new URLSearchParams();
+        if (filter.is_active !== undefined) {
+          params.set("is_active", String(filter.is_active));
+        }
+        params.set("sort_by", filter.sort_by);
+        params.set("order", filter.order);
+
+        const res = await fetch(`/api/admin/categories?${params.toString()}`);
+        if (!res.ok) throw new Error("Failed to fetch categories");
+        const data = await res.json();
+
+        if (data.success && data.data) {
+          setCategories(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Không thể tải danh sách danh mục.");
+      } finally {
+        setIsLoading(false);
       }
-      params.set("sort_by", filter.sort_by);
-      params.set("order", filter.order);
-
-      // call api
-      const res = await fetch(`/api/admin/categories?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to fetch categories");
-      const data = await res.json();
-
-      // check
-      if (data.success && data.data) {
-        setCategories(data.data);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Không thể tải danh sách danh mục.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [appliedFilter],
+  );
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
   // DELETE METHOD
   const deleteCategory = async (id: string) => {
@@ -137,9 +137,11 @@ export default function AdminCategoryPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Categories</h1>
+        <h1 className="text-2xl font-bold text-foreground">
+          {t("admin.categoriesPage.headerTitle.title")}
+        </h1>
         <p className="text-sm text-muted-foreground">
-          Tổng quan danh mục sản phẩm
+          {t("admin.categoriesPage.headerTitle.subtitle")}
         </p>
       </div>
 
@@ -158,7 +160,7 @@ export default function AdminCategoryPage() {
                   className="gap-2 bg-card hover:bg-sand-100"
                 >
                   <Filter className="h-4 w-4" />
-                  Bộ lọc
+                  {t("button.filter")}
                   {activeFilterCount > 0 && (
                     <span className="ml-1 rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-primary-foreground leading-none">
                       {activeFilterCount}
@@ -241,7 +243,7 @@ export default function AdminCategoryPage() {
                   </div>
                   <PopoverClose asChild>
                     <Button variant={"accent"} size="sm" onClick={handleApply}>
-                      Áp dụng
+                      {t("button.apply")}
                     </Button>
                   </PopoverClose>
                 </div>
@@ -253,7 +255,7 @@ export default function AdminCategoryPage() {
                 onClick={handleClearFilter}
                 className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
               >
-                Xoá bộ lọc
+                {t("button.clearFilter")}
               </button>
             )}
           </div>
@@ -267,12 +269,20 @@ export default function AdminCategoryPage() {
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
-              <TableHead className="w-12 text-center">#</TableHead>
-              <TableHead>Tên danh mục</TableHead>
-              <TableHead>Mô tả</TableHead>
-              <TableHead>Trạng thái</TableHead>
-              <TableHead>Ngày tạo</TableHead>
-              <TableHead className="text-right">Thao tác</TableHead>
+              <TableHead className="w-12 text-center">
+                {t("admin.table.columns.no")}
+              </TableHead>
+              <TableHead>
+                {t("admin.categoriesPage.table.columns.name")}
+              </TableHead>
+              <TableHead>
+                {t("admin.categoriesPage.table.columns.description")}
+              </TableHead>
+              <TableHead>{t("admin.table.columns.status")}</TableHead>
+              <TableHead>{t("admin.table.columns.createdAt")}</TableHead>
+              <TableHead className="text-right">
+                {t("admin.table.columns.actions")}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -311,7 +321,13 @@ export default function AdminCategoryPage() {
                   </TableCell>
                   <TableCell>
                     <Badge variant={category.is_active ? "success" : "warning"}>
-                      {category.is_active ? "Hoạt động" : "Không hoạt động"}
+                      {category.is_active
+                        ? locale === "vi"
+                          ? "Hoạt động"
+                          : "Active"
+                        : locale === "vi"
+                          ? "Không hoạt động"
+                          : "Inactive"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">

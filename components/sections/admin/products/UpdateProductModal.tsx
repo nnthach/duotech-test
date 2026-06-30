@@ -44,7 +44,7 @@ const EMPTY_FORM: FormState = {
 };
 
 const inputCls =
-  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring";
+  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground";
 
 function Field({
   label,
@@ -80,7 +80,9 @@ export default function UpdateProductModal({
 }: UpdateProductModalProps) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof FormState, string>>
+  >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -92,7 +94,7 @@ export default function UpdateProductModal({
   const [ingredients, setIngredients] = useState<IngredientItem[]>([]);
   const [loadingMeta, setLoadingMeta] = useState(false);
 
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
 
   useEffect(() => {
     if (!open) return;
@@ -121,7 +123,9 @@ export default function UpdateProductModal({
         const enData = enJson.success ? enJson.data : {};
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const currentIngredients = (product as any).ingredients as IngredientItem[] | undefined;
+        const currentIngredients = (product as any).ingredients as
+          | IngredientItem[]
+          | undefined;
 
         setForm({
           name_vi: viData.name ?? "",
@@ -151,7 +155,9 @@ export default function UpdateProductModal({
   }, [open, product]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -207,9 +213,14 @@ export default function UpdateProductModal({
 
   const validate = (): boolean => {
     const next: Partial<Record<keyof FormState, string>> = {};
-    if (!form.name_vi.trim()) next.name_vi = "Tên tiếng Việt không được để trống.";
-    if (!form.price || form.price <= 0) next.price = "Giá phải lớn hơn 0.";
-    if (!form.category_id) next.category_id = "Vui lòng chọn danh mục.";
+    if (!form.name_vi.trim())
+      next.name_vi = t("admin.productsPage.updateModal.errors.nameViRequired");
+    if (!form.price || form.price <= 0)
+      next.price = t("admin.productsPage.updateModal.errors.priceRequired");
+    if (!form.category_id)
+      next.category_id = t(
+        "admin.productsPage.updateModal.errors.categoryRequired",
+      );
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -275,14 +286,16 @@ export default function UpdateProductModal({
 
       <DialogContent className="w-[800px]">
         <DialogHeader>
-          <DialogTitle>Chỉnh sửa sản phẩm</DialogTitle>
+          <DialogTitle>{t("admin.productsPage.updateModal.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="max-h-[60vh] overflow-y-auto space-y-4 py-2 pr-1">
             {/* Image Upload */}
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-foreground">Hình ảnh</label>
+              <label className="text-sm font-medium text-foreground">
+                {t("admin.modal.image")}
+              </label>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -292,7 +305,7 @@ export default function UpdateProductModal({
               />
               <div
                 onClick={handleImageClick}
-                className="relative h-28 w-28 cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
+                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
               >
                 {imagePreview ? (
                   <>
@@ -313,7 +326,9 @@ export default function UpdateProductModal({
                 ) : (
                   <div className="flex flex-col items-center gap-1 text-muted-foreground">
                     <ImagePlus className="h-6 w-6" />
-                    <span className="text-xs">Chọn ảnh</span>
+                    <span className="text-xs">
+                      {t("admin.modal.pickImage")}
+                    </span>
                   </div>
                 )}
               </div>
@@ -321,7 +336,11 @@ export default function UpdateProductModal({
 
             {/* Name VI / EN */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Tên (Tiếng Việt)" required error={errors.name_vi}>
+              <Field
+                label={t("admin.productsPage.updateModal.fields.nameVi")}
+                required
+                error={errors.name_vi}
+              >
                 <input
                   name="name_vi"
                   placeholder="Ví dụ: Bánh mì"
@@ -331,7 +350,10 @@ export default function UpdateProductModal({
                   className={inputCls}
                 />
               </Field>
-              <Field label="Tên (English)" error={errors.name_en}>
+              <Field
+                label={t("admin.productsPage.updateModal.fields.nameEn")}
+                error={errors.name_en}
+              >
                 <input
                   name="name_en"
                   placeholder="E.g: Bread"
@@ -344,7 +366,11 @@ export default function UpdateProductModal({
             </div>
 
             {/* Price */}
-            <Field label="Giá (VND)" required error={errors.price}>
+            <Field
+              label={t("admin.productsPage.updateModal.fields.price")}
+              required
+              error={errors.price}
+            >
               <input
                 name="price"
                 type="number"
@@ -358,7 +384,9 @@ export default function UpdateProductModal({
             </Field>
 
             {/* Description VI / EN */}
-            <Field label="Mô tả (Tiếng Việt)">
+            <Field
+              label={t("admin.productsPage.updateModal.fields.descriptionVi")}
+            >
               <textarea
                 name="description_vi"
                 rows={3}
@@ -369,7 +397,9 @@ export default function UpdateProductModal({
                 className={inputCls}
               />
             </Field>
-            <Field label="Mô tả (English)">
+            <Field
+              label={t("admin.productsPage.updateModal.fields.descriptionEn")}
+            >
               <textarea
                 name="description_en"
                 rows={3}
@@ -382,11 +412,15 @@ export default function UpdateProductModal({
             </Field>
 
             {/* Category */}
-            <Field label="Danh mục" required error={errors.category_id}>
+            <Field
+              label={t("admin.productsPage.updateModal.fields.category")}
+              required
+              error={errors.category_id}
+            >
               {loadingMeta ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Đang tải...
+                  {t("admin.modal.loading")}
                 </div>
               ) : (
                 <select
@@ -396,7 +430,11 @@ export default function UpdateProductModal({
                   disabled={isSubmitting}
                   className={inputCls}
                 >
-                  <option value="">-- Chọn danh mục --</option>
+                  <option value="">
+                    {t(
+                      "admin.productsPage.updateModal.fields.categoryPlaceholder",
+                    )}
+                  </option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name[locale]}
@@ -407,14 +445,18 @@ export default function UpdateProductModal({
             </Field>
 
             {/* Ingredients */}
-            <Field label="Nguyên liệu">
+            <Field
+              label={t("admin.productsPage.updateModal.fields.ingredients")}
+            >
               {loadingMeta ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Đang tải...
+                  {t("admin.modal.loading")}
                 </div>
               ) : ingredients.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-1">Không có nguyên liệu.</p>
+                <p className="text-sm text-muted-foreground py-1">
+                  {t("admin.productsPage.updateModal.fields.noIngredients")}
+                </p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {ingredients.map((ing) => {
@@ -440,7 +482,9 @@ export default function UpdateProductModal({
               )}
               {form.ingredient_ids.length > 0 && (
                 <p className="text-xs text-muted-foreground mt-1">
-                  Đã chọn: {form.ingredient_ids.length} nguyên liệu
+                  {locale === "vi"
+                    ? `Đã chọn: ${form.ingredient_ids.length} nguyên liệu`
+                    : `Selected: ${form.ingredient_ids.length} ingredients`}
                 </p>
               )}
             </Field>
@@ -449,7 +493,7 @@ export default function UpdateProductModal({
           <DialogFooter className="mt-4 gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline" disabled={isSubmitting}>
-                Huỷ
+                {t("admin.modal.cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -461,7 +505,7 @@ export default function UpdateProductModal({
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Lưu thay đổi"
+                t("admin.productsPage.updateModal.submit")
               )}
             </Button>
           </DialogFooter>
