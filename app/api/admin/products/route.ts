@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
 
     const params = req.nextUrl.searchParams;
     const is_active = params.get("is_active");
+    const category_id = params.get("category_id");
     const sort_by = params.get("sort_by") ?? "created_at";
     const order = params.get("order") ?? "desc";
     const locale = params.get("locale") ?? "vi";
@@ -39,6 +40,10 @@ export async function GET(req: NextRequest) {
 
     if (is_active !== null && is_active !== "") {
       query = query.eq("is_active", is_active === "true");
+    }
+
+    if (category_id !== null && category_id !== "") {
+      query = query.eq("category_id", category_id);
     }
 
     const { data, error } = await query;

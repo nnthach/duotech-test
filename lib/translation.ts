@@ -97,6 +97,7 @@ export const translations = {
         bread: "Bread",
         cake: "Cake",
         pastry: "Pastry",
+        empty: "No items found in this category.",
       },
     },
     // product detail
@@ -576,6 +577,7 @@ export const translations = {
         bread: "Bánh mì",
         cake: "Bánh kem",
         pastry: "Bánh ngọt",
+        empty: "Không có sản phẩm nào trong danh mục này.",
       },
     },
 

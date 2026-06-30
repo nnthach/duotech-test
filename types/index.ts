@@ -100,6 +100,7 @@ export interface ProductItem {
   categories: CategoryItem;
   product_translations: ProductTranslation[];
   product_ingredients: IngredientItem[];
+  ingredients: IngredientItem[];
   is_active: boolean;
   created_at: string;
   updated_at: string | null;

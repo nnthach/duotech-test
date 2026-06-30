@@ -4,37 +4,116 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import ProductCard from "@/components/custom/ProductCard";
 import { Button } from "@/components/ui/button";
-import { MENU_CATEGORIES, MENU_PRODUCTS } from "@/lib/content";
+import { BakeryProduct, ProductItem } from "@/types";
 import { ChevronLeft, Wheat } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/context/I18nContext";
 
 export default function ProductDetailClient({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }) {
-  const product = MENU_PRODUCTS.find((item) => item.id === params.id);
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const [product, setProduct] = useState<ProductItem | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<BakeryProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [notFoundError, setNotFoundError] = useState(false);
 
-  if (!product) notFound();
+  const fetchProduct = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`/api/products/${params.slug}?locale=${locale}`);
+      if (res.status === 404) {
+        setNotFoundError(true);
+        return;
+      }
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.success && data.data) {
+        setProduct(data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const categoryLabel = MENU_CATEGORIES.find(
-    (category) => category.id === product.category,
-  )?.label;
+  const fetchRelatedProducts = async (categoryId: string, currentId: string) => {
+    try {
+      const query = new URLSearchParams({
+        is_active: "true",
+        locale,
+        category_id: categoryId,
+      });
+      const res = await fetch(`/api/admin/products?${query.toString()}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data)) {
+        const related: BakeryProduct[] = data.data
+          .filter((p: { id: string }) => p.id !== currentId)
+          .slice(0, 3)
+          .map((p: { slug: string; image_url: string[]; name: string; description: string; price: number }) => ({
+            id: p.slug,
+            image: p.image_url?.[0] ?? "/images/placeholder.webp",
+            name: p.name,
+            description: p.description,
+            price: p.price.toLocaleString("vi-VN") + " đ",
+          }));
+        setRelatedProducts(related);
+      }
+    } catch (error) {
+      console.error("Failed to fetch related products:", error);
+    }
+  };
 
-  const relatedProducts = MENU_PRODUCTS.filter(
-    (item) => item.category === product.category && item.id !== product.id,
-  ).slice(0, 3);
+  useEffect(() => {
+    fetchProduct();
+  }, [params.slug, locale]);
+
+  useEffect(() => {
+    if (product?.category?.id) {
+      fetchRelatedProducts(product.category.id, product.id);
+    }
+  }, [product?.category?.id, product?.id, locale]);
+
+  if (notFoundError) notFound();
+
+  if (isLoading) {
+    return (
+      <div className="bg-sand">
+        <Header />
+        <section className="relative h-64 animate-pulse bg-charcoal/10" />
+        <section className="px-6 py-14">
+          <div className="mx-auto max-w-2xl space-y-4">
+            <div className="mx-auto h-96 w-full max-w-md animate-pulse rounded-2xl bg-charcoal/10" />
+            <div className="mx-auto h-6 w-32 animate-pulse rounded bg-charcoal/10" />
+            <div className="mx-auto h-4 w-64 animate-pulse rounded bg-charcoal/10" />
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!product) return null;
+
+  const image = product.image_url?.[0] ?? "/images/placeholder.webp";
+  const categoryName = product.category?.name?.[locale as "en" | "vi"] ?? "";
+  const formattedPrice = product.price.toLocaleString("vi-VN") + " đ";
+
   return (
     <div className="bg-sand">
       <Header />
 
+      {/* Hero banner */}
       <section className="relative overflow-hidden bg-charcoal-900 px-6 pb-8 pt-28">
         <Image
-          src={product.image}
+          src={image}
           alt={product.name}
           fill
           priority
@@ -49,20 +128,23 @@ export default function ProductDetailClient({
           >
             <ChevronLeft className="h-4 w-4" /> {t("button.backToMenu")}
           </Link>
-          <p className="mt-4 font-script text-3xl text-amber">
-            {t(`menuPage.menuFilter.${categoryLabel?.toLowerCase()}`)}
-          </p>
+          {categoryName && (
+            <p className="mt-4 font-script text-3xl text-amber">
+              {categoryName}
+            </p>
+          )}
           <h1 className="mt-1 text-3xl font-bold text-white sm:text-4xl">
             {product.name}
           </h1>
         </div>
       </section>
 
+      {/* Product detail */}
       <section className="relative z-10 px-6 py-14">
         <div className="mx-auto max-w-2xl text-center">
           <div className="relative mx-auto h-72 w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-md sm:h-96">
             <Image
-              src={product.image}
+              src={image}
               alt={product.name}
               fill
               priority
@@ -70,25 +152,28 @@ export default function ProductDetailClient({
             />
           </div>
 
-          <p className="mt-8 text-2xl font-bold text-amber">{product.price}</p>
+          <p className="mt-8 text-2xl font-bold text-amber">{formattedPrice}</p>
           <p className="mx-auto mt-4 max-w-md text-charcoal/60">
             {product.description}
           </p>
 
-          <div className="mx-auto mt-10 max-w-sm text-left">
-            <h2 className="flex items-center gap-2 font-serif text-lg font-bold text-charcoal">
-              <Wheat className="h-4 w-4 text-amber" />
-              {t("productDetailPage.ingredients")}
-            </h2>
-            <ul className="mt-4 grid grid-cols-2 gap-y-2 gap-x-4 text-sm text-charcoal/60">
-              {product.ingredients.map((ingredient) => (
-                <li key={ingredient} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
-                  {t(`productDetailPage.ingredientsList.${ingredient}`)}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {product.ingredients.length > 0 && (
+            <div className="mx-auto mt-10 max-w-sm text-left">
+              <h2 className="flex items-center gap-2 font-serif text-lg font-bold text-charcoal">
+                <Wheat className="h-4 w-4 text-amber" />
+                {t("productDetailPage.ingredients")}
+              </h2>
+              <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-charcoal/60">
+                {product.ingredients.map((ingredient) => (
+                  <li key={ingredient.id} className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+                    {ingredient.name?.[locale as "en" | "vi"] ??
+                      ingredient.name.vi}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="mt-10">
             <Link href="/#contact">
