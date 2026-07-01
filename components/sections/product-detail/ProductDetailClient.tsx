@@ -9,7 +9,7 @@ import { ChevronLeft, Wheat } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useI18n } from "@/context/I18nContext";
 
 export default function ProductDetailClient({
@@ -23,7 +23,7 @@ export default function ProductDetailClient({
   const [isLoading, setIsLoading] = useState(true);
   const [notFoundError, setNotFoundError] = useState(false);
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       setIsLoading(true);
       const res = await fetch(`/api/products/${params.slug}?locale=${locale}`);
@@ -41,9 +41,9 @@ export default function ProductDetailClient({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [params.slug, locale]);
 
-  const fetchRelatedProducts = async (categoryId: string, currentId: string) => {
+  const fetchRelatedProducts = useCallback(async (categoryId: string, currentId: string) => {
     try {
       const query = new URLSearchParams({
         is_active: "true",
@@ -69,17 +69,17 @@ export default function ProductDetailClient({
     } catch (error) {
       console.error("Failed to fetch related products:", error);
     }
-  };
+  }, [locale]);
 
   useEffect(() => {
     fetchProduct();
-  }, [params.slug, locale]);
+  }, [fetchProduct]);
 
   useEffect(() => {
     if (product?.category?.id) {
       fetchRelatedProducts(product.category.id, product.id);
     }
-  }, [product?.category?.id, product?.id, locale]);
+  }, [product?.category?.id, product?.id, fetchRelatedProducts]);
 
   if (notFoundError) notFound();
 
