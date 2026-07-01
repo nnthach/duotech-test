@@ -14,16 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import { formatToSlug } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
-
-interface FormState {
-  name_vi: string;
-  name_en: string;
-  slug: string;
-}
+import { IngredientFormState } from "@/types/form-type";
 
 interface UpdateIngredientModalProps {
   id: string;
-  defaultValues: FormState;
+  defaultValues: IngredientFormState;
   onUpdated?: () => void;
 }
 
@@ -33,26 +28,30 @@ export default function UpdateIngredientModal({
   onUpdated,
 }: UpdateIngredientModalProps) {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<FormState>(defaultValues);
-  const [errors, setErrors] = useState<Partial<FormState>>({});
+  const [form, setForm] = useState<IngredientFormState>(defaultValues);
+  const [errors, setErrors] = useState<Partial<IngredientFormState>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   const validate = (): boolean => {
-    const next: Partial<FormState> = {};
-    if (!form.name_vi.trim()) next.name_vi = t("admin.ingredientsPage.updateModal.errors.nameViRequired");
-    if (!form.name_en.trim()) next.name_en = t("admin.ingredientsPage.updateModal.errors.nameEnRequired");
+    const next: Partial<IngredientFormState> = {};
+    if (!form.name_vi.trim())
+      next.name_vi = t(
+        "admin.ingredientsPage.updateModal.errors.nameViRequired",
+      );
+    if (!form.name_en.trim())
+      next.name_en = t(
+        "admin.ingredientsPage.updateModal.errors.nameEnRequired",
+      );
     setErrors(next);
     return Object.keys(next).length === 0;
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormState]) {
+    if (errors[name as keyof IngredientFormState]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
@@ -102,20 +101,26 @@ export default function UpdateIngredientModal({
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t("admin.ingredientsPage.updateModal.title")}</DialogTitle>
+          <DialogTitle>
+            {t("admin.ingredientsPage.updateModal.title")}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
             {/* Name VI */}
             <div className="space-y-1.5">
-              <label htmlFor="update-name_vi" className="text-sm font-medium text-foreground">
-                {t("admin.ingredientsPage.updateModal.fields.nameVi")} <span className="text-destructive">*</span>
+              <label
+                htmlFor="update-name_vi"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.ingredientsPage.updateModal.fields.nameVi")}{" "}
+                <span className="text-destructive">*</span>
               </label>
               <input
                 id="update-name_vi"
                 name="name_vi"
-                placeholder="Ví dụ: Bột mì"
+                placeholder={locale === "vi" ? "Ví dụ: Bột mì" : "E.g. Flour"}
                 value={form.name_vi}
                 onChange={handleChange}
                 aria-invalid={!!errors.name_vi}
@@ -129,13 +134,17 @@ export default function UpdateIngredientModal({
 
             {/* Name EN */}
             <div className="space-y-1.5">
-              <label htmlFor="update-name_en" className="text-sm font-medium text-foreground">
-                {t("admin.ingredientsPage.updateModal.fields.nameEn")} <span className="text-destructive">*</span>
+              <label
+                htmlFor="update-name_en"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.ingredientsPage.updateModal.fields.nameEn")}{" "}
+                <span className="text-destructive">*</span>
               </label>
               <input
                 id="update-name_en"
                 name="name_en"
-                placeholder="E.g. Flour"
+                placeholder={locale === "vi" ? "Ví dụ: Bột mì" : "E.g. Flour"}
                 value={form.name_en}
                 onChange={handleChange}
                 aria-invalid={!!errors.name_en}

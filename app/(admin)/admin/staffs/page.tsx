@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Filter, Trash2, LayoutGrid } from "lucide-react";
+import React, { useCallback, useEffect, useState } from "react";
+import { Filter, Trash2, LayoutGrid, Loader2, Ban, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,71 +18,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import CreateStaffModal, { StaffFormState } from "@/components/sections/admin/staffs/CreateStaffModal";
+import CreateStaffModal from "@/components/sections/admin/staffs/CreateStaffModal";
 import UpdateStaffModal from "@/components/sections/admin/staffs/UpdateStaffModal";
 import { useI18n } from "@/context/I18nContext";
-
-interface StaffItem {
-  id: string;
-  fullname: string;
-  email: string;
-  dob: string;
-  gender: "male" | "female" | "other";
-  is_active: boolean;
-  created_at: string;
-}
-
-const MOCK_STAFFS: StaffItem[] = [
-  {
-    id: "1",
-    fullname: "Nguyễn Văn An",
-    email: "an.nguyen@duotech.vn",
-    dob: "1995-03-15",
-    gender: "male",
-    is_active: true,
-    created_at: "2024-01-10T08:00:00Z",
-  },
-  {
-    id: "2",
-    fullname: "Trần Thị Bình",
-    email: "binh.tran@duotech.vn",
-    dob: "1998-07-22",
-    gender: "female",
-    is_active: true,
-    created_at: "2024-02-14T09:30:00Z",
-  },
-  {
-    id: "3",
-    fullname: "Lê Minh Cường",
-    email: "cuong.le@duotech.vn",
-    dob: "1993-11-05",
-    gender: "male",
-    is_active: false,
-    created_at: "2024-03-20T10:00:00Z",
-  },
-  {
-    id: "4",
-    fullname: "Phạm Thị Dung",
-    email: "dung.pham@duotech.vn",
-    dob: "2000-01-30",
-    gender: "female",
-    is_active: true,
-    created_at: "2024-04-05T11:00:00Z",
-  },
-  {
-    id: "5",
-    fullname: "Hoàng Văn Em",
-    email: "em.hoang@duotech.vn",
-    dob: "1990-09-18",
-    gender: "other",
-    is_active: false,
-    created_at: "2024-05-12T14:00:00Z",
-  },
-];
+import { StaffItem } from "@/types";
 
 interface FilterState {
   is_active: boolean | undefined;
-  sort_by: "fullname" | "created_at";
+  sort_by: "full_name" | "created_at";
   order: "asc" | "desc";
 }
 
@@ -92,23 +35,32 @@ const DEFAULT_FILTER: FilterState = {
   order: "desc",
 };
 
-let nextId = MOCK_STAFFS.length + 1;
-
 export default function AdminStaffPage() {
   const { t } = useI18n();
-  const [staffs, setStaffs] = useState<StaffItem[]>(MOCK_STAFFS);
-  const [appliedFilter, setAppliedFilter] = useState<FilterState>(DEFAULT_FILTER);
+  const [staffs, setStaffs] = useState<StaffItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [appliedFilter, setAppliedFilter] =
+    useState<FilterState>(DEFAULT_FILTER);
   const [tempFilter, setTempFilter] = useState<FilterState>(DEFAULT_FILTER);
 
   const STATUS_OPTIONS = [
     { label: t("admin.staffsPage.filter.statusOptions.all"), value: "" },
     { label: t("admin.staffsPage.filter.statusOptions.active"), value: "true" },
-    { label: t("admin.staffsPage.filter.statusOptions.inactive"), value: "false" },
+    {
+      label: t("admin.staffsPage.filter.statusOptions.inactive"),
+      value: "false",
+    },
   ];
 
   const SORT_BY_OPTIONS = [
-    { label: t("admin.staffsPage.filter.sortByOptions.createdAt"), value: "created_at" },
-    { label: t("admin.staffsPage.filter.sortByOptions.fullname"), value: "fullname" },
+    {
+      label: t("admin.staffsPage.filter.sortByOptions.createdAt"),
+      value: "created_at",
+    },
+    {
+      label: t("admin.staffsPage.filter.sortByOptions.fullname"),
+      value: "full_name",
+    },
   ];
 
   const ORDER_OPTIONS = [
@@ -116,49 +68,92 @@ export default function AdminStaffPage() {
     { label: t("admin.staffsPage.filter.orderOptions.asc"), value: "asc" },
   ];
 
-  const applyFilter = (list: StaffItem[], filter: FilterState): StaffItem[] => {
-    let result = [...list];
-    if (filter.is_active !== undefined) {
-      result = result.filter((s) => s.is_active === filter.is_active);
+  // fetch staffs from API
+  const fetchStaffs = useCallback(
+    async (filter: FilterState = appliedFilter) => {
+      try {
+        setIsLoading(true);
+
+        // get param
+        const params = new URLSearchParams();
+        if (filter.is_active !== undefined) {
+          params.set("is_active", String(filter.is_active));
+        }
+        params.set("sort_by", filter.sort_by);
+        params.set("order", filter.order);
+
+        // call api
+        const res = await fetch(`/api/admin/staffs?${params.toString()}`);
+        if (!res.ok) throw new Error("Failed to fetch staffs");
+        const data = await res.json();
+
+        // check
+        if (data.success && data.data) {
+          setStaffs(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [appliedFilter],
+  );
+
+  useEffect(() => {
+    fetchStaffs();
+  }, [fetchStaffs]);
+
+  // disable (soft delete)
+  const disableStaff = async (id: string) => {
+    try {
+      await fetch(`/api/admin/staffs/${id}/disable`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      });
+      fetchStaffs(appliedFilter);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to disable");
     }
-    result.sort((a, b) => {
-      const va = a[filter.sort_by];
-      const vb = b[filter.sort_by];
-      return filter.order === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
-    });
-    return result;
   };
 
-  const displayedStaffs = applyFilter(staffs, appliedFilter);
+  // restore
+  const restoreStaff = async (id: string) => {
+    try {
+      await fetch(`/api/admin/staffs/${id}/restore`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      });
+      fetchStaffs(appliedFilter);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to restore");
+    }
+  };
+
+  // delete (only allowed once already disabled)
+  const deleteStaff = async (id: string) => {
+    if (!window.confirm(t("admin.staffsPage.deleteConfirm"))) return;
+
+    try {
+      await fetch(`/api/admin/staffs/${id}`, { method: "DELETE" });
+      fetchStaffs(appliedFilter);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete");
+    }
+  };
 
   const handleApply = () => {
     setAppliedFilter(tempFilter);
+    fetchStaffs(tempFilter);
   };
 
   const handleClearFilter = () => {
     setAppliedFilter(DEFAULT_FILTER);
     setTempFilter(DEFAULT_FILTER);
-  };
-
-  const handleCreate = (values: StaffFormState) => {
-    const newStaff: StaffItem = {
-      id: String(nextId++),
-      ...values,
-      is_active: true,
-      created_at: new Date().toISOString(),
-    };
-    setStaffs((prev) => [newStaff, ...prev]);
-  };
-
-  const handleUpdate = (id: string, values: StaffFormState) => {
-    setStaffs((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, ...values } : s))
-    );
-  };
-
-  const handleDelete = (id: string) => {
-    if (!confirm(t("admin.staffsPage.deleteConfirm"))) return;
-    setStaffs((prev) => prev.filter((s) => s.id !== id));
+    fetchStaffs(DEFAULT_FILTER);
   };
 
   const isFilterActive =
@@ -188,9 +183,15 @@ export default function AdminStaffPage() {
         {/* Card header */}
         <div className="flex items-center justify-between border-b px-4 py-4">
           <div className="flex items-center gap-3">
-            <Popover onOpenChange={(open) => open && setTempFilter(appliedFilter)}>
+            <Popover
+              onOpenChange={(open) => open && setTempFilter(appliedFilter)}
+            >
               <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2 bg-card hover:bg-sand-100">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-2 bg-card hover:bg-sand-100"
+                >
                   <Filter className="h-4 w-4" />
                   {t("button.filter")}
                   {activeFilterCount > 0 && (
@@ -208,7 +209,11 @@ export default function AdminStaffPage() {
                     </p>
                     <select
                       className="border rounded-md h-9 px-2 w-full text-sm"
-                      value={tempFilter.is_active === undefined ? "" : String(tempFilter.is_active)}
+                      value={
+                        tempFilter.is_active === undefined
+                          ? ""
+                          : String(tempFilter.is_active)
+                      }
                       onChange={(e) => {
                         const v = e.target.value;
                         setTempFilter((prev) => ({
@@ -218,7 +223,9 @@ export default function AdminStaffPage() {
                       }}
                     >
                       {STATUS_OPTIONS.map((opt) => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -238,7 +245,9 @@ export default function AdminStaffPage() {
                       }
                     >
                       {SORT_BY_OPTIONS.map((opt) => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -258,7 +267,9 @@ export default function AdminStaffPage() {
                       }
                     >
                       {ORDER_OPTIONS.map((opt) => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -282,26 +293,43 @@ export default function AdminStaffPage() {
             )}
           </div>
 
-          <CreateStaffModal onCreated={handleCreate} />
+          <CreateStaffModal onCreated={() => fetchStaffs(appliedFilter)} />
         </div>
 
         {/* Table */}
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
-              <TableHead className="w-12 text-center">{t("admin.table.columns.no")}</TableHead>
-              <TableHead>{t("admin.staffsPage.table.columns.fullname")}</TableHead>
+              <TableHead className="w-12 text-center">
+                {t("admin.table.columns.no")}
+              </TableHead>
+              <TableHead>
+                {t("admin.staffsPage.table.columns.fullname")}
+              </TableHead>
               <TableHead>{t("admin.staffsPage.table.columns.email")}</TableHead>
-              <TableHead>{t("admin.staffsPage.table.columns.dob")}</TableHead>
-              <TableHead>{t("admin.staffsPage.table.columns.gender")}</TableHead>
+              <TableHead>{t("admin.staffsPage.table.columns.store")}</TableHead>
               <TableHead>{t("admin.table.columns.status")}</TableHead>
-              <TableHead className="text-right">{t("admin.table.columns.actions")}</TableHead>
+              <TableHead className="text-right">
+                {t("admin.table.columns.actions")}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {displayedStaffs.length === 0 ? (
+            {isLoading ? (
               <TableRow>
-                <TableCell colSpan={7} className="py-20 text-center text-muted-foreground">
+                <TableCell
+                  colSpan={6}
+                  className="py-20 text-center text-muted-foreground"
+                >
+                  <Loader2 className="h-6 w-6 animate-spin mx-auto" />
+                </TableCell>
+              </TableRow>
+            ) : staffs.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  className="py-20 text-center text-muted-foreground"
+                >
                   <div className="flex flex-col items-center gap-3">
                     <LayoutGrid className="h-10 w-10 opacity-30" />
                     <p className="text-sm">{t("admin.staffsPage.empty")}</p>
@@ -309,45 +337,79 @@ export default function AdminStaffPage() {
                 </TableCell>
               </TableRow>
             ) : (
-              displayedStaffs.map((staff, index) => (
+              staffs.map((staff, index) => (
                 <TableRow key={staff.id}>
                   <TableCell className="text-center text-muted-foreground text-xs">
                     {index + 1}
                   </TableCell>
-                  <TableCell className="font-medium">{staff.fullname}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{staff.email}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {new Date(staff.dob).toLocaleDateString("vi-VN")}
+                  <TableCell className="font-medium">
+                    {staff.users.full_name}
                   </TableCell>
-                  <TableCell className="text-sm">
-                    {t(`admin.staffsPage.gender.${staff.gender}`)}
+                  <TableCell className="text-sm text-muted-foreground">
+                    {staff.email}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {staff.stores?.name ?? "-"}
                   </TableCell>
                   <TableCell>
-                    <Badge variant={staff.is_active ? "success" : "warning"}>
-                      {staff.is_active
-                        ? t("admin.staffsPage.status.active")
-                        : t("admin.staffsPage.status.inactive")}
-                    </Badge>
+                    {staff.deleted_at ? (
+                      <Badge variant="destructive">
+                        {t("admin.staffsPage.status.disabled")}
+                      </Badge>
+                    ) : (
+                      <Badge variant={staff.is_active ? "success" : "warning"}>
+                        {staff.is_active
+                          ? t("admin.staffsPage.status.active")
+                          : t("admin.staffsPage.status.inactive")}
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-2">
-                      <UpdateStaffModal
-                        defaultValues={{
-                          fullname: staff.fullname,
-                          email: staff.email,
-                          dob: staff.dob,
-                          gender: staff.gender,
-                        }}
-                        onUpdated={(values) => handleUpdate(staff.id, values)}
-                      />
-                      <Button
-                        onClick={() => handleDelete(staff.id)}
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      {staff.deleted_at ? (
+                        <>
+                          <Button
+                            onClick={() => restoreStaff(staff.id)}
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-emerald-600 hover:text-emerald-600 hover:bg-emerald-500/10"
+                          >
+                            <RotateCcw className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            onClick={() => deleteStaff(staff.id)}
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <UpdateStaffModal
+                            staffId={staff.id}
+                            defaultValues={{
+                              fullname: staff.users.full_name ?? "",
+                              email: staff.email ?? "",
+                              dob: staff.dob ?? "",
+                              gender: staff.gender ?? "other",
+                              store_id: staff.store_id ?? "",
+                            }}
+                            onUpdated={() => {
+                              fetchStaffs(appliedFilter);
+                            }}
+                          />
+                          <Button
+                            onClick={() => disableStaff(staff.id)}
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                          >
+                            <Ban className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -359,7 +421,7 @@ export default function AdminStaffPage() {
         <div className="border-t px-6 py-3">
           <p className="text-xs text-muted-foreground">
             {t("admin.staffsPage.showing")}{" "}
-            <span className="font-medium text-foreground">{displayedStaffs.length}</span>{" "}
+            <span className="font-medium text-foreground">{staffs.length}</span>{" "}
             {t("admin.staffsPage.staff")}
           </p>
         </div>

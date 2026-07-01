@@ -126,3 +126,26 @@ export interface StoreItem {
 
 export type UserStatusEnum = "active" | "inactive" | "banned";
 export type UserRoleEnum = "admin" | "staff" | "customer";
+export type UserGenderEnum = "male" | "female" | "other";
+
+export interface UserItem {
+  id: string;
+  full_name: string;
+  role: UserRoleEnum;
+  status: UserStatusEnum;
+}
+
+export interface StaffItem {
+  id: string;
+  user_id: string;
+  users: UserItem;
+  store_id: string;
+  stores: StoreItem | null;
+  email: string;
+  dob: string | null;
+  gender: UserGenderEnum;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}

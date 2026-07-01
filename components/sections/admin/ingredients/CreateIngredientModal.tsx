@@ -14,14 +14,13 @@ import {
 } from "@/components/ui/dialog";
 import { formatToSlug } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
+import { IngredientFormState } from "@/types/form-type";
 
-interface FormState {
-  name_vi: string;
-  name_en: string;
-  slug: string;
-}
-
-const INITIAL_FORM: FormState = { name_vi: "", name_en: "", slug: "" };
+const INITIAL_FORM: IngredientFormState = {
+  name_vi: "",
+  name_en: "",
+  slug: "",
+};
 
 interface CreateIngredientModalProps {
   onCreated?: () => void;
@@ -31,26 +30,30 @@ export default function CreateIngredientModal({
   onCreated,
 }: CreateIngredientModalProps) {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<FormState>(INITIAL_FORM);
-  const [errors, setErrors] = useState<Partial<FormState>>({});
+  const [form, setForm] = useState<IngredientFormState>(INITIAL_FORM);
+  const [errors, setErrors] = useState<Partial<IngredientFormState>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { t } = useI18n();
 
   const validate = (): boolean => {
-    const next: Partial<FormState> = {};
-    if (!form.name_vi.trim()) next.name_vi = t("admin.ingredientsPage.createModal.errors.nameViRequired");
-    if (!form.name_en.trim()) next.name_en = t("admin.ingredientsPage.createModal.errors.nameEnRequired");
+    const next: Partial<IngredientFormState> = {};
+    if (!form.name_vi.trim())
+      next.name_vi = t(
+        "admin.ingredientsPage.createModal.errors.nameViRequired",
+      );
+    if (!form.name_en.trim())
+      next.name_en = t(
+        "admin.ingredientsPage.createModal.errors.nameEnRequired",
+      );
     setErrors(next);
     return Object.keys(next).length === 0;
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormState]) {
+    if (errors[name as keyof IngredientFormState]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
@@ -102,15 +105,21 @@ export default function CreateIngredientModal({
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t("admin.ingredientsPage.createModal.title")}</DialogTitle>
+          <DialogTitle>
+            {t("admin.ingredientsPage.createModal.title")}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
             {/* Name VI */}
             <div className="space-y-1.5">
-              <label htmlFor="name_vi" className="text-sm font-medium text-foreground">
-                {t("admin.ingredientsPage.createModal.fields.nameVi")} <span className="text-destructive">*</span>
+              <label
+                htmlFor="name_vi"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.ingredientsPage.createModal.fields.nameVi")}{" "}
+                <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_vi"
@@ -129,8 +138,12 @@ export default function CreateIngredientModal({
 
             {/* Name EN */}
             <div className="space-y-1.5">
-              <label htmlFor="name_en" className="text-sm font-medium text-foreground">
-                {t("admin.ingredientsPage.createModal.fields.nameEn")} <span className="text-destructive">*</span>
+              <label
+                htmlFor="name_en"
+                className="text-sm font-medium text-foreground"
+              >
+                {t("admin.ingredientsPage.createModal.fields.nameEn")}{" "}
+                <span className="text-destructive">*</span>
               </label>
               <input
                 id="name_en"

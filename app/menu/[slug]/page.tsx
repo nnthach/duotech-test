@@ -1,4 +1,4 @@
-import ProductDetailClient from "@/components/sections/productDetail/ProductDetailClient";
+import ProductDetailClient from "@/components/sections/product-detail/ProductDetailClient";
 
 interface ProductDetailPageProps {
   params: { slug: string };

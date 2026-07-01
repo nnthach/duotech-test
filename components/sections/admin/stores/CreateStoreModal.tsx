@@ -75,7 +75,7 @@ export default function CreateStoreModal({ onCreated }: CreateStoreModalProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
 
   // handle change
   const handleChange = (
@@ -253,7 +253,9 @@ export default function CreateStoreModal({ onCreated }: CreateStoreModalProps) {
             >
               <input
                 name="name"
-                placeholder="Ví dụ: Chi nhánh Quận 1"
+                placeholder={
+                  locale == "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
+                }
                 value={form.name}
                 onChange={handleChange}
                 disabled={isSubmitting}

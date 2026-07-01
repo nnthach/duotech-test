@@ -449,6 +449,7 @@ export const translations = {
           columns: {
             fullname: "Full Name",
             email: "Email",
+            store: "Store",
             dob: "Date of Birth",
             gender: "Gender",
           },
@@ -479,6 +480,7 @@ export const translations = {
         status: {
           active: "Active",
           inactive: "Inactive",
+          disabled: "Disabled",
         },
         empty: "No staff found",
         showing: "Showing",
@@ -494,6 +496,9 @@ export const translations = {
             dob: "Date of Birth",
             gender: "Gender",
             fullnamePlaceholder: "E.g.: John Doe",
+            store: "Store",
+            storePlaceholder: "Select a store",
+            storeLoading: "Loading stores...",
           },
           genderOptions: {
             male: "Male",
@@ -505,6 +510,7 @@ export const translations = {
             emailRequired: "Email is required.",
             emailInvalid: "Invalid email address.",
             dobRequired: "Date of birth is required.",
+            storeRequired: "Store is required.",
           },
         },
         updateModal: {
@@ -516,6 +522,9 @@ export const translations = {
             dob: "Date of Birth",
             gender: "Gender",
             fullnamePlaceholder: "E.g.: John Doe",
+            store: "Store",
+            storePlaceholder: "Select a store",
+            storeLoading: "Loading stores...",
           },
           genderOptions: {
             male: "Male",
@@ -527,6 +536,7 @@ export const translations = {
             emailRequired: "Email is required.",
             emailInvalid: "Invalid email address.",
             dobRequired: "Date of birth is required.",
+            storeRequired: "Store is required.",
           },
         },
       },
@@ -926,7 +936,7 @@ export const translations = {
       storesPage: {
         headerTitle: {
           title: "Cửa hàng",
-          subtitle: "Quản lý các chi nhánh cửa hàng",
+          subtitle: "Quản lý các cửa hàng",
         },
         table: {
           columns: {
@@ -985,6 +995,7 @@ export const translations = {
           columns: {
             fullname: "Họ và tên",
             email: "Email",
+            store: "Cửa hàng",
             dob: "Ngày sinh",
             gender: "Giới tính",
           },
@@ -1015,6 +1026,7 @@ export const translations = {
         status: {
           active: "Hoạt động",
           inactive: "Không hoạt động",
+          disabled: "Đã vô hiệu hóa",
         },
         empty: "Không tìm thấy nhân viên nào",
         showing: "Hiển thị",
@@ -1030,6 +1042,9 @@ export const translations = {
             dob: "Ngày sinh",
             gender: "Giới tính",
             fullnamePlaceholder: "Ví dụ: Nguyễn Văn A",
+            store: "Cửa hàng",
+            storePlaceholder: "Chọn cửa hàng",
+            storeLoading: "Đang tải cửa hàng...",
           },
           genderOptions: {
             male: "Nam",
@@ -1041,6 +1056,7 @@ export const translations = {
             emailRequired: "Email không được để trống.",
             emailInvalid: "Email không hợp lệ.",
             dobRequired: "Ngày sinh không được để trống.",
+            storeRequired: "Cửa hàng không được để trống.",
           },
         },
         updateModal: {
@@ -1052,6 +1068,9 @@ export const translations = {
             dob: "Ngày sinh",
             gender: "Giới tính",
             fullnamePlaceholder: "Ví dụ: Nguyễn Văn A",
+            store: "Cửa hàng",
+            storePlaceholder: "Chọn cửa hàng",
+            storeLoading: "Đang tải cửa hàng...",
           },
           genderOptions: {
             male: "Nam",
@@ -1063,6 +1082,7 @@ export const translations = {
             emailRequired: "Email không được để trống.",
             emailInvalid: "Email không hợp lệ.",
             dobRequired: "Ngày sinh không được để trống.",
+            storeRequired: "Cửa hàng không được để trống.",
           },
         },
       },

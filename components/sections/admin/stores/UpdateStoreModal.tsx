@@ -90,7 +90,7 @@ export default function UpdateStoreModal({
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   useEffect(() => {
     if (!open) return;
@@ -278,7 +278,9 @@ export default function UpdateStoreModal({
             >
               <input
                 name="name"
-                placeholder="Ví dụ: Chi nhánh Quận 1"
+                placeholder={
+                  locale === "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
+                }
                 value={form.name}
                 onChange={handleChange}
                 disabled={isSubmitting}
@@ -332,9 +334,7 @@ export default function UpdateStoreModal({
                   className={inputCls}
                 />
               </Field>
-              <Field
-                label={t("admin.storesPage.updateModal.fields.district")}
-              >
+              <Field label={t("admin.storesPage.updateModal.fields.district")}>
                 <input
                   name="district"
                   placeholder="Ví dụ: Quận 1"
