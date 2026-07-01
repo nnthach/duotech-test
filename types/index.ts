@@ -105,3 +105,24 @@ export interface ProductItem {
   created_at: string;
   updated_at: string | null;
 }
+
+export interface StoreItem {
+  id: string;
+  name: string;
+  address: {
+    en: string;
+    vi: string;
+  };
+  city: string;
+  district: string;
+  slug: string;
+  image_url: string;
+  phone: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export type UserStatusEnum = "active" | "inactive" | "banned";
+export type UserRoleEnum = "admin" | "staff" | "customer";

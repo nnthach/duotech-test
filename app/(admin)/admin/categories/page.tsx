@@ -303,7 +303,11 @@ export default function AdminCategoryPage() {
                 >
                   <div className="flex flex-col items-center gap-3">
                     <LayoutGrid className="h-10 w-10 opacity-30" />
-                    <p className="text-sm">Không tìm thấy danh mục nào</p>
+                    <p className="text-sm">
+                      {locale == "vi"
+                        ? "Không tìm thấy danh mục nào"
+                        : "No categories found"}
+                    </p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -365,7 +369,7 @@ export default function AdminCategoryPage() {
         {/* Footer count */}
         <div className="border-t px-6 py-3">
           <p className="text-xs text-muted-foreground">
-            Hiển thị{" "}
+            {locale == "vi" ? "Hiển thị" : "Showing"}{" "}
             <span className="font-medium text-foreground">
               {categories.length}
             </span>{" "}
@@ -373,7 +377,7 @@ export default function AdminCategoryPage() {
             <span className="font-medium text-foreground">
               {categories.length}
             </span>{" "}
-            danh mục
+            {locale == "vi" ? "danh mục" : "categories"}
           </p>
         </div>
       </div>

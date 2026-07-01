@@ -196,6 +196,7 @@ export const translations = {
         customers: "Customers",
         settings: "Settings",
         staffs: "Staffs",
+        stores: "Stores",
       },
       headerDropdown: {
         notifications: "Notifications",
@@ -221,6 +222,7 @@ export const translations = {
           reviews: "Reviews",
           customers: "Customers",
           settings: "Settings",
+          stores: "Stores",
         },
         user: {
           profile: "Profile",
@@ -383,6 +385,58 @@ export const translations = {
           errors: {
             nameViRequired: "Ingredient name (VI) is required.",
             nameEnRequired: "Ingredient name (EN) is required.",
+          },
+        },
+      },
+      storesPage: {
+        headerTitle: {
+          title: "Stores",
+          subtitle: "Manage stores",
+        },
+        table: {
+          columns: {
+            name: "Store Name",
+            address: "Address",
+            phone: "Phone",
+            image: "Image",
+          },
+        },
+        createModal: {
+          trigger: "Create Store",
+          title: "New Store",
+          submit: "Create Store",
+          fields: {
+            name: "Store Name",
+            addressVi: "Address (VI)",
+            addressEn: "Address (EN)",
+            city: "City",
+            district: "District",
+            phone: "Phone",
+          },
+          errors: {
+            nameRequired: "Store name is required.",
+            addressViRequired: "Address (VI) is required.",
+            addressEnRequired: "Address (EN) is required.",
+          },
+        },
+        updateModal: {
+          title: "Edit Store",
+          submit: "Save Changes",
+          fields: {
+            name: "Store Name",
+            addressVi: "Address (VI)",
+            addressEn: "Address (EN)",
+            city: "City",
+            district: "District",
+            phone: "Phone",
+            status: "Status",
+            statusActive: "Active",
+            statusInactive: "Inactive",
+          },
+          errors: {
+            nameRequired: "Store name is required.",
+            addressViRequired: "Address (VI) is required.",
+            addressEnRequired: "Address (EN) is required.",
           },
         },
       },
@@ -677,6 +731,7 @@ export const translations = {
         customers: "Khách hàng",
         settings: "Cài đặt",
         staffs: "Nhân viên",
+        stores: "Cửa hàng",
       },
       headerDropdown: {
         notifications: "Thông báo",
@@ -694,7 +749,7 @@ export const translations = {
         },
         nav: {
           dashboard: "Tổng quan",
-          staffs: "Nhân viên",
+          stores: "Cửa hàng",
           orders: "Đơn hàng",
           products: "Sản phẩm",
           categories: "Danh mục",
@@ -702,6 +757,7 @@ export const translations = {
           reviews: "Đánh giá",
           customers: "Khách hàng",
           settings: "Cài đặt",
+          staffs: "Nhân viên",
         },
         user: {
           profile: "Hồ sơ",
@@ -864,6 +920,59 @@ export const translations = {
           errors: {
             nameViRequired: "Tên nguyên liệu (VI) không được để trống.",
             nameEnRequired: "Tên nguyên liệu (EN) không được để trống.",
+          },
+        },
+      },
+      storesPage: {
+        headerTitle: {
+          title: "Cửa hàng",
+          subtitle: "Quản lý các chi nhánh cửa hàng",
+        },
+        table: {
+          columns: {
+            name: "Tên cửa hàng",
+            address: "Địa chỉ",
+            phone: "Số điện thoại",
+            image: "Hình ảnh",
+          },
+        },
+        createModal: {
+          trigger: "Tạo cửa hàng",
+          title: "Tạo cửa hàng mới",
+          submit: "Tạo cửa hàng",
+          fields: {
+            name: "Tên cửa hàng",
+            addressVi: "Địa chỉ (VI)",
+            addressEn: "Địa chỉ (EN)",
+            city: "Thành phố",
+            district: "Quận/Huyện",
+            phone: "Số điện thoại",
+            imageUrl: "Hình ảnh",
+          },
+          errors: {
+            nameRequired: "Tên cửa hàng không được để trống.",
+            addressViRequired: "Địa chỉ (VI) không được để trống.",
+            addressEnRequired: "Địa chỉ (EN) không được để trống.",
+          },
+        },
+        updateModal: {
+          title: "Chỉnh sửa cửa hàng",
+          submit: "Lưu thay đổi",
+          fields: {
+            name: "Tên cửa hàng",
+            addressVi: "Địa chỉ (VI)",
+            addressEn: "Địa chỉ (EN)",
+            city: "Thành phố",
+            district: "Quận/Huyện",
+            phone: "Số điện thoại",
+            status: "Trạng thái",
+            statusActive: "Hoạt động",
+            statusInactive: "Không hoạt động",
+          },
+          errors: {
+            nameRequired: "Tên cửa hàng không được để trống.",
+            addressViRequired: "Địa chỉ (VI) không được để trống.",
+            addressEnRequired: "Địa chỉ (EN) không được để trống.",
           },
         },
       },

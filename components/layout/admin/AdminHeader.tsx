@@ -36,6 +36,7 @@ const BREADCRUMB_MAP: Record<string, string> = {
   customers: "customers",
   settings: "settings",
   staffs: "staffs",
+  stores: "stores",
 };
 
 function useBreadcrumbs() {

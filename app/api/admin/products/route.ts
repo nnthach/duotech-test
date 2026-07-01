@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // get params
     const params = req.nextUrl.searchParams;
     const is_active = params.get("is_active");
     const category_id = params.get("category_id");
@@ -18,11 +19,13 @@ export async function GET(req: NextRequest) {
     const order = params.get("order") ?? "desc";
     const locale = params.get("locale") ?? "vi";
 
+    // validate params
     const validSortBy = ["name", "created_at"].includes(sort_by)
       ? sort_by
       : "created_at";
     const ascending = order === "asc";
 
+    // query 
     let query = supabaseAdmin
       .from("products")
       .select(

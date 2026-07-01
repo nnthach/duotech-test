@@ -30,6 +30,7 @@ import {
   Settings,
   ShoppingCart,
   Star,
+  Store,
   Tag,
   Users,
 } from "lucide-react";
@@ -41,6 +42,7 @@ import { useI18n } from "@/context/I18nContext";
 const NAV_MANAGEMENT = [
   { key: "dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { key: "staffs", href: "/admin/staffs", icon: Users },
+  { key: "stores", href: "/admin/stores", icon: Store },
   { key: "orders", href: "/admin/orders", icon: ShoppingCart },
   { key: "reviews", href: "/admin/reviews", icon: Star },
   { key: "customers", href: "/admin/customers", icon: Users },
