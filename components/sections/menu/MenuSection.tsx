@@ -26,7 +26,7 @@ export default function MenuSection() {
 
   const fetchCategories = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/categories?is_active=true&sort_by=created_at&order=asc");
+      const res = await fetch("/api/categories?is_active=true");
       if (!res.ok) return;
       const data = await res.json();
       if (data.success && data.data) {
@@ -37,30 +37,33 @@ export default function MenuSection() {
     }
   }, []);
 
-  const fetchProducts = useCallback(async (categoryId: string) => {
-    try {
-      setIsLoading(true);
-      const params = new URLSearchParams({
-        is_active: "true",
-        sort_by: "created_at",
-        order: "asc",
-        locale,
-      });
-      if (categoryId !== "all") {
-        params.set("category_id", categoryId);
+  const fetchProducts = useCallback(
+    async (categoryId: string) => {
+      try {
+        setIsLoading(true);
+        const params = new URLSearchParams({
+          is_active: "true",
+          sort_by: "created_at",
+          order: "asc",
+          locale,
+        });
+        if (categoryId !== "all") {
+          params.set("category_id", categoryId);
+        }
+        const res = await fetch(`/api/products?${params.toString()}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.success && data.data) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setIsLoading(false);
       }
-      const res = await fetch(`/api/admin/products?${params.toString()}`);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.success && data.data) {
-        setProducts(data.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [locale]);
+    },
+    [locale],
+  );
 
   useEffect(() => {
     fetchCategories();
@@ -74,8 +77,7 @@ export default function MenuSection() {
     setActiveCategory(id);
   };
 
-  const formatPrice = (price: number) =>
-    price.toLocaleString("vi-VN") + " đ";
+  const formatPrice = (price: number) => price.toLocaleString("vi-VN") + " đ";
 
   return (
     <section className="relative z-10 bg-sand px-6 py-16">
@@ -116,7 +118,10 @@ export default function MenuSection() {
         {isLoading ? (
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-80 animate-pulse rounded-2xl bg-white/60" />
+              <div
+                key={i}
+                className="h-80 animate-pulse rounded-2xl bg-white/60"
+              />
             ))}
           </div>
         ) : (

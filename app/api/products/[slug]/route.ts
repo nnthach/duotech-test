@@ -1,4 +1,4 @@
-import { isSupabaseConfigured, supabaseAdmin } from "@/lib/supabase";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { ProductIngredientRow, RawProduct } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,7 +25,7 @@ export async function GET(
     }
 
     // Step 1: Tìm product_id từ slug trong product_translations
-    const { data: translation, error: translationError } = await supabaseAdmin
+    const { data: translation, error: translationError } = await supabase
       .from("product_translations")
       .select("product_id")
       .eq("slug", slug)
@@ -39,7 +39,7 @@ export async function GET(
     }
 
     // Step 2: Query full product bằng product_id vừa lấy được
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from("products")
       .select(
         `
