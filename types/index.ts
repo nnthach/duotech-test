@@ -47,7 +47,10 @@ export interface CategoryItem {
     vi: string;
   };
   is_active: boolean;
-  slug: string;
+  slug: {
+    en: string;
+    vi: string;
+  };
   created_at: string;
   updated_at: string | null;
 }
@@ -75,7 +78,10 @@ export interface IngredientItem {
     vi: string;
   };
   is_active: boolean;
-  slug: string;
+  slug: {
+    en: string;
+    vi: string;
+  };
   created_at: string;
   updated_at: string | null;
 }
@@ -148,4 +154,23 @@ export interface StaffItem {
   created_at: string;
   updated_at: string | null;
   deleted_at: string | null;
+}
+
+export type StoreInventoryItemStatusEnum =
+  | "available"
+  | "out_of_stock"
+  | "low_stock"
+  | null;
+
+export interface StoreInventoryRaw {
+  id: string;
+  store_id: string;
+  product_id: string;
+  updated_by: string;
+  quantity: number;
+  status: StoreInventoryItemStatusEnum;
+  updated_at: string | null;
+  created_at: string;
+  products: ProductItem;
+  staffs: StaffItem;
 }

@@ -197,6 +197,7 @@ export const translations = {
         settings: "Settings",
         staffs: "Staffs",
         stores: "Stores",
+        storeInventories: "Store Inventory",
       },
       headerDropdown: {
         notifications: "Notifications",
@@ -209,6 +210,7 @@ export const translations = {
       sidebar: {
         groups: {
           management: "Management",
+          storeManagement: "Store Management",
           products: "Products",
           system: "System",
         },
@@ -223,6 +225,7 @@ export const translations = {
           customers: "Customers",
           settings: "Settings",
           stores: "Stores",
+          storeInventories: "Store Inventory",
         },
         user: {
           profile: "Profile",
@@ -439,6 +442,34 @@ export const translations = {
             addressEnRequired: "Address (EN) is required.",
           },
         },
+      },
+      storeInventoriesPage: {
+        headerTitle: {
+          title: "Store Inventory",
+          subtitle: "Manage product stock levels for your store",
+        },
+        table: {
+          columns: {
+            image: "Image",
+            name: "Product Name",
+            quantity: "Quantity",
+            updatedBy: "Updated By",
+            status: "Status",
+          },
+        },
+        status: {
+          available: "Available",
+          out_of_stock: "Out of Stock",
+          low_stock: "Low Stock",
+          unknown: "Unknown",
+        },
+        storeSelect: {
+          loading: "Loading stores...",
+          empty: "No stores available",
+        },
+        empty: "No inventory items found",
+        showing: "Showing",
+        item: "items",
       },
       staffsPage: {
         headerTitle: {
@@ -742,6 +773,7 @@ export const translations = {
         settings: "Cài đặt",
         staffs: "Nhân viên",
         stores: "Cửa hàng",
+        storeInventories: "Tồn kho cửa hàng",
       },
       headerDropdown: {
         notifications: "Thông báo",
@@ -754,6 +786,7 @@ export const translations = {
       sidebar: {
         groups: {
           management: "Quản lý",
+          storeManagement: "Quản lý cửa hàng",
           products: "Sản phẩm",
           system: "Hệ thống",
         },
@@ -768,6 +801,7 @@ export const translations = {
           customers: "Khách hàng",
           settings: "Cài đặt",
           staffs: "Nhân viên",
+          storeInventories: "Tồn kho cửa hàng",
         },
         user: {
           profile: "Hồ sơ",
@@ -985,6 +1019,34 @@ export const translations = {
             addressEnRequired: "Địa chỉ (EN) không được để trống.",
           },
         },
+      },
+      storeInventoriesPage: {
+        headerTitle: {
+          title: "Tồn kho cửa hàng",
+          subtitle: "Quản lý số lượng tồn kho sản phẩm của cửa hàng",
+        },
+        table: {
+          columns: {
+            image: "Hình ảnh",
+            name: "Tên sản phẩm",
+            quantity: "Số lượng",
+            updatedBy: "Người cập nhật",
+            status: "Trạng thái",
+          },
+        },
+        status: {
+          available: "Còn hàng",
+          out_of_stock: "Hết hàng",
+          low_stock: "Sắp hết hàng",
+          unknown: "Không xác định",
+        },
+        storeSelect: {
+          loading: "Đang tải cửa hàng...",
+          empty: "Không có cửa hàng nào",
+        },
+        empty: "Không tìm thấy sản phẩm tồn kho nào",
+        showing: "Hiển thị",
+        item: "sản phẩm",
       },
       staffsPage: {
         headerTitle: {

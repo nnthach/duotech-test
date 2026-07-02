@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { Filter, Trash2, LayoutGrid, Loader2 } from "lucide-react";
+import { Filter, LayoutGrid, Loader2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,10 +18,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { IngredientItem } from "@/types";
+import { StoreInventoryRaw, StoreItem } from "@/types";
 import { useI18n } from "@/context/I18nContext";
-import CreateIngredientModal from "@/components/sections/admin/ingredients/CreateIngredientModal";
-import UpdateIngredientModal from "@/components/sections/admin/ingredients/UpdateIngredientModal";
+import Image from "next/image";
 
 const STATUS_OPTIONS = [
   { label: "Tất cả", value: "" },
@@ -51,76 +50,88 @@ const DEFAULT_FILTER: FilterState = {
   order: "desc",
 };
 
-export default function AdminIngredientPage() {
-  const [ingredients, setIngredients] = useState<IngredientItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function AdminStoreInventoryPage() {
+  const [stores, setStoreInventories] = useState<StoreInventoryRaw[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [appliedFilter, setAppliedFilter] =
     useState<FilterState>(DEFAULT_FILTER);
   const [tempFilter, setTempFilter] = useState<FilterState>(DEFAULT_FILTER);
 
-  const { t, locale } = useI18n();
+  const [storeOptions, setStoreOptions] = useState<StoreItem[]>([]);
+  const [selectedStoreId, setSelectedStoreId] = useState("");
+  const [isLoadingStores, setIsLoadingStores] = useState(true);
 
-  const fetchIngredients = useCallback(
-    async (filter: FilterState = appliedFilter) => {
+  const { t } = useI18n();
+
+  // fetch all stores once, then default-select the first one
+  useEffect(() => {
+    const fetchStores = async () => {
       try {
-        setIsLoading(true);
-
-        // get param
-        const params = new URLSearchParams();
-        if (filter.is_active !== undefined) {
-          params.set("is_active", String(filter.is_active));
-        }
-        params.set("sort_by", filter.sort_by);
-        params.set("order", filter.order);
-
-        // call api
-        const res = await fetch(`/api/admin/ingredients?${params.toString()}`);
-        if (!res.ok) throw new Error("Failed to fetch ingredients");
+        setIsLoadingStores(true);
+        const res = await fetch("/api/admin/stores?is_active=true");
+        if (!res.ok) throw new Error("Failed to fetch stores");
         const data = await res.json();
-
-        // check
         if (data.success && data.data) {
-          setIngredients(data.data);
+          setStoreOptions(data.data);
+          if (data.data.length > 0) {
+            setSelectedStoreId(data.data[0].id);
+          }
         }
       } catch (error) {
         console.error(error);
-        alert("Không thể tải danh sách nguyên liệu.");
       } finally {
-        setIsLoading(false);
+        setIsLoadingStores(false);
       }
-    },
-    [appliedFilter],
-  );
+    };
 
-  useEffect(() => {
-    fetchIngredients();
-  }, [fetchIngredients]);
+    fetchStores();
+  }, []);
 
-  // delete
-  const deleteIngredient = async (id: string) => {
+  const fetchStoreInventory = useCallback(async (storeId: string) => {
+    if (!storeId) return;
+
     try {
-      await fetch(`/api/admin/ingredients/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      fetchIngredients(appliedFilter);
+      setIsLoading(true);
+
+      // get param
+      const params = new URLSearchParams();
+      params.set("store_id", storeId);
+
+      // call api
+      const res = await fetch(
+        `/api/admin/store-inventories?${params.toString()}`,
+      );
+      if (!res.ok) throw new Error("Failed to fetch store inventories");
+      const data = await res.json();
+
+      // check
+      if (data.success && data.data) {
+        setStoreInventories(data.data);
+      }
     } catch (error) {
       console.error(error);
-      alert("Failed to delete");
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, []);
+
+  // only fetch inventory once a store_id is available; refetch when it changes
+  useEffect(() => {
+    if (!selectedStoreId) return;
+    fetchStoreInventory(selectedStoreId);
+  }, [selectedStoreId, fetchStoreInventory]);
 
   // apply filter
   const handleApply = () => {
     setAppliedFilter(tempFilter);
-    fetchIngredients(tempFilter);
+    fetchStoreInventory(selectedStoreId);
   };
 
   // clear filter
   const handleClearFilter = () => {
     setAppliedFilter(DEFAULT_FILTER);
     setTempFilter(DEFAULT_FILTER);
-    fetchIngredients(DEFAULT_FILTER);
+    fetchStoreInventory(selectedStoreId);
   };
 
   //check filter
@@ -140,10 +151,10 @@ export default function AdminIngredientPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">
-          {t("admin.ingredientsPage.headerTitle.title")}
+          {t("admin.storeInventoriesPage.headerTitle.title")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          {t("admin.ingredientsPage.headerTitle.subtitle")}
+          {t("admin.storeInventoriesPage.headerTitle.subtitle")}
         </p>
       </div>
 
@@ -252,6 +263,29 @@ export default function AdminIngredientPage() {
                 </div>
               </PopoverContent>
             </Popover>
+            
+            <select
+              className="border rounded-md h-9 px-2 w-48 text-sm bg-card"
+              value={selectedStoreId}
+              onChange={(e) => setSelectedStoreId(e.target.value)}
+              disabled={isLoadingStores || storeOptions.length === 0}
+            >
+              {isLoadingStores ? (
+                <option value="">
+                  {t("admin.storeInventoriesPage.storeSelect.loading")}
+                </option>
+              ) : storeOptions.length === 0 ? (
+                <option value="">
+                  {t("admin.storeInventoriesPage.storeSelect.empty")}
+                </option>
+              ) : (
+                storeOptions.map((store) => (
+                  <option key={store.id} value={store.id}>
+                    {store.name}
+                  </option>
+                ))
+              )}
+            </select>
 
             {isFilterActive && (
               <button
@@ -262,10 +296,6 @@ export default function AdminIngredientPage() {
               </button>
             )}
           </div>
-
-          <CreateIngredientModal
-            onCreated={() => fetchIngredients(appliedFilter)}
-          />
         </div>
 
         {/* Table */}
@@ -276,10 +306,20 @@ export default function AdminIngredientPage() {
                 {t("admin.table.columns.no")}
               </TableHead>
               <TableHead>
-                {t("admin.ingredientsPage.table.columns.name")}
+                {t("admin.storeInventoriesPage.table.columns.image")}
               </TableHead>
-              <TableHead>{t("admin.table.columns.status")}</TableHead>
-              <TableHead>{t("admin.table.columns.createdAt")}</TableHead>
+              <TableHead>
+                {t("admin.storeInventoriesPage.table.columns.name")}
+              </TableHead>
+              <TableHead>
+                {t("admin.storeInventoriesPage.table.columns.quantity")}
+              </TableHead>
+              <TableHead>
+                {t("admin.storeInventoriesPage.table.columns.updatedBy")}
+              </TableHead>
+              <TableHead>
+                {t("admin.storeInventoriesPage.table.columns.status")}
+              </TableHead>
               <TableHead className="text-right">
                 {t("admin.table.columns.actions")}
               </TableHead>
@@ -295,7 +335,7 @@ export default function AdminIngredientPage() {
                   <Loader2 className="h-6 w-6 animate-spin mx-auto" />
                 </TableCell>
               </TableRow>
-            ) : ingredients.length === 0 ? (
+            ) : stores.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={7}
@@ -304,64 +344,69 @@ export default function AdminIngredientPage() {
                   <div className="flex flex-col items-center gap-3">
                     <LayoutGrid className="h-10 w-10 opacity-30" />
                     <p className="text-sm">
-                      {locale == "vi"
-                        ? "Không tìm thấy nguyên liệu nào"
-                        : "No ingredients found"}
+                      {t("admin.storeInventoriesPage.empty")}
                     </p>
                   </div>
                 </TableCell>
               </TableRow>
             ) : (
-              ingredients.map((ingredient, index) => (
-                <TableRow key={ingredient.id}>
-                  <TableCell className="text-center text-muted-foreground text-xs">
-                    {index + 1}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {ingredient.name[locale]}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={ingredient.is_active ? "success" : "warning"}
-                    >
-                      {ingredient.is_active
-                        ? locale === "vi"
-                          ? "Hoạt động"
-                          : "Active"
-                        : locale === "vi"
-                          ? "Không hoạt động"
-                          : "Inactive"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {new Date(ingredient.created_at).toLocaleDateString(
-                      "vi-VN",
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center justify-end gap-2">
-                      <UpdateIngredientModal
-                        id={ingredient.id}
-                        defaultValues={{
-                          name_vi: ingredient.name.vi,
-                          name_en: ingredient.name.en,
-                          slug_vi: ingredient.slug.vi,
-                          slug_en: ingredient.slug.en,
-                        }}
-                        onUpdated={() => fetchIngredients(appliedFilter)}
-                      />
-                      <Button
-                        onClick={() => deleteIngredient(ingredient.id)}
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              stores.map((storeInventory, index) => {
+                const statusVariant: Record<
+                  string,
+                  "success" | "warning" | "destructive" | "secondary"
+                > = {
+                  available: "success",
+                  low_stock: "warning",
+                  out_of_stock: "destructive",
+                };
+                const statusKey = storeInventory.status ?? "unknown";
+
+                return (
+                  <TableRow key={storeInventory.id}>
+                    <TableCell className="text-center text-muted-foreground text-xs">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell>
+                      <div className="relative w-12 h-12 overflow-hidden rounded-md">
+                        <Image
+                          src={storeInventory.products.image_url[0]}
+                          alt={
+                            storeInventory.products.product_translations[0]
+                              ?.name ?? ""
+                          }
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {storeInventory.products.product_translations[0]?.name}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {storeInventory.quantity}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {storeInventory.staffs?.users?.full_name ?? "-"}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={statusVariant[statusKey] ?? "secondary"}>
+                        {t(`admin.storeInventoriesPage.status.${statusKey}`)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
@@ -369,11 +414,10 @@ export default function AdminIngredientPage() {
         {/* Footer count */}
         <div className="border-t px-6 py-3">
           <p className="text-xs text-muted-foreground">
-            {locale == "vi" ? "Hiển thị" : "Showing"}{" "}
+            {t("admin.storeInventoriesPage.showing")}{" "}
             <span className="font-medium text-foreground">
-              {ingredients.length}
+              {stores.length}
             </span>{" "}
-            {locale == "vi" ? "nguyên liệu" : "ingredients"}
           </p>
         </div>
       </div>

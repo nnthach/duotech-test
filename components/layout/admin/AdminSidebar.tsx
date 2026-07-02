@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
+  Boxes,
   ChevronUp,
   Croissant,
   FlaskConical,
@@ -42,10 +43,14 @@ import { useI18n } from "@/context/I18nContext";
 const NAV_MANAGEMENT = [
   { key: "dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { key: "staffs", href: "/admin/staffs", icon: Users },
-  { key: "stores", href: "/admin/stores", icon: Store },
   { key: "orders", href: "/admin/orders", icon: ShoppingCart },
   { key: "reviews", href: "/admin/reviews", icon: Star },
   { key: "customers", href: "/admin/customers", icon: Users },
+];
+
+const NAV_STORE_MANAGEMENT = [
+  { key: "stores", href: "/admin/stores", icon: Store },
+  { key: "storeInventories", href: "/admin/store-inventories", icon: Boxes },
 ];
 
 const NAV_PRODUCTS = [
@@ -140,10 +145,19 @@ export function AdminSidebar() {
       </SidebarHeader>
 
       {/* Main Navigation */}
-      <SidebarContent>
+      <SidebarContent className="custom-scrollbar">
         <NavGroup
           items={NAV_MANAGEMENT}
           label={t("admin.sidebar.groups.management")}
+          pathname={pathname}
+          t={t}
+        />
+
+        <SidebarSeparator />
+
+        <NavGroup
+          items={NAV_STORE_MANAGEMENT}
+          label={t("admin.sidebar.groups.storeManagement")}
           pathname={pathname}
           t={t}
         />
