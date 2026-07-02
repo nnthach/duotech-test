@@ -22,16 +22,19 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, slug } = body;
-    if (!name) {
+    const { name_vi, name_en, slug_vi, slug_en } = body;
+    if (!name_vi || !name_en) {
       return NextResponse.json(
-        { success: false, error: "Name is required" },
+        { success: false, error: "Names are required" },
         { status: 400 },
       );
     }
     const { data, error } = await supabaseAdmin
       .from("ingredients")
-      .update({ name, slug })
+      .update({
+        name: { vi: name_vi, en: name_en },
+        slug: { vi: slug_vi, en: slug_en },
+      })
       .eq("id", id)
       .select()
       .single();

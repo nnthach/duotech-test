@@ -52,11 +52,18 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name_vi, name_en, description_vi, description_en, slug } = body;
+    const {
+      name_vi,
+      name_en,
+      description_vi,
+      description_en,
+      slug_vi,
+      slug_en,
+    } = body;
 
     if (!name_vi || !name_en) {
       return NextResponse.json(
-        { success: false, error: "Name is required" },
+        { success: false, error: "Names are required" },
         { status: 400 },
       );
     }
@@ -66,7 +73,7 @@ export async function POST(req: NextRequest) {
       .insert({
         name: { vi: name_vi, en: name_en },
         description: { vi: description_vi ?? "", en: description_en ?? "" },
-        slug,
+        slug: { vi: slug_vi, en: slug_en },
       })
       .select()
       .single();

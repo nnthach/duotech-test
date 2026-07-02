@@ -52,9 +52,9 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, slug } = body;
+    const { name_vi, name_en, slug_vi, slug_en } = body;
 
-    if (!name) {
+    if (!name_vi || !name_en) {
       return NextResponse.json(
         { success: false, error: "Name is required" },
         { status: 400 },
@@ -63,7 +63,10 @@ export async function POST(req: NextRequest) {
 
     const { data, error } = await supabaseAdmin
       .from("ingredients")
-      .insert({ name, slug })
+      .insert({
+        name: { vi: name_vi, en: name_en },
+        slug: { vi: slug_vi, en: slug_en },
+      })
       .select()
       .single();
     if (error) throw error;

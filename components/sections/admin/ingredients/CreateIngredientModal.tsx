@@ -15,11 +15,13 @@ import {
 import { formatToSlug } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { IngredientFormState } from "@/types/form-type";
+import InputFormField from "@/components/custom/InputFormField";
 
 const INITIAL_FORM: IngredientFormState = {
   name_vi: "",
   name_en: "",
-  slug: "",
+  slug_vi: "",
+  slug_en: "",
 };
 
 interface CreateIngredientModalProps {
@@ -50,7 +52,11 @@ export default function CreateIngredientModal({
     return Object.keys(next).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name as keyof IngredientFormState]) {
@@ -64,7 +70,11 @@ export default function CreateIngredientModal({
 
     try {
       setIsSubmitting(true);
-      const payload = { ...form, slug: formatToSlug(form.name_vi) };
+      const payload = {
+        ...form,
+        slug_vi: formatToSlug(form.name_vi),
+        slug_en: formatToSlug(form.name_en),
+      };
 
       const res = await fetch("/api/admin/ingredients", {
         method: "POST",
@@ -113,52 +123,30 @@ export default function CreateIngredientModal({
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
             {/* Name VI */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="name_vi"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.ingredientsPage.createModal.fields.nameVi")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <input
-                id="name_vi"
-                name="name_vi"
-                placeholder="Ví dụ: Bột mì"
-                value={form.name_vi}
-                onChange={handleChange}
-                aria-invalid={!!errors.name_vi}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
-              />
-              {errors.name_vi && (
-                <p className="text-xs text-destructive">{errors.name_vi}</p>
-              )}
-            </div>
+            <InputFormField
+              label={t("admin.ingredientsPage.createModal.fields.nameVi")}
+              name="name_vi"
+              placeholder="Ví dụ: Bột mì"
+              type="text"
+              value={form.name_vi}
+              onChange={handleChange}
+              error={errors.name_vi}
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Name EN */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="name_en"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.ingredientsPage.createModal.fields.nameEn")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <input
-                id="name_en"
-                name="name_en"
-                placeholder="E.g. Flour"
-                value={form.name_en}
-                onChange={handleChange}
-                aria-invalid={!!errors.name_en}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
-              />
-              {errors.name_en && (
-                <p className="text-xs text-destructive">{errors.name_en}</p>
-              )}
-            </div>
+            <InputFormField
+              label={t("admin.ingredientsPage.createModal.fields.nameEn")}
+              name="name_en"
+              placeholder="E.g. Flour"
+              type="text"
+              value={form.name_en}
+              onChange={handleChange}
+              error={errors.name_en}
+              disabled={isSubmitting}
+              required
+            />
           </div>
 
           <DialogFooter className="mt-4 gap-2">

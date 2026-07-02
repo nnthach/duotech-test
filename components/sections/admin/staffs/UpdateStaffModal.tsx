@@ -15,6 +15,7 @@ import {
 import { useI18n } from "@/context/I18nContext";
 import { StoreItem } from "@/types";
 import { StaffFormState } from "@/types/form-type";
+import InputFormField from "@/components/custom/InputFormField";
 
 interface UpdateStaffModalProps {
   staffId: string;
@@ -60,6 +61,34 @@ export default function UpdateStaffModal({
     fetchStores();
   }, [open]);
 
+  const genderOptions = [
+    {
+      value: "male",
+      label: t("admin.staffsPage.updateModal.genderOptions.male"),
+    },
+    {
+      value: "female",
+      label: t("admin.staffsPage.updateModal.genderOptions.female"),
+    },
+    {
+      value: "other",
+      label: t("admin.staffsPage.updateModal.genderOptions.other"),
+    },
+  ];
+
+  const storeOptions = [
+    {
+      value: "",
+      label: isLoadingStores
+        ? t("admin.staffsPage.updateModal.fields.storeLoading")
+        : t("admin.staffsPage.updateModal.fields.storePlaceholder"),
+    },
+    ...stores.map((store) => ({
+      value: store.id,
+      label: store.name,
+    })),
+  ];
+
   const validate = (): boolean => {
     const next: Partial<Record<keyof StaffFormState, string>> = {};
     if (!form.fullname.trim())
@@ -77,7 +106,9 @@ export default function UpdateStaffModal({
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -139,142 +170,69 @@ export default function UpdateStaffModal({
         <form onSubmit={handleSubmit} noValidate>
           <div className="space-y-4 py-2">
             {/* Fullname */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="update-fullname"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.staffsPage.updateModal.fields.fullname")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <input
-                id="update-fullname"
-                name="fullname"
-                placeholder={t(
-                  "admin.staffsPage.updateModal.fields.fullnamePlaceholder",
-                )}
-                value={form.fullname}
-                onChange={handleChange}
-                aria-invalid={!!errors.fullname}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
-              />
-              {errors.fullname && (
-                <p className="text-xs text-destructive">{errors.fullname}</p>
+            <InputFormField
+              label={t("admin.staffsPage.updateModal.fields.fullname")}
+              name="fullname"
+              placeholder={t(
+                "admin.staffsPage.updateModal.fields.fullnamePlaceholder",
               )}
-            </div>
+              type="text"
+              value={form.fullname}
+              onChange={handleChange}
+              error={errors.fullname}
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Email */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="update-email"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.staffsPage.updateModal.fields.email")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <input
-                id="update-email"
-                name="email"
-                type="email"
-                placeholder="example@email.com"
-                value={form.email}
-                onChange={handleChange}
-                aria-invalid={!!errors.email}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
-              />
-              {errors.email && (
-                <p className="text-xs text-destructive">{errors.email}</p>
-              )}
-            </div>
+            <InputFormField
+              label={t("admin.staffsPage.updateModal.fields.email")}
+              name="email"
+              placeholder="example@email.com"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              error={errors.email}
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Date of birth */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="update-dob"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.staffsPage.updateModal.fields.dob")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <input
-                id="update-dob"
-                name="dob"
-                type="date"
-                value={form.dob}
-                onChange={handleChange}
-                aria-invalid={!!errors.dob}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground"
-              />
-              {errors.dob && (
-                <p className="text-xs text-destructive">{errors.dob}</p>
-              )}
-            </div>
+            <InputFormField
+              label={t("admin.staffsPage.updateModal.fields.dob")}
+              name="dob"
+              type="date"
+              value={form.dob}
+              onChange={handleChange}
+              error={errors.dob}
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Gender */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="update-gender"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.staffsPage.updateModal.fields.gender")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <select
-                id="update-gender"
-                name="gender"
-                value={form.gender}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background"
-              >
-                <option value="male">
-                  {t("admin.staffsPage.updateModal.genderOptions.male")}
-                </option>
-                <option value="female">
-                  {t("admin.staffsPage.updateModal.genderOptions.female")}
-                </option>
-                <option value="other">
-                  {t("admin.staffsPage.updateModal.genderOptions.other")}
-                </option>
-              </select>
-            </div>
+            <InputFormField
+              label={t("admin.staffsPage.updateModal.fields.gender")}
+              name="gender"
+              type="select"
+              selectData={genderOptions}
+              value={form.gender}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Store */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="update-store_id"
-                className="text-sm font-medium text-foreground"
-              >
-                {t("admin.staffsPage.updateModal.fields.store")}{" "}
-                <span className="text-destructive">*</span>
-              </label>
-              <select
-                id="update-store_id"
-                name="store_id"
-                value={form.store_id}
-                onChange={handleChange}
-                aria-invalid={!!errors.store_id}
-                disabled={isSubmitting || isLoadingStores}
-                className="flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background"
-              >
-                <option value="">
-                  {isLoadingStores
-                    ? t("admin.staffsPage.updateModal.fields.storeLoading")
-                    : t("admin.staffsPage.updateModal.fields.storePlaceholder")}
-                </option>
-                {stores.map((store) => (
-                  <option key={store.id} value={store.id}>
-                    {store.name}
-                  </option>
-                ))}
-              </select>
-              {errors.store_id && (
-                <p className="text-xs text-destructive">{errors.store_id}</p>
-              )}
-            </div>
+            <InputFormField
+              label={t("admin.staffsPage.updateModal.fields.store")}
+              name="store_id"
+              type="select"
+              selectData={storeOptions}
+              value={form.store_id}
+              onChange={handleChange}
+              error={errors.store_id}
+              disabled={isSubmitting || isLoadingStores}
+              required
+            />
           </div>
 
           <DialogFooter className="mt-4 gap-2">

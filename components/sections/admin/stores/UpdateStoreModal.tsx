@@ -16,44 +16,10 @@ import { formatToSlug } from "@/lib/utils";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 import { StoreItem } from "@/types";
 import { useI18n } from "@/context/I18nContext";
+import InputFormField from "@/components/custom/InputFormField";
+import { StoreFormState } from "@/types/form-type";
 
-interface FormState {
-  name: string;
-  address_vi: string;
-  address_en: string;
-  city: string;
-  district: string;
-  phone: string;
-  is_active: boolean;
-}
-
-const inputCls =
-  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground";
-
-function Field({
-  label,
-  required,
-  error,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-1.5">
-      <label className="text-sm font-medium text-foreground">
-        {label}
-        {required && <span className="text-destructive"> *</span>}
-      </label>
-      {children}
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </div>
-  );
-}
-
-function toFormState(store: StoreItem): FormState {
+function toFormState(store: StoreItem): StoreFormState {
   return {
     name: store.name,
     address_vi: store.address.vi,
@@ -61,7 +27,6 @@ function toFormState(store: StoreItem): FormState {
     city: store.city ?? "",
     district: store.district ?? "",
     phone: store.phone ?? "",
-    is_active: store.is_active,
   };
 }
 
@@ -75,9 +40,9 @@ export default function UpdateStoreModal({
   onUpdated,
 }: UpdateStoreModalProps) {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<FormState>(() => toFormState(store));
+  const [form, setForm] = useState<StoreFormState>(() => toFormState(store));
   const [errors, setErrors] = useState<
-    Partial<Record<keyof FormState, string>>
+    Partial<Record<keyof StoreFormState, string>>
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -102,11 +67,13 @@ export default function UpdateStoreModal({
 
   // handle change
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormState]) {
+    if (errors[name as keyof StoreFormState]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
@@ -147,7 +114,7 @@ export default function UpdateStoreModal({
   // end image
 
   const validate = (): boolean => {
-    const next: Partial<Record<keyof FormState, string>> = {};
+    const next: Partial<Record<keyof StoreFormState, string>> = {};
     if (!form.name.trim())
       next.name = t("admin.storesPage.updateModal.errors.nameRequired");
     if (!form.address_vi.trim())
@@ -241,7 +208,7 @@ export default function UpdateStoreModal({
               />
               <div
                 onClick={handleImageClick}
-                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
+                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors"
               >
                 {imagePreview ? (
                   <>
@@ -271,115 +238,80 @@ export default function UpdateStoreModal({
             </div>
 
             {/* Name */}
-            <Field
+            <InputFormField
               label={t("admin.storesPage.updateModal.fields.name")}
-              required
+              name="name"
+              type="text"
+              placeholder={
+                locale === "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
+              }
+              value={form.name}
+              onChange={handleChange}
               error={errors.name}
-            >
-              <input
-                name="name"
-                placeholder={
-                  locale === "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
-                }
-                value={form.name}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Address VI / EN */}
             <div className="grid grid-cols-2 gap-3">
-              <Field
+              <InputFormField
                 label={t("admin.storesPage.updateModal.fields.addressVi")}
-                required
+                name="address_vi"
+                type="textarea"
+                rows={2}
+                placeholder="Địa chỉ..."
+                value={form.address_vi}
+                onChange={handleChange}
                 error={errors.address_vi}
-              >
-                <textarea
-                  name="address_vi"
-                  rows={2}
-                  placeholder="Địa chỉ..."
-                  value={form.address_vi}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
-              <Field
-                label={t("admin.storesPage.updateModal.fields.addressEn")}
+                disabled={isSubmitting}
                 required
+              />
+              <InputFormField
+                label={t("admin.storesPage.updateModal.fields.addressEn")}
+                name="address_en"
+                type="textarea"
+                rows={2}
+                placeholder="Address..."
+                value={form.address_en}
+                onChange={handleChange}
                 error={errors.address_en}
-              >
-                <textarea
-                  name="address_en"
-                  rows={2}
-                  placeholder="Address..."
-                  value={form.address_en}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
+                disabled={isSubmitting}
+                required
+              />
             </div>
 
             {/* City / District */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label={t("admin.storesPage.updateModal.fields.city")}>
-                <input
-                  name="city"
-                  placeholder="Ví dụ: Hồ Chí Minh"
-                  value={form.city}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label={t("admin.storesPage.updateModal.fields.district")}>
-                <input
-                  name="district"
-                  placeholder="Ví dụ: Quận 1"
-                  value={form.district}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
+              <InputFormField
+                label={t("admin.storesPage.updateModal.fields.city")}
+                name="city"
+                type="text"
+                placeholder="Ví dụ: Hồ Chí Minh"
+                value={form.city}
+                onChange={handleChange}
+                disabled={isSubmitting}
+              />
+              <InputFormField
+                label={t("admin.storesPage.updateModal.fields.district")}
+                name="district"
+                type="text"
+                placeholder="Ví dụ: Quận 1"
+                value={form.district}
+                onChange={handleChange}
+                disabled={isSubmitting}
+              />
             </div>
 
             {/* Phone */}
-            <Field label={t("admin.storesPage.updateModal.fields.phone")}>
-              <input
-                name="phone"
-                placeholder="Ví dụ: 0901234567"
-                value={form.phone}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
-
-            {/* Status */}
-            <Field label={t("admin.storesPage.updateModal.fields.status")}>
-              <select
-                name="is_active"
-                value={form.is_active ? "true" : "false"}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    is_active: e.target.value === "true",
-                  }))
-                }
-                disabled={isSubmitting}
-                className={inputCls}
-              >
-                <option value="true">
-                  {t("admin.storesPage.updateModal.fields.statusActive")}
-                </option>
-                <option value="false">
-                  {t("admin.storesPage.updateModal.fields.statusInactive")}
-                </option>
-              </select>
-            </Field>
+            <InputFormField
+              label={t("admin.storesPage.updateModal.fields.phone")}
+              name="phone"
+              type="text"
+              placeholder="Ví dụ: 0901234567"
+              value={form.phone}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
           </div>
 
           <DialogFooter className="mt-4 gap-2">

@@ -15,6 +15,7 @@ import {
 import { formatToSlug } from "@/lib/utils";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 import { useI18n } from "@/context/I18nContext";
+import InputFormField from "@/components/custom/InputFormField";
 
 interface FormState {
   name: string;
@@ -33,32 +34,6 @@ const INITIAL_FORM: FormState = {
   district: "",
   phone: "",
 };
-
-const inputCls =
-  "flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground";
-
-function Field({
-  label,
-  required,
-  error,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-1.5">
-      <label className="text-sm font-medium text-foreground">
-        {label}
-        {required && <span className="text-destructive"> *</span>}
-      </label>
-      {children}
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </div>
-  );
-}
 
 interface CreateStoreModalProps {
   onCreated?: () => void;
@@ -79,7 +54,9 @@ export default function CreateStoreModal({ onCreated }: CreateStoreModalProps) {
 
   // handle change
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -216,7 +193,7 @@ export default function CreateStoreModal({ onCreated }: CreateStoreModalProps) {
               />
               <div
                 onClick={handleImageClick}
-                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors hover:border-primary/60 hover:bg-muted/50"
+                className="relative h-44 w-full cursor-pointer rounded-md border-2 border-dashed border-muted-foreground/40 bg-muted/30 flex items-center justify-center overflow-hidden transition-colors"
               >
                 {imagePreview ? (
                   <>
@@ -246,90 +223,78 @@ export default function CreateStoreModal({ onCreated }: CreateStoreModalProps) {
             </div>
 
             {/* Name */}
-            <Field
+            <InputFormField
               label={t("admin.storesPage.createModal.fields.name")}
-              required
+              name="name"
+              type="text"
+              placeholder={
+                locale == "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
+              }
+              value={form.name}
+              onChange={handleChange}
               error={errors.name}
-            >
-              <input
-                name="name"
-                placeholder={
-                  locale == "vi" ? "Ví dụ: Cửa hàng A" : "E.g. Store A"
-                }
-                value={form.name}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
+              disabled={isSubmitting}
+              required
+            />
 
             {/* Address VI / EN */}
-            <Field
+            <InputFormField
               label={t("admin.storesPage.createModal.fields.addressVi")}
-              required
+              name="address_vi"
+              type="textarea"
+              rows={2}
+              placeholder="Địa chỉ..."
+              value={form.address_vi}
+              onChange={handleChange}
               error={errors.address_vi}
-            >
-              <textarea
-                name="address_vi"
-                rows={2}
-                placeholder="Địa chỉ..."
-                value={form.address_vi}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
-            <Field
-              label={t("admin.storesPage.createModal.fields.addressEn")}
+              disabled={isSubmitting}
               required
+            />
+            <InputFormField
+              label={t("admin.storesPage.createModal.fields.addressEn")}
+              name="address_en"
+              type="textarea"
+              rows={2}
+              placeholder="Address..."
+              value={form.address_en}
+              onChange={handleChange}
               error={errors.address_en}
-            >
-              <textarea
-                name="address_en"
-                rows={2}
-                placeholder="Address..."
-                value={form.address_en}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
+              disabled={isSubmitting}
+              required
+            />
 
             {/* City / District */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label={t("admin.storesPage.createModal.fields.city")}>
-                <input
-                  name="city"
-                  placeholder="Ví dụ: Hồ Chí Minh"
-                  value={form.city}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
-              <Field label={t("admin.storesPage.createModal.fields.district")}>
-                <input
-                  name="district"
-                  placeholder="Ví dụ: Quận 1"
-                  value={form.district}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  className={inputCls}
-                />
-              </Field>
+              <InputFormField
+                label={t("admin.storesPage.createModal.fields.city")}
+                name="city"
+                type="text"
+                placeholder="Ví dụ: Hồ Chí Minh"
+                value={form.city}
+                onChange={handleChange}
+                disabled={isSubmitting}
+              />
+              <InputFormField
+                label={t("admin.storesPage.createModal.fields.district")}
+                name="district"
+                type="text"
+                placeholder="Ví dụ: Quận 1"
+                value={form.district}
+                onChange={handleChange}
+                disabled={isSubmitting}
+              />
             </div>
 
             {/* Phone */}
-            <Field label={t("admin.storesPage.createModal.fields.phone")}>
-              <input
-                name="phone"
-                placeholder="Ví dụ: 0901234567"
-                value={form.phone}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                className={inputCls}
-              />
-            </Field>
+            <InputFormField
+              label={t("admin.storesPage.createModal.fields.phone")}
+              name="phone"
+              type="text"
+              placeholder="Ví dụ: 0901234567"
+              value={form.phone}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
           </div>
 
           <DialogFooter className="mt-4 gap-2">
