@@ -32,3 +32,8 @@ export interface StoreFormState {
   district: string;
   phone: string;
 }
+
+export interface StoreInventoryFormState {
+  product_id: string;
+  quantity: number;
+}

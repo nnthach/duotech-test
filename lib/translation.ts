@@ -572,6 +572,74 @@ export const translations = {
         },
       },
     },
+
+    // staff
+    staff: {
+      headerBreadcrumb: {
+        dashboard: "Dashboard",
+        orders: "Orders",
+        staffs: "Staffs",
+        storeInventories: "Store Inventory",
+      },
+      headerDropdown: {
+        profile: "Profile",
+        accountSettings: "Account Settings",
+        signOut: "Sign Out",
+      },
+      // sidebar
+      sidebar: {
+        groups: {
+          management: "Management",
+        },
+        nav: {
+          dashboard: "Dashboard",
+          staffs: "Staffs",
+          orders: "Orders",
+          reviews: "Reviews",
+          customers: "Customers",
+          storeInventories: "Store Inventory",
+        },
+        user: {
+          profile: "Profile",
+          account: "Account",
+          signOut: "Sign Out",
+        },
+      },
+      // dashboard page
+      dashboardPage: {
+        headerTitle: {
+          title: "Dashboard",
+          subtitle: "Overview of the store's activity",
+        },
+      },
+      modal: {
+        cancel: "Cancel",
+      },
+      storeInventoriesPage: {
+        createModal: {
+          trigger: "Add Products",
+          title: "Add Products to Inventory",
+          submit: "Add to Inventory",
+          addRow: "Add Product",
+          fields: {
+            product: "Product",
+            quantity: "Quantity",
+          },
+          productSelect: {
+            placeholder: "Select a product",
+            loading: "Loading products...",
+            empty: "No active products available",
+          },
+          errors: {
+            productRequired: "Please select a product.",
+            duplicateProduct: "This product has already been added.",
+            quantityInvalid: "Quantity must be 0 or greater.",
+            fetchProductsFailed: "Failed to load products.",
+            submitFailed: "Failed to add products to inventory.",
+          },
+        },
+      },
+    },
   },
   vi: {
     // Navbar header
@@ -1145,6 +1213,74 @@ export const translations = {
             emailInvalid: "Email không hợp lệ.",
             dobRequired: "Ngày sinh không được để trống.",
             storeRequired: "Cửa hàng không được để trống.",
+          },
+        },
+      },
+    },
+
+    // staff
+    staff: {
+      headerBreadcrumb: {
+        dashboard: "Tổng quan",
+        orders: "Đơn hàng",
+        staffs: "Nhân viên",
+        storeInventories: "Tồn kho cửa hàng",
+      },
+      headerDropdown: {
+        profile: "Hồ sơ",
+        accountSettings: "Cài đặt tài khoản",
+        signOut: "Đăng xuất",
+      },
+      // sidebar
+      sidebar: {
+        groups: {
+          management: "Quản lý",
+        },
+        nav: {
+          dashboard: "Tổng quan",
+          staffs: "Nhân viên",
+          orders: "Đơn hàng",
+          reviews: "Đánh giá",
+          customers: "Khách hàng",
+          storeInventories: "Tồn kho cửa hàng",
+        },
+        user: {
+          profile: "Hồ sơ",
+          account: "Tài khoản",
+          signOut: "Đăng xuất",
+        },
+      },
+      // dashboard page
+      dashboardPage: {
+        headerTitle: {
+          title: "Tổng quan",
+          subtitle: "Tổng quan hoạt động của cửa hàng",
+        },
+      },
+      modal: {
+        cancel: "Huỷ",
+      },
+      storeInventoriesPage: {
+        createModal: {
+          trigger: "Cập nhật sản phẩm",
+          title: "Cập nhật số lượng sản phẩm",
+          submit: "Lưu thay đổi",
+          addRow: "Thêm dòng",
+          fields: {
+            product: "Sản phẩm",
+            quantity: "Số lượng",
+          },
+          productSelect: {
+            placeholder: "Chọn sản phẩm",
+            loading: "Đang tải sản phẩm...",
+            empty: "Không có sản phẩm đang hoạt động",
+          },
+          errors: {
+            productRequired: "Vui lòng chọn sản phẩm.",
+            duplicateProduct: "Sản phẩm này đã được thêm.",
+            quantityInvalid: "Số lượng phải lớn hơn hoặc bằng 0.",
+            fetchProductsFailed: "Không thể tải danh sách sản phẩm.",
+            submitFailed: "Không thể thêm sản phẩm vào kho.",
           },
         },
       },
